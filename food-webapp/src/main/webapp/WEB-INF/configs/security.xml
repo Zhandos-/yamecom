@@ -12,7 +12,6 @@
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
         <remember-me user-service-ref="userService" />
                 
-                
         <intercept-url pattern="/**" access="hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_ANONYMOUS')" />
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/clients/**" access="hasAnyRole('ROLE_CLIENT')" />
@@ -27,7 +26,6 @@
         <authentication-provider user-service-ref='userService'>
             <password-encoder hash="md5" />
         </authentication-provider>
-            
     </authentication-manager>
 
 </beans:beans>

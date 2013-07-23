@@ -26,12 +26,14 @@
             </activation>
             <id>test</id>
             <properties>
-                <food.db.driverClassName>oracle.jdbc.OracleDriver</food.db.driverClassName>
-                <food.db.url>jdbc:oracle:thin:@192.168.1.212:1521:UAIS</food.db.url>
-                <food.db.schemaName>BZR</food.db.schemaName>
-                <food.db.username>BZR</food.db.username>
-                <food.db.password>BZR_user</food.db.password>
-                <food.db.showsql>true</food.db.showsql>
+                <db.driverClassName>org.postgresql.Driver</db.driverClassName>
+                <db.url>jdbc:postgresql://localhost:5432/food</db.url>
+                <db.schemaName>food</db.schemaName>
+                <db.username>postgres</db.username>
+                <db.password>postgres1</db.password>
+                <db.showsql>true</db.showsql>
+                <db.hbmddl>update</db.hbmddl>
+                <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
             </properties>
         </profile>
         
@@ -41,12 +43,14 @@
             </activation>
             <id>production</id>
             <properties>
-                <food.db.driverClassName>oracle.jdbc.OracleDriver</food.db.driverClassName>
-                <food.db.url>jdbc:oracle:thin:@192.168.1.184:1521:dmorcl</food.db.url>
-                <food.db.schemaName>pcra2</food.db.schemaName>
-                <food.db.username>pcra2</food.db.username>
-                <food.db.password>pcra2</food.db.password>
-                <food.db.showsql>true</food.db.showsql>
+                <db.driverClassName>org.postgresql.Driver</db.driverClassName>
+                <db.url>jdbc:postgresql://localhost:5432/food</db.url>
+                <db.schemaName>food</db.schemaName>
+                <db.username>postgres</db.username>
+                <db.password>postgres1</db.password>
+                <db.showsql>false</db.showsql>
+                <db.hbmddl>validate</db.hbmddl>
+                <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
             </properties>
         </profile>
     </profiles>
@@ -68,6 +72,32 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>food-dao</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>3.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>3.1.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>3.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>3.1.0.RELEASE</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>
