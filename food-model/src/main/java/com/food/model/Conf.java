@@ -10,5 +10,5 @@ package com.food.model;
  */
 public class Conf {
 
-    public static final String TABLE_PREFIX = "p_";
+    public static final String TABLE_PREFIX = "f_";
 }

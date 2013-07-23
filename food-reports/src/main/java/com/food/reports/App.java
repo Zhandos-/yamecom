@@ -1,4 +1,4 @@
-package kz.innoforce.payctl.reports;
+package com.food.reports;
 
 /**
  * Hello world!
