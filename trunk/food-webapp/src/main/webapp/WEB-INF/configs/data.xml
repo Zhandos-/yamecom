@@ -32,17 +32,18 @@
     </bean>
 
     <!-- Настройки бина dataSource будем хранить в отдельном файле -->
-    <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="/WEB-INF/config/jdbc.properties" />
+    <!--    <bean id="propertyConfigurer"
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+    p:location="/WEB-INF/config/jdbc.properties" />-->
 
     <!-- Непосредственно бин dataSource -->
     <bean id="dataSourcePostgres"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="${jdbc.driverClassNamePostgres}" 
-          p:url="${jdbc.databaseurlPostgres}"
-          p:username="${jdbc.usernamePostgres}" 
-          p:password="${jdbc.passwordPostgres}" />
+          p:driverClassName="${db.driverClassName}" 
+          p:url="${db.url}"
+          p:username="${db.username}" 
+          p:password="${db.password}" />
+    
     <!-- Настройки фабрики сессий Хибернейта -->
     <bean id="sessionFactoryPostgres"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -54,10 +55,10 @@
         </property>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">${jdbc.hbmddlPostgres}</prop>
-                <prop key="hibernate.default_schema">${jdbc.defaultshemaPostgres}</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.dialect">${jdbc.dialectPostgres}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${db.hbmddl}</prop>
+                <prop key="hibernate.default_schema">${db.schemaName}</prop>
+                <prop key="hibernate.show_sql">${db.showsql}</prop>
+                <prop key="hibernate.dialect">${db.dialect}</prop>
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
             </props>
         </property>
