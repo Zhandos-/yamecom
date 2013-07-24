@@ -32,9 +32,9 @@
     </bean>
 
     <!-- Настройки бина dataSource будем хранить в отдельном файле -->
-    <!--    <bean id="propertyConfigurer"
-    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-    p:location="/WEB-INF/config/jdbc.properties" />-->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="/WEB-INF/configs/jdbc.properties" />
 
     <!-- Непосредственно бин dataSource -->
     <bean id="dataSourcePostgres"
@@ -50,7 +50,8 @@
         <property name="dataSource" ref="dataSourcePostgres" />
         <property name="annotatedClasses">
             <list>
-                <value>com.food.model.Users</value>
+                <value>com.food.model.auth.User</value>
+                <value>com.food.model.auth.Role</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -60,6 +61,9 @@
                 <prop key="hibernate.show_sql">${db.showsql}</prop>
                 <prop key="hibernate.dialect">${db.dialect}</prop>
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="javax.persistence.validation.mode">none</prop>
             </props>
         </property>
     </bean>
