@@ -53,7 +53,6 @@ public class UserController {
     // GEt
     @RequestMapping("/spravka")
     private String spravka(Map<String, Object> map) {
-
         return "spravka";
     }
 
