@@ -36,8 +36,6 @@
                 <db.showsql>true</db.showsql>
                 <db.hbmddl>update</db.hbmddl>
                 <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
-                
-                <spring.profile>test</spring.profile>
             </properties>
         </profile>
         
@@ -55,8 +53,6 @@
                 <db.showsql>false</db.showsql>
                 <db.hbmddl>validate</db.hbmddl>
                 <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
-                
-                <spring.profile>production</spring.profile>
             </properties>
         </profile>
     </profiles>
