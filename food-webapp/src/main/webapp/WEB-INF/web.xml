@@ -6,7 +6,11 @@
     <!-- Описание корневого контейнера, разделяемого всеми сервлетами и фильтрами -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/configs/root-context.xml</param-value>
+        <param-value>/WEB-INF/classes/configs/root-context.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>${spring.profile}</param-value>
     </context-param>
     <!-- Создаёт контейнер Spring, разделяемый всеми сервлетами и фильтрами -->
     <filter-mapping>
@@ -41,16 +45,16 @@
     </filter>
     <!-- Базовый сервлет, обрабатывает все запросы к приложению -->
     <servlet>
-        <servlet-name>app</servlet-name>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/configs/servlet-context.xml</param-value>
+            <param-value>/WEB-INF/classes/configs/servlet-context.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>app</servlet-name>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <session-config>

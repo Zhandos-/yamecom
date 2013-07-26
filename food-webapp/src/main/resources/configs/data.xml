@@ -33,8 +33,13 @@
 
     <!-- Настройки бина dataSource будем хранить в отдельном файле -->
     <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="/WEB-INF/configs/jdbc.properties" />
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/classes/configs/profiles/test.properties</value>
+            </list>
+        </property>
+    </bean>
 
     <!-- Непосредственно бин dataSource -->
     <bean id="dataSourcePostgres"
