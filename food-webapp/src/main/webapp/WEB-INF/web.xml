@@ -6,11 +6,10 @@
     <!-- Описание корневого контейнера, разделяемого всеми сервлетами и фильтрами -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/classes/configs/root-context.xml</param-value>
-    </context-param>
-    <context-param>
-        <param-name>spring.profiles.active</param-name>
-        <param-value>${spring.profile}</param-value>
+        <param-value>
+            /WEB-INF/classes/configs/applicationContext-business.xml
+            /WEB-INF/classes/configs/applicationContext-security.xml
+        </param-value>
     </context-param>
     <!-- Создаёт контейнер Spring, разделяемый всеми сервлетами и фильтрами -->
     <filter-mapping>
@@ -49,7 +48,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/classes/configs/servlet-context.xml</param-value>
+            <param-value>/WEB-INF/classes/configs/applicationContext-business.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
