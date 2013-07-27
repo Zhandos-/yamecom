@@ -41,6 +41,40 @@
         
         <profile>
             <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>daniyar</id>
+            <properties>
+                <db.driverClassName>org.postgresql.Driver</db.driverClassName>
+                <db.url>jdbc:postgresql://localhost:5432/food</db.url>
+                <db.schemaName>food</db.schemaName>
+                <db.username>postgres</db.username>
+                <db.password>postgres1</db.password>
+                <db.showsql>true</db.showsql>
+                <db.hbmddl>update</db.hbmddl>
+                <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
+            </properties>
+        </profile>
+        
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>zhandos</id>
+            <properties>
+                <db.driverClassName>org.postgresql.Driver</db.driverClassName>
+                <db.url>jdbc:postgresql://localhost:5432/food</db.url>
+                <db.schemaName>food</db.schemaName>
+                <db.username>postgres</db.username>
+                <db.password>password</db.password>
+                <db.showsql>true</db.showsql>
+                <db.hbmddl>update</db.hbmddl>
+                <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
+            </properties>
+        </profile>
+        
+        <profile>
+            <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
             <id>production</id>

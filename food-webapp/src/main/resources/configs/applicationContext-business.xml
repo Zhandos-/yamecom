@@ -63,10 +63,9 @@
     <bean id="sessionFactoryPostgres"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSourcePostgres" />
-        <property name="annotatedClasses">
+        <property name="packagesToScan">
             <list>
-                <value>com.food.model.auth.User</value>
-                <value>com.food.model.auth.Role</value>
+                <value>com.food.model.auth</value>
             </list>
         </property>
         <property name="hibernateProperties">
