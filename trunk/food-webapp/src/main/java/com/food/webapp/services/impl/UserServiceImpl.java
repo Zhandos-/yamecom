@@ -5,6 +5,7 @@
 package com.food.webapp.services.impl;
 
 import com.food.dao.UserDAO;
+import com.food.model.auth.EnumRole;
 import com.food.model.auth.Role;
 import com.food.model.auth.User;
 import com.food.webapp.services.UserService;
@@ -44,19 +45,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public List<User> listUser() {
-        return userDAO.listUser();
+    public List<User> allUsers() {
+        return userDAO.allUsers();
     }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
-        User innerUser = getUserbyLogin(login);
-        System.out.println(innerUser.getLoginName() + "  ########################## login");
+        User innerUser = getUserByEmail(login);
+        System.out.println(innerUser.getEmail() + "  ########################## login");
         if (innerUser == null) {
             System.out.println(" Нет пользователя  ########################## login");
             throw new UsernameNotFoundException("user not found in database");
         }
-        org.springframework.security.core.userdetails.User springUser = new org.springframework.security.core.userdetails.User(innerUser.getLoginName(), innerUser.getLoginPassword(), true, true, true, true, getAuthorities(innerUser.getRoles()));
+        org.springframework.security.core.userdetails.User springUser = new org.springframework.security.core.userdetails.User(innerUser.getEmail(), innerUser.getPassword(), true, true, true, true, getAuthorities(innerUser.getRoles()));
 
         return springUser;
     }
@@ -92,38 +93,34 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public GrantedAuthority[] defaultAuthority() {
         GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new SimpleGrantedAuthority("ROLE_USER");
+        authorities[0] = new SimpleGrantedAuthority(EnumRole.ROLE_ANONYMOUS.toString());
         return authorities;
     }
 
     @Override
-    public GrantedAuthority[] employeeAuthority() {
+    public GrantedAuthority[] consumerAuthority() {
         GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new SimpleGrantedAuthority("ROLE_EMPLOYEE");
+        authorities[0] = new SimpleGrantedAuthority(EnumRole.ROLE_CONSUMER.toString());
         return authorities;
     }
 
     @Override
     public GrantedAuthority[] adminAuthority() {
         GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new SimpleGrantedAuthority("ROLE_ADMIN");
+        authorities[0] = new SimpleGrantedAuthority(EnumRole.ROLE_ADMIN.toString());
         return authorities;
     }
 
+    @Override
     public GrantedAuthority[] clientAuthority() {
         GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new SimpleGrantedAuthority("ROLE_CLIENT");
+        authorities[0] = new SimpleGrantedAuthority(EnumRole.ROLE_CLIENT.toString());
         return authorities;
     }
 
     @Override
-    public User getUserbyLogin(String login) {
-        return userDAO.getUserbyLogin(login);
-    }
-
-    @Override
-    public User getUserByUUID(String uuid) {
-        return userDAO.getUserByUUID(uuid);
+    public User getUserByEmail(String email) {
+        return userDAO.getUserByEmail(email);
     }
 
     public List<String> getRoles(Set<Role> rolesList) {
@@ -151,5 +148,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public Role getRoles(Integer id) {
         return userDAO.getRoles(id);
+    }
+
+    @Override
+    public List<User> allActiveUsers() {
+        return userDAO.allActiveUsers();
     }
 }

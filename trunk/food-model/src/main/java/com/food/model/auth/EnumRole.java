@@ -1,9 +1,9 @@
 package com.food.model.auth;
 
-public enum ERole {
+public enum EnumRole {
 
     ROLE_CLIENT,
     ROLE_ADMIN,
-    ROLE_EMPLOYEE,
+    ROLE_CONSUMER,
     ROLE_ANONYMOUS
 }

@@ -4,7 +4,7 @@
  */
 package com.food.dao;
 
-import com.food.model.auth.ERole;
+import com.food.model.auth.EnumRole;
 import com.food.model.auth.Role;
 
 /**
@@ -15,5 +15,5 @@ public interface RoleDAO {
 
     public Role getRoleById(Long id);
 
-    public Role getRoleByName(ERole name);
+    public Role getRoleByName(EnumRole name);
 }

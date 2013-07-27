@@ -22,6 +22,18 @@
             </activation>
         </profile>
         <profile>
+            <id>daniyar</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>zhandos</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
             <id>production</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
