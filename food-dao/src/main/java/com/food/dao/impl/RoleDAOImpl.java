@@ -5,7 +5,7 @@
 package com.food.dao.impl;
 
 import com.food.dao.RoleDAO;
-import com.food.model.auth.ERole;
+import com.food.model.auth.EnumRole;
 import com.food.model.auth.Role;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class RoleDAOImpl implements RoleDAO {
     }
 
     @Override
-    public Role getRoleByName(ERole name) {
+    public Role getRoleByName(EnumRole name) {
         return (Role) sessionFactory.getCurrentSession().createQuery("from Role where name = :name").setParameter("name", name).uniqueResult();
     }
 }

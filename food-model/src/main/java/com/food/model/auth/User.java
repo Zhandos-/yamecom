@@ -12,41 +12,40 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(name = Conf.TABLE_PREFIX + "auth_user")
+@Table(name = Conf.TABLE_PREFIX + "user")
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class User extends AEntity {
 
     private static final long serialVersionUID = -105633019920728916L;
-    private String loginName;
-    private String loginPassword;
-    private String firstName;
-    private String lastName;
-    private String patronymic;
-    private String fullName;
-    private String customsAuthority;
-    private String position;
-    private Date registeredDate;
+    private String name;
+    private String surname;
     private String email;
+    private String password;
+    private Date creationDate;
     private boolean active = true;
     private Set<Role> roles = new HashSet<Role>();
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
+    @Column(name = "name")
     @Size(max = 255)
-    public String getCustomsAuthority() {
-        return customsAuthority;
+    public String getName() {
+        return name;
     }
 
-    public void setCustomsAuthority(String customsAuthority) {
-        this.customsAuthority = customsAuthority;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    @Column(name = "surname")
+    @Size(max = 255)
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    @Column(name = "email")
     @Size(max = 255)
     public String getEmail() {
         return email;
@@ -56,72 +55,37 @@ public class User extends AEntity {
         this.email = email;
     }
 
+    @Column(name = "password")
     @Size(max = 255)
-    public String getFirstName() {
-        return firstName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @Size(max = 255)
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    @Size(max = 255)
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    @Size(max = 255)
-    public String getLoginPassword() {
-        return loginPassword;
-    }
-
-    public void setLoginPassword(String loginPassword) {
-        this.loginPassword = loginPassword;
-    }
-
-    @Size(max = 255)
-    public String getPatronymic() {
-        return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    @Column(length = 4000)
-    @Size(max = 4000)
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
+    @Column(name = "creation_date")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    public Date getRegisteredDate() {
-        return registeredDate;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setRegisteredDate(Date registeredDate) {
-        this.registeredDate = registeredDate;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @Column(name = "active")
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @ManyToMany(cascade = {javax.persistence.CascadeType.MERGE, javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.REFRESH})
-    @JoinTable(name = Conf.TABLE_PREFIX + "auth_user_role")
+    @JoinTable(name = Conf.TABLE_PREFIX + "user_role")
     public Set<Role> getRoles() {
         return roles;
     }
@@ -135,14 +99,6 @@ public class User extends AEntity {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     @Override
@@ -159,43 +115,43 @@ public class User extends AEntity {
 
         final User other = (User) obj;
         return new EqualsBuilder().append(this.getId(), other.getId()).
-                append(this.getLoginName(), other.getLoginName()).
-                append(this.getFirstName(), other.getFirstName()).
-                append(this.getLastName(), other.getLastName()).
+                append(this.getEmail(), other.getEmail()).
+                append(this.getName(), other.getName()).
+                append(this.getSurname(), other.getSurname()).
                 isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(23, 57).append(getId()).
-                append(this.getLoginName()).
-                append(this.getFirstName()).
-                append(this.getLastName()).
+                append(this.getEmail()).
+                append(this.getName()).
+                append(this.getSurname()).
                 toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("id", getId()).
-                append("loginName", this.getLoginName()).
-                append("firstName", this.getFirstName()).
-                append("lastName", this.getLastName()).
+                append("email", this.getEmail()).
+                append("name", this.getName()).
+                append("surname", this.getSurname()).
                 toString();
     }
 
     @Transient
     public synchronized String getDisplayName() {
-        return getDisplayFullName() + " [" + loginName + "]";
+        return getDisplayFullName() + " [" + email + "]";
     }
 
     @Transient
     public synchronized String getDisplayFullName() {
-        return ((lastName == null) ? "" : lastName) + " " + ((firstName == null) ? "" : firstName) + " " + ((patronymic == null) ? "" : patronymic);
+        return ((surname == null) ? "" : surname) + " " + ((name == null) ? "" : name);
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auth_user_seq")
-    @SequenceGenerator(name = "auth_user_seq", sequenceName = Conf.TABLE_PREFIX + "auth_user_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = Conf.TABLE_PREFIX + "user_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;
@@ -206,7 +162,7 @@ public class User extends AEntity {
         this.id = id;
     }
 
-    public synchronized boolean hasRole(ERole role) {
+    public synchronized boolean hasRole(EnumRole role) {
         boolean hasRole = false;
         if (role != null && !getRoles().isEmpty()) {
             Iterator<Role> iterator = getRoles().iterator();

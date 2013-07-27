@@ -4,21 +4,16 @@
  */
 package com.food.webapp.controllers;
 
-import com.food.model.auth.ERole;
 import com.food.model.auth.User;
 import com.food.webapp.services.UserService;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,16 +40,14 @@ public class UserController {
         } else {
             username = obj.toString();
         }
-        User u = userService.getUserbyLogin(username);
+        User u = userService.getUserByEmail(username);
 
         return u;
     }
 
-
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     private String loginform(Map<String, Object> map, HttpSession session) {
-    return "index";
+        return "index";
     }
 
     @JsonIgnore
@@ -65,7 +58,7 @@ public class UserController {
             @RequestParam("login") String login,
             @RequestParam("password") String password) {
         // session.removeAttribute("user");
-         SecurityContextHolder.clearContext();
+        SecurityContextHolder.clearContext();
 //        User user = userService.getUserbyLogin(login);
 //
 //        if (user != null && user.getPassword().equals(userService.createHash(password))) {

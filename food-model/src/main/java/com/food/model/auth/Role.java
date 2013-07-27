@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -18,14 +19,16 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(name = Conf.TABLE_PREFIX + "auth_role")
+@Table(name = Conf.TABLE_PREFIX + "role")
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
 public class Role extends AEntity {
 
     private static final long serialVersionUID = 1340561732210722997L;
-    private ERole name;
+    private EnumRole name;
     private String description;
 
+    @Column(name = "description")
+    @Size(max = 255)
     public String getDescription() {
         return description;
     }
@@ -36,11 +39,11 @@ public class Role extends AEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    public ERole getName() {
+    public EnumRole getName() {
         return name;
     }
 
-    public void setName(ERole name) {
+    public void setName(EnumRole name) {
         this.name = name;
     }
 
@@ -77,8 +80,8 @@ public class Role extends AEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auth_role_seq")
-    @SequenceGenerator(name = "auth_role_seq", sequenceName = Conf.TABLE_PREFIX + "auth_role_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
+    @SequenceGenerator(name = "role_seq", sequenceName = Conf.TABLE_PREFIX + "role_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

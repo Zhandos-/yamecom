@@ -18,13 +18,11 @@ public interface UserDAO {
 
     public User getUser(Integer id);
 
-    public List<User> listUser();
+    public List<User> allUsers();
 
-    public User getUserbyLogin(String login);
+    public List<User> allActiveUsers();
 
-    public User getUserByUUID(String uuid);
-
-    public List<User> getUserByUserCode(String userCode);
+    public User getUserByEmail(String email);
 
     public Role getRoles(Integer id);
 }

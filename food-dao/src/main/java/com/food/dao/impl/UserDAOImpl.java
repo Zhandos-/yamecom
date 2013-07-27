@@ -35,27 +35,22 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> listUser() {
+    public List<User> allUsers() {
         return sessionFactory.getCurrentSession().createQuery("from User").list();
     }
 
     @Override
-    public User getUserbyLogin(String login) {
-        return (User) sessionFactory.getCurrentSession().createQuery("from User where userLogin = :login").setString("login", login).uniqueResult();
-    }
-
-    @Override
-    public User getUserByUUID(String uuid) {
-        return (User) sessionFactory.getCurrentSession().createQuery("from User where userGuid = :uuid").setString("uuid", uuid).uniqueResult();
-    }
-
-    @Override
-    public List<User> getUserByUserCode(String userCode) {
-        return sessionFactory.getCurrentSession().createQuery("from User where userCode like :userCode").setString("userCode", "%" + userCode + "%").list();
+    public List<User> allActiveUsers() {
+        return sessionFactory.getCurrentSession().createQuery("from User where active = true").list();
     }
 
     @Override
     public Role getRoles(Integer id) {
         return (Role) sessionFactory.getCurrentSession().createQuery("from Role where id=:id").setInteger("id", id).uniqueResult();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return (User) sessionFactory.getCurrentSession().createQuery("from User where email = :email").setString("email", email).uniqueResult();
     }
 }

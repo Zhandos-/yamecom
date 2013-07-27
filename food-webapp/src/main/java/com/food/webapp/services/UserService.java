@@ -21,11 +21,13 @@ public interface UserService {
 
     public User getUser(Integer id);
 
-    public List<User> listUser();
+    public List<User> allUsers();
+
+    public List<User> allActiveUsers();
 
     public String generateUserPassword(Integer length);
 
-    public User getUserbyLogin(String login);
+    public User getUserByEmail(String email);
 
     public String createHash(String password);
 
@@ -35,9 +37,7 @@ public interface UserService {
 
     public GrantedAuthority[] clientAuthority();
 
-    public GrantedAuthority[] employeeAuthority();
-
-    public User getUserByUUID(String uuid);
+    public GrantedAuthority[] consumerAuthority();
 
     public Collection<? extends GrantedAuthority> getAuthorities(Set<Role> rolesList);
 
