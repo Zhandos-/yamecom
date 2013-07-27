@@ -19,7 +19,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -92,27 +92,27 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public GrantedAuthority[] defaultAuthority() {
         GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new GrantedAuthorityImpl("ROLE_USER");
+        authorities[0] = new SimpleGrantedAuthority("ROLE_USER");
         return authorities;
     }
 
     @Override
     public GrantedAuthority[] employeeAuthority() {
         GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new GrantedAuthorityImpl("ROLE_EMPLOYEE");
+        authorities[0] = new SimpleGrantedAuthority("ROLE_EMPLOYEE");
         return authorities;
     }
 
     @Override
     public GrantedAuthority[] adminAuthority() {
         GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new GrantedAuthorityImpl("ROLE_ADMIN");
+        authorities[0] = new SimpleGrantedAuthority("ROLE_ADMIN");
         return authorities;
     }
 
     public GrantedAuthority[] clientAuthority() {
         GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new GrantedAuthorityImpl("ROLE_CLIENT");
+        authorities[0] = new SimpleGrantedAuthority("ROLE_CLIENT");
         return authorities;
     }
 
@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for (String role : roles) {
-            authorities.add(new GrantedAuthorityImpl(role));
+            authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
     }
