@@ -50,88 +50,11 @@ public class UserController {
         return u;
     }
 
-    // GEt
-    @RequestMapping("/spravka")
-    private String spravka(Map<String, Object> map) {
-        return "spravka";
-    }
 
-    @RequestMapping("/login/register")
-    private String loadForm(Map<String, Object> map) {
-        System.out.println("1");
-        map.put("newuser", new User());
-        return "login/register";
-    }
 
-    //POST SAVE NEW USER
-    @RequestMapping(value = "/login/register/reg", method = RequestMethod.POST)
-    private String register(@ModelAttribute(value = "newuser") @Valid User user, BindingResult result) {
-
-        if (result.hasErrors()) {
-
-            return "/login/register/reg";
-
-        } else {
-            // пароль  в MD5
-            user.setLoginPassword(userService.createHash(user.getLoginPassword()));
-//            // Задаем роль
-//            if (user.getUserRole() == 1) {
-//                user.setRole(userService.getRoles(1));
-//            } else if (user.getUserRole() == 2) {
-//                user.setRole(userService.getRoles(2));
-//            } else if (user.getUserRole() == 3) {
-//                user.setRole(userService.getRoles(3));
-//            }
-            // Сохраняем    
-            userService.addOrUpdateUser(user);
-        }
-
-        return "redirect:/index";
-    }
-    // Admin all user
-
-    @RequestMapping("/admin/usershow")
-    private String listUsers(Map<String, Object> map) {
-        map.put("listUsers", userService.listUser());
-        return "/admin/usershow";
-    }
-
-    @RequestMapping("/admin/useredit/edit/{id}")
-    public String getEditUser(Map<String, Object> map, @PathVariable("id") Integer id) {
-        System.out.println("3");
-        map.put("user", userService.getUser(id));
-        return "admin/useredit";
-    }
-
-    @RequestMapping(value = "/admin/useredit/edit", method = RequestMethod.POST)
-    private String editUser(@ModelAttribute(value = "user") User user, BindingResult result) {
-        if (!result.hasErrors()) {
-            userService.addOrUpdateUser(user);
-            return "redirect:../usershow";
-        } else {
-        }
-        return "redirect:../useredit";
-    }
-
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     private String loginform(Map<String, Object> map, HttpSession session) {
-//        session.removeAttribute("user");
-//        SecurityContextHolder.clearContext();
-        User user = getCurrentUser();
-        if (user == null) {
-            return "login";
-        } else {
-            if (user.getRoles().contains(ERole.ROLE_CLIENT)) {
-                return "redirect:/clients/orderlist";
-            } else {
-//                if (user.getRole().getId() == 3) {
-//                    return "redirect:/admin/orderlist";
-//                } else {
-//                    return "redirect:/employers/orderlist";
-//                }
-                return null;
-            }
-        }
+    return "index";
     }
 
     @JsonIgnore
@@ -142,7 +65,7 @@ public class UserController {
             @RequestParam("login") String login,
             @RequestParam("password") String password) {
         // session.removeAttribute("user");
-        // SecurityContextHolder.clearContext();
+         SecurityContextHolder.clearContext();
 //        User user = userService.getUserbyLogin(login);
 //
 //        if (user != null && user.getPassword().equals(userService.createHash(password))) {
