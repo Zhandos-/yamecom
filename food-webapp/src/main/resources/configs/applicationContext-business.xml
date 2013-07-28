@@ -66,6 +66,8 @@
         <property name="packagesToScan">
             <list>
                 <value>com.food.model.auth</value>
+                <value>com.food.model.location</value>
+                <value>com.food.model.restaurant</value>
             </list>
         </property>
         <property name="hibernateProperties">
