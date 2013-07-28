@@ -66,7 +66,7 @@ public class User extends AEntity {
     }
 
     @Column(name = "creation_date")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreationDate() {
         return creationDate;
     }
