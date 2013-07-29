@@ -28,4 +28,10 @@ public class RoleDAOImpl implements RoleDAO {
     public Role getRoleByName(EnumRole name) {
         return (Role) sessionFactory.getCurrentSession().createQuery("from Role where name = :name").setParameter("name", name).uniqueResult();
     }
+
+    @Override
+    public long save(Role role) {
+        sessionFactory.getCurrentSession().saveOrUpdate(role);
+        return role.getId();
+    }
 }
