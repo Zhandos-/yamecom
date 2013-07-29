@@ -4,8 +4,8 @@
  */
 package com.food.webapp.services;
 
-import com.food.model.auth.Role;
-import com.food.model.auth.User;
+import com.food.model.user.Role;
+import com.food.model.user.User;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;

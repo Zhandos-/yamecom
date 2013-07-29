@@ -2,20 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.food.model.location;
+package com.food.model.restaurant;
 
+import com.food.model.enums.EnumRestaurantType;
 import com.food.model.AEntity;
 import com.food.model.Conf;
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,31 +25,20 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * @author daniyar.artykov
  */
 @Entity
-@Table(name = Conf.TABLE_PREFIX + "city")
+@Table(name = Conf.TABLE_PREFIX + "restaurant_type")
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-public class City extends AEntity {
+public class RestaurantType extends AEntity {
 
-    private static final long serialVersionUID = 6008028763240806892L;
-    private String name;
-    private Region region;
-    private String zipCode;
+    private static final long serialVersionUID = 167153939075005557L;
+    private EnumRestaurantType type;
+    private String description;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "city_seq")
-    @SequenceGenerator(name = "city_seq", sequenceName = Conf.TABLE_PREFIX + "city_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurant_type_seq")
+    @SequenceGenerator(name = "restaurant_type_seq", sequenceName = Conf.TABLE_PREFIX + "restaurant_type_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;
-    }
-
-    @Column(name = "city_name")
-    @Size(max = 1000)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
@@ -56,23 +46,23 @@ public class City extends AEntity {
         this.id = id;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    public Region getRegion() {
-        return region;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    public EnumRestaurantType getType() {
+        return type;
     }
 
-    public void setRegion(Region region) {
-        this.region = region;
+    public void setType(EnumRestaurantType type) {
+        this.type = type;
     }
 
-    @Column(name = "zip_code")
-    @Size(max = 255)
-    public String getZipCode() {
-        return zipCode;
+    @Basic(optional = true)
+    public String getDescription() {
+        return description;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -85,10 +75,10 @@ public class City extends AEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof City)) {
+        if (!(object instanceof RestaurantType)) {
             return false;
         }
-        City other = (City) object;
+        RestaurantType other = (RestaurantType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,6 +87,6 @@ public class City extends AEntity {
 
     @Override
     public String toString() {
-        return "com.food.model.location.City[ id=" + id + " ]";
+        return "com.food.model.restaurant.RestaurantType[ id=" + id + " ]";
     }
 }

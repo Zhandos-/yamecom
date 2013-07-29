@@ -1,5 +1,6 @@
-package com.food.model.auth;
+package com.food.model.user;
 
+import com.food.model.enums.EnumRole;
 import com.food.model.AEntity;
 import com.food.model.Conf;
 import javax.persistence.Column;

@@ -1,7 +1,12 @@
-package com.food.model.auth;
+package com.food.model.user;
 
+import com.food.model.enums.EnumRole;
 import com.food.model.AEntity;
 import com.food.model.Conf;
+import com.food.model.additional.Comment;
+import com.food.model.additional.Rating;
+import com.food.model.food.Order;
+import com.food.model.restaurant.Restaurant;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -23,6 +28,10 @@ public class User extends AEntity {
     private String password;
     private Date creationDate;
     private boolean active = true;
+    private List<Comment> comments;
+    private List<Rating> ratings;
+    private List<Restaurant> restaurants;
+    private List<Order> orders;
     private Set<Role> roles = new HashSet<Role>();
 
     @Column(name = "name")
@@ -88,6 +97,45 @@ public class User extends AEntity {
     @JoinTable(name = Conf.TABLE_PREFIX + "user_role")
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    @Basic(optional = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Basic(optional = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    @Basic(optional = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(List<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Transient

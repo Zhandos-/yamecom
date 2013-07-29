@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.food.model.location;
+package com.food.model.data;
 
 import com.food.model.AEntity;
 import com.food.model.Conf;
-import com.food.model.auth.User;
+import com.food.model.user.User;
 import com.food.model.restaurant.Restaurant;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -108,6 +108,6 @@ public class Address extends AEntity {
 
     @Override
     public String toString() {
-        return "com.food.model.location.Address[ id=" + id + " ]";
+        return "com.food.model.data.Address[ id=" + id + " ]";
     }
 }

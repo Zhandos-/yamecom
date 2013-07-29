@@ -65,9 +65,11 @@
         <property name="dataSource" ref="dataSourcePostgres" />
         <property name="packagesToScan">
             <list>
-                <value>com.food.model.auth</value>
-                <value>com.food.model.location</value>
+                <value>com.food.model.additional</value>
+                <value>com.food.model.data</value>
+                <value>com.food.model.food</value>
                 <value>com.food.model.restaurant</value>
+                <value>com.food.model.user</value>
             </list>
         </property>
         <property name="hibernateProperties">
