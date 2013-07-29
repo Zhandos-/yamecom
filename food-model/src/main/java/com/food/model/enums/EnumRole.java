@@ -1,4 +1,4 @@
-package com.food.model.auth;
+package com.food.model.enums;
 
 public enum EnumRole {
 

@@ -5,8 +5,8 @@
 package com.food.dao.impl;
 
 import com.food.dao.RoleDAO;
-import com.food.model.auth.EnumRole;
-import com.food.model.auth.Role;
+import com.food.model.enums.EnumRole;
+import com.food.model.user.Role;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

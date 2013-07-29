@@ -5,8 +5,8 @@
 package com.food.dao.impl;
 
 import com.food.dao.UserDAO;
-import com.food.model.auth.Role;
-import com.food.model.auth.User;
+import com.food.model.user.Role;
+import com.food.model.user.User;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

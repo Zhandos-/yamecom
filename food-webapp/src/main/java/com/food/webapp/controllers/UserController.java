@@ -4,7 +4,7 @@
  */
 package com.food.webapp.controllers;
 
-import com.food.model.auth.User;
+import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import java.util.Map;
 import javax.servlet.http.HttpSession;

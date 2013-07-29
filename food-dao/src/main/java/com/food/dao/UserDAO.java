@@ -4,8 +4,8 @@
  */
 package com.food.dao;
 
-import com.food.model.auth.Role;
-import com.food.model.auth.User;
+import com.food.model.user.Role;
+import com.food.model.user.User;
 import java.util.List;
 
 /**

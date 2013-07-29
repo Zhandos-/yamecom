@@ -5,9 +5,9 @@
 package com.food.webapp.services.impl;
 
 import com.food.dao.UserDAO;
-import com.food.model.auth.EnumRole;
-import com.food.model.auth.Role;
-import com.food.model.auth.User;
+import com.food.model.enums.EnumRole;
+import com.food.model.user.Role;
+import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import java.math.BigInteger;
 import java.security.MessageDigest;

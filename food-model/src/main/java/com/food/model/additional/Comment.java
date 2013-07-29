@@ -2,12 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.food.model.restaurant;
+package com.food.model.additional;
 
+import com.food.model.restaurant.*;
 import com.food.model.AEntity;
 import com.food.model.Conf;
 import com.food.model.user.User;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,19 +31,20 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * @author daniyar.artykov
  */
 @Entity
-@Table(name = Conf.TABLE_PREFIX + "restaurant")
+@Table(name = Conf.TABLE_PREFIX + "comments")
 @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL)
-public class Restaurant extends AEntity {
+public class Comment extends AEntity {
 
-    private static final long serialVersionUID = 369037569587867117L;
-    private String name;
-    private String about;
-    private Date creationDate;
+    private static final long serialVersionUID = 3945208737215452771L;
     private User user;
+    private Restaurant restaurant;
+    private Date creationDate;
+    private Comment parent;
+    private String text;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurant_seq")
-    @SequenceGenerator(name = "restaurant_seq", sequenceName = Conf.TABLE_PREFIX + "restaurant_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_seq")
+    @SequenceGenerator(name = "comments_seq", sequenceName = Conf.TABLE_PREFIX + "comments_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;
@@ -51,24 +55,24 @@ public class Restaurant extends AEntity {
         this.id = id;
     }
 
-    @Column(name = "name")
-    @Size(max = 255)
-    public String getName() {
-        return name;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @Basic(optional = false)
+    public User getUser() {
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    @Column(name = "about")
-    @Size(max = 4000)
-    public String getAbout() {
-        return about;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Basic(optional = false)
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setAbout(String about) {
-        this.about = about;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     @Column(name = "creation_date")
@@ -81,13 +85,23 @@ public class Restaurant extends AEntity {
         this.creationDate = creationDate;
     }
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    public User getUser() {
-        return user;
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    public Comment getParent() {
+        return parent;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setParent(Comment parent) {
+        this.parent = parent;
+    }
+
+    @Column(nullable = false, name = "text")
+    @Size(max = 4000)
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
@@ -100,10 +114,10 @@ public class Restaurant extends AEntity {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Restaurant)) {
+        if (!(object instanceof RestaurantDetails)) {
             return false;
         }
-        Restaurant other = (Restaurant) object;
+        Comment other = (Comment) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -112,6 +126,6 @@ public class Restaurant extends AEntity {
 
     @Override
     public String toString() {
-        return "com.food.model.restaurant.Restaurant[ id=" + id + " ]";
+        return "com.food.model.additional.Comment[ id=" + id + " ]";
     }
 }
