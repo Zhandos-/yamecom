@@ -25,4 +25,9 @@ public interface UserDAO {
     public User getUserByEmail(String email);
 
     public Role getRoles(Integer id);
+    
+    public boolean login(String mail,String password);
+    
+    public long save(User user);
+    
 }

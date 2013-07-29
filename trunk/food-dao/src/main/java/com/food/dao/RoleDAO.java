@@ -16,4 +16,6 @@ public interface RoleDAO {
     public Role getRoleById(Long id);
 
     public Role getRoleByName(EnumRole name);
+    
+    public long save(Role role);
 }

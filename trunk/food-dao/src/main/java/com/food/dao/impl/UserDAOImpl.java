@@ -53,4 +53,23 @@ public class UserDAOImpl implements UserDAO {
     public User getUserByEmail(String email) {
         return (User) sessionFactory.getCurrentSession().createQuery("from User where email = :email").setString("email", email).uniqueResult();
     }
+
+    @Override
+    public boolean login(String mail, String password) {
+       long count=((Number) sessionFactory.getCurrentSession()
+         .createQuery("select COUNT(*) from User where email = :email and password=:password") 
+         .setString("email", mail)
+         .setString("password", password)
+         .uniqueResult()).longValue();
+        if(count>0)
+        return true;
+        else
+        return false;
+    }
+
+    @Override
+    public long save(User user) {
+      sessionFactory.getCurrentSession().saveOrUpdate(user);
+      return user.getId();
+    }
 }
