@@ -38,9 +38,7 @@
     </filter>
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>
-            org.springframework.web.filter.DelegatingFilterProxy
-        </filter-class>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
     <!-- Базовый сервлет, обрабатывает все запросы к приложению -->
     <servlet>
@@ -57,9 +55,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>/index</welcome-file>
