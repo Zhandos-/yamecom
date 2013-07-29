@@ -28,14 +28,7 @@
             </activation>
             <id>test</id>
             <properties>
-                <db.driverClassName>org.postgresql.Driver</db.driverClassName>
-                <db.url>jdbc:postgresql://localhost:5432/food</db.url>
-                <db.schemaName>food</db.schemaName>
-                <db.username>postgres</db.username>
-                <db.password>postgres1</db.password>
-                <db.showsql>true</db.showsql>
-                <db.hbmddl>update</db.hbmddl>
-                <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
+                <filter.filename>test.properties</filter.filename>
             </properties>
         </profile>
         
@@ -45,14 +38,7 @@
             </activation>
             <id>daniyar</id>
             <properties>
-                <db.driverClassName>org.postgresql.Driver</db.driverClassName>
-                <db.url>jdbc:postgresql://localhost:5432/food</db.url>
-                <db.schemaName>food</db.schemaName>
-                <db.username>postgres</db.username>
-                <db.password>postgres1</db.password>
-                <db.showsql>true</db.showsql>
-                <db.hbmddl>update</db.hbmddl>
-                <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
+                <filter.filename>daniyar.properties</filter.filename>
             </properties>
         </profile>
         
@@ -62,14 +48,7 @@
             </activation>
             <id>zhandos</id>
             <properties>
-                <db.driverClassName>org.postgresql.Driver</db.driverClassName>
-                <db.url>jdbc:postgresql://localhost:5432/food</db.url>
-                <db.schemaName>food</db.schemaName>
-                <db.username>postgres</db.username>
-                <db.password>password</db.password>
-                <db.showsql>true</db.showsql>
-                <db.hbmddl>update</db.hbmddl>
-                <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
+                <filter.filename>zhandos.properties</filter.filename>
             </properties>
         </profile>
         
@@ -79,14 +58,7 @@
             </activation>
             <id>production</id>
             <properties>
-                <db.driverClassName>org.postgresql.Driver</db.driverClassName>
-                <db.url>jdbc:postgresql://localhost:5432/food</db.url>
-                <db.schemaName>food</db.schemaName>
-                <db.username>postgres</db.username>
-                <db.password>postgres1</db.password>
-                <db.showsql>false</db.showsql>
-                <db.hbmddl>validate</db.hbmddl>
-                <db.dialect>org.hibernate.dialect.PostgreSQLDialect</db.dialect>
+                <filter.filename>production.properties</filter.filename>
             </properties>
         </profile>
     </profiles>
@@ -288,6 +260,7 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
             <type>jar</type>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -310,8 +283,18 @@
             <artifactId>aopalliance</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
+        <finalName>food</finalName>
+        <filters>
+            <filter>${basedir}/src/main/resources/configs/profiles/${filter.filename}</filter>
+        </filters>
         <resources>
             <resource>                
                 <directory>src/main/resources</directory>
@@ -333,6 +316,5 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>food</finalName>
     </build>
 </project>
