@@ -4,6 +4,7 @@
  */
 package com.food.webapp.services.impl;
 
+import com.food.dao.RoleDAO;
 import com.food.dao.UserDAO;
 import com.food.model.enums.EnumRole;
 import com.food.model.user.Role;
@@ -14,26 +15,49 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ *
+ * @author TWINS
+ */
 @Service("userService")
 @Transactional("postgresT")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
-    UserDAO userDAO;
-
+   private UserDAO userDAO;
+   @Autowired
+   private RoleDAO roleDAO;
+    public boolean  authenticate(User user)
+    {
+         SecurityContextHolder.clearContext();
+        User user2 = userDAO.getUserByEmail(user.getEmail());
+         String password=createHash(user.getPassword());
+         
+        if (user2 != null && user.getPassword().equals(createHash(password))) {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user2, user2.getPassword(),getAuthorities(user2.getRoles()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+         return false;
+    }
+    
+    
     @Override
     public void addOrUpdateUser(User user) {
         userDAO.addOrUpdateUser(user);
@@ -90,33 +114,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
     }
 
-    @Override
-    public GrantedAuthority[] defaultAuthority() {
-        GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new SimpleGrantedAuthority(EnumRole.ROLE_ANONYMOUS.toString());
-        return authorities;
-    }
+   
 
-    @Override
-    public GrantedAuthority[] consumerAuthority() {
-        GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new SimpleGrantedAuthority(EnumRole.ROLE_CONSUMER.toString());
-        return authorities;
-    }
-
-    @Override
-    public GrantedAuthority[] adminAuthority() {
-        GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new SimpleGrantedAuthority(EnumRole.ROLE_ADMIN.toString());
-        return authorities;
-    }
-
-    @Override
-    public GrantedAuthority[] clientAuthority() {
-        GrantedAuthority[] authorities = new GrantedAuthority[1];
-        authorities[0] = new SimpleGrantedAuthority(EnumRole.ROLE_CLIENT.toString());
-        return authorities;
-    }
+   
 
     @Override
     public User getUserByEmail(String email) {
@@ -153,5 +153,29 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public List<User> allActiveUsers() {
         return userDAO.allActiveUsers();
+    }
+
+    @Override
+    public boolean login(User user) {
+        String mail=user.getEmail();
+        String password=createHash(user.getPassword());
+        return userDAO.login(mail, password);
+    }
+
+    @Override
+    public long save(User user) {
+        user.setPassword(createHash(user.getPassword()));
+        Set<Role> roles=new HashSet<Role>();
+        Role role=roleDAO.getRoleByName(EnumRole.ROLE_CLIENT);
+        if(role==null)
+        {
+            role=new Role();
+            role.setDescription("для клиентов");
+            role.setName(EnumRole.ROLE_CLIENT);
+            roleDAO.save(role);
+        }
+        roles.add(role);
+        user.setRoles(roles);
+        return userDAO.save(user);
     }
 }

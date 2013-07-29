@@ -14,8 +14,8 @@
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/clients/**" access="hasAnyRole('ROLE_CLIENT')" />
         <intercept-url pattern="/employers/**" access="hasAnyRole('ROLE_EMPLOYEE')" />
-        <form-login login-page="/index" default-target-url="/index" authentication-failure-url="/index" />
-        <logout logout-url="/logout" logout-success-url="/index" />
+        <form-login login-page="/login" default-target-url="/" authentication-failure-url="/login" />
+        <logout logout-url="/logout" logout-success-url="/" />
 		              
         <remember-me />
     </http>
