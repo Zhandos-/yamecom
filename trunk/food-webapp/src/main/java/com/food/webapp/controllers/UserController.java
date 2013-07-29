@@ -7,8 +7,6 @@ package com.food.webapp.controllers;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,58 +43,32 @@ public class UserController {
         return u;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    private String loginform(Map<String, Object> map, HttpSession session) {
+    @RequestMapping(value = "/")
+    private String index() {
         return "index";
     }
-
-    @JsonIgnore
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    private String loginform(Map<String, Object> map,
-            HttpSession session,
-            @RequestParam(value = "rememberme", required = false) boolean remember,
-            @RequestParam("login") String login,
-            @RequestParam("password") String password) {
-        // session.removeAttribute("user");
-        SecurityContextHolder.clearContext();
-//        User user = userService.getUserbyLogin(login);
-//
-//        if (user != null && user.getPassword().equals(userService.createHash(password))) {
-//
-//            Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), userService.getAuthorities(user.getRole()));
-//            session.setAttribute("user", ((User) user));
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//            if (remember) {
-//                session.setMaxInactiveInterval(2880);
-//            }
-//            if (user.getUserRole() == 1) {
-//                return "redirect:/clients/orderlist";
-//            } else {
-//                if (user.getUserRole() == 3) {
-//                    return "redirect:/admin/orderlist";
-//                } else {
-//                    return "redirect:/employers/orderlist";
-//                }
-//            }
-//
-//
-//        } else {
-//            map.put("login_error", "Not user");
-//        }
-        User user = getCurrentUser();
-        if (user == null) {
-            return "login";
-        } else {
-//            if (user.getUserRole() == 1) {
-//                return "redirect:/clients/orderlist";
-//            } else {
-//                if (user.getRole().getId() == 3) {
-//                    return "redirect:/admin/orderlist";
-//                } else {
-//                    return "redirect:/employers/orderlist";
-//                }
-//            }
-            return null;
-        }
+     
+    
+        @RequestMapping(value = "/login")
+    private String login(  Map<String, Object> map ) {
+        User user=new User();   
+        map.put("user", user);
+        return "login";
     }
+        
+        @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    private String registration(  Map<String, Object> map ) {
+        User user=new User();   
+        map.put("user", user);
+        return "registration";
+    }    
+        
+ 
+        
+           @RequestMapping(value = "/save", method = RequestMethod.POST)
+    private String save(User user) {
+        userService.save(user);
+        return "redirect:/";
+    }       
+        
 }

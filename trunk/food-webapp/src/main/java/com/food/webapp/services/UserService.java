@@ -31,15 +31,11 @@ public interface UserService {
 
     public String createHash(String password);
 
-    public GrantedAuthority[] defaultAuthority();
-
-    public GrantedAuthority[] adminAuthority();
-
-    public GrantedAuthority[] clientAuthority();
-
-    public GrantedAuthority[] consumerAuthority();
-
     public Collection<? extends GrantedAuthority> getAuthorities(Set<Role> rolesList);
 
     public Role getRoles(Integer id);
+    
+    public boolean login(User user);
+    
+    public long save(User user);
 }
