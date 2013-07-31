@@ -1,4 +1,3 @@
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
@@ -24,7 +23,7 @@
     <profiles>
         <profile>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <id>test</id>
             <properties>
@@ -44,7 +43,7 @@
         
         <profile>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <id>zhandos</id>
             <properties>
@@ -287,29 +286,29 @@
         
 
             
-                   <dependency>
-     <groupId>javax.servlet</groupId>
-     <artifactId>jstl</artifactId>
-     <version>1.2</version>
-     <scope>provided</scope>
- </dependency>
- <dependency>
-	<groupId>javax.el</groupId>
-	<artifactId>javax.el-api</artifactId>
-	<version>2.2.1</version>
-</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>2.2.1</version>
+        </dependency>
             
- <dependency>
-	<groupId>javax.servlet.jsp</groupId>
-	<artifactId>javax.servlet.jsp-api</artifactId>
-	<version>2.2.1</version>
-        <scope>provided</scope>
-</dependency>
-<dependency>
-	<groupId>org.apache.tiles</groupId>
-	<artifactId>tiles-jsp</artifactId>
-	<version>3.0.1</version>
-</dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-jsp</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
     </dependencies>
     <build>
