@@ -12,6 +12,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <application.version>0.0.1-SNAPSHOT</application.version>
+        <spring.version>3.1.1.RELEASE</spring.version>
+        <spring.security.version>3.1.0.RELEASE</spring.security.version>
+        <jsf.version>2.1.0-b03</jsf.version>
+        <hibernate.version>4.2.3.Final</hibernate.version>
     </properties>
   
     <profiles>
