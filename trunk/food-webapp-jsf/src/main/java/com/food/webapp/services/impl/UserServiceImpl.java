@@ -41,23 +41,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
-   private UserDAO userDAO;
-   @Autowired
-   private RoleDAO roleDAO;
-    public boolean  authenticate(User user)
-    {
-         SecurityContextHolder.clearContext();
+    private UserDAO userDAO;
+    @Autowired
+    private RoleDAO roleDAO;
+
+    public boolean authenticate(User user) {
+        SecurityContextHolder.clearContext();
         User user2 = userDAO.getUserByEmail(user.getEmail());
-         String password=createHash(user.getPassword());
-         
+        String password = createHash(user.getPassword());
+
         if (user2 != null && user.getPassword().equals(createHash(password))) {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user2, user2.getPassword(),getAuthorities(user2.getRoles()));
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user2, user2.getPassword(), getAuthorities(user2.getRoles()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-         return false;
+        return false;
     }
-    
-    
+
     @Override
     public void addOrUpdateUser(User user) {
         userDAO.addOrUpdateUser(user);
@@ -114,10 +113,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
     }
 
-   
-
-   
-
     @Override
     public User getUserByEmail(String email) {
         return userDAO.getUserByEmail(email);
@@ -157,19 +152,18 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public boolean login(User user) {
-        String mail=user.getEmail();
-        String password=createHash(user.getPassword());
+        String mail = user.getEmail();
+        String password = createHash(user.getPassword());
         return userDAO.login(mail, password);
     }
 
     @Override
     public long save(User user) {
         user.setPassword(createHash(user.getPassword()));
-        Set<Role> roles=new HashSet<Role>();
-        Role role=roleDAO.getRoleByName(EnumRole.ROLE_CLIENT);
-        if(role==null)
-        {
-            role=new Role();
+        Set<Role> roles = new HashSet<Role>();
+        Role role = roleDAO.getRoleByName(EnumRole.ROLE_CLIENT);
+        if (role == null) {
+            role = new Role();
             role.setDescription("для клиентов");
             role.setName(EnumRole.ROLE_CLIENT);
             roleDAO.save(role);

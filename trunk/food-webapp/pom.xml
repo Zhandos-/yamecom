@@ -269,7 +269,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
-            <version>4.1.12.Final</version>
+            <version>${hibernate.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -282,9 +282,6 @@
             <artifactId>aopalliance</artifactId>
             <version>1.0</version>
         </dependency>
-
-        
-
             
         <dependency>
             <groupId>javax.servlet</groupId>

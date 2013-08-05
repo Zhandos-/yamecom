@@ -58,13 +58,8 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>3.1.1.RELEASE</version>
+            <version>${spring.version}</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>4.1.2.Final</version>
         </dependency>
     </dependencies>   
 </project>
