@@ -17,9 +17,9 @@ import org.springframework.security.core.GrantedAuthority;
  */
 public interface UserService {
 
-    public void addOrUpdateUser(User user);
-
-    public User getUser(Integer id);
+    public User getCurrentUser();
+    
+    public User getUser(Long id);
 
     public List<User> allUsers();
 
@@ -38,4 +38,6 @@ public interface UserService {
     public boolean login(User user);
     
     public long save(User user);
+    
+    public void registration(User user);
 }
