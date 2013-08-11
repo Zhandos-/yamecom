@@ -12,11 +12,9 @@ import java.util.List;
  *
  * @author daniyar.artykov
  */
-public interface UserDAO {
+public interface UserDAO extends BaseDAO<User, Long> {
 
-    public void addOrUpdateUser(User user);
-
-    public User getUser(Integer id);
+    public User getUser(Long id);
 
     public List<User> allUsers();
 
@@ -28,6 +26,5 @@ public interface UserDAO {
     
     public boolean login(String mail,String password);
     
-    public long save(User user);
     
 }
