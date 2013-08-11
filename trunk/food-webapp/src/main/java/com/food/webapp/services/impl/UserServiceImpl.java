@@ -47,24 +47,37 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public boolean  authenticate(User user)
     {
          SecurityContextHolder.clearContext();
-        User user2 = userDAO.getUserByEmail(user.getEmail());
+        User user2 = getUserByEmail(user.getEmail());
          String password=createHash(user.getPassword());
          
-        if (user2 != null && user.getPassword().equals(createHash(password))) {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user2, user2.getPassword(),getAuthorities(user2.getRoles()));
+        if (user2!= null) {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user2.getEmail(), user.getPassword(),getAuthorities(user2.getRoles()));
+//            authentication.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
          return false;
     }
     
+    @Override
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (null == auth) {
+            // throw new NotFndException("");
+        }
+        Object obj = auth.getPrincipal();
+        String username = "";
+        if (obj instanceof UserDetails) {
+            username = ((UserDetails) obj).getUsername();
+        } else {
+            username = obj.toString();
+        }
+        User u = getUserByEmail(username);
+
+        return u;
+    }
     
     @Override
-    public void addOrUpdateUser(User user) {
-        userDAO.addOrUpdateUser(user);
-    }
-
-    @Override
-    public User getUser(Integer id) {
+    public User getUser(Long id) {
         return userDAO.getUser(id);
     }
 
@@ -174,8 +187,24 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             role.setName(EnumRole.ROLE_CLIENT);
             roleDAO.save(role);
         }
+        if(user.getId()==null)
+        {
         roles.add(role);
         user.setRoles(roles);
-        return userDAO.save(user);
+        return userDAO.save(user).getId();
+        }
+        else
+        {
+        roles.add(role);
+        user.setRoles(roles);    
+        return userDAO.update(user).getId();
+        }
+        
+    }
+
+    @Override
+    public void registration(User user) {
+        save(user);
+        authenticate(user);
     }
 }

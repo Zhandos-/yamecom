@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd       
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+
+    <!-- Включаем опцию использования конфигурационных аннотаций (@Annotation-based configuration)-->
+    <context:annotation-config />
+    <!-- Определяем папки, в которых будем автоматически искать бины-компоненты (@Component, @Service)  -->
+    <!--<context:component-scan base-package="com.food.dao" />
+    <context:component-scan base-package="com.food.webapp.services" />-->
+    <context:component-scan base-package="com.food.dao">
+        <context:include-filter type="aspectj" expression="com.food.dao.*" />
+    </context:component-scan>
+    <context:component-scan base-package="com.food.webapp">
+        <context:include-filter type="aspectj" expression="com.food.webapp.*" />
+    </context:component-scan>
+    
+    <!-- Настраивает управление транзакциями с помощью аннотации @Transactional -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- Менеджер транзакций -->
+    <bean id="transactionManager1"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <qualifier value="postgresT" />
+        <property name="sessionFactory" ref="sessionFactoryPostgres" />
+    </bean>
+    
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
+       <bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="/WEB-INF/zhandos.properties" />
+    <!-- Непосредственно бин dataSource -->
+    <bean id="dataSourcePostgres"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="${db.driverClassName}" 
+          p:url="${db.url}"
+          p:username="${db.username}" 
+          p:password="${db.password}" />
+    
+    <!-- Настройки фабрики сессий Хибернейта -->
+    <bean id="sessionFactoryPostgres"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourcePostgres" />
+        <property name="packagesToScan">
+            <list>
+                <value>com.food.model.additional</value>
+                <value>com.food.model.data</value>
+                <value>com.food.model.food</value>
+                <value>com.food.model.restaurant</value>
+                <value>com.food.model.user</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">${db.hbmddl}</prop>
+                <prop key="hibernate.default_schema">${db.schemaName}</prop>
+                <prop key="hibernate.show_sql">${db.showsql}</prop>
+                <prop key="hibernate.dialect">${db.dialect}</prop>
+                <prop key="hibernate.connection.charSet">UTF-8</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="javax.persistence.validation.mode">none</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- Configure the multipart resolver -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="100000"/> 
+    </bean>
+    
+    <!-- Разрешаем использование аннотаций Spring MVC (то есть @Controller и.т.д) -->
+    <mvc:annotation-driven />
+    <!-- Всю статику (изображения, css-файлы, javascript) положим в папку webapp/resources 
+    и замаппим их на урл вида /resources/** -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
+    <!-- Отображение видов на jsp-файлы, лежащие в папке /WEB-INF/views -->
+    <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <beans:property name="prefix" value="/WEB-INF/views/" />
+        <beans:property name="suffix" value=".jsp" />
+    </beans:bean>
+    <!--  БИН Валидатор -->
+    <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+    <mvc:interceptors>
+        <!-- Changes the locale when a 'locale' request parameter is sent; e.g. /?locale=de -->
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" >
+            <beans:property name="paramName" value="lang" />
+        </beans:bean>
+        <beans:bean name="openSessionInViewInterceptor" class="org.springframework.orm.hibernate4.support.OpenSessionInViewInterceptor">
+            <beans:property name="sessionFactory" ref="sessionFactoryPostgres" />
+        </beans:bean>
+    </mvc:interceptors>
+</beans>
