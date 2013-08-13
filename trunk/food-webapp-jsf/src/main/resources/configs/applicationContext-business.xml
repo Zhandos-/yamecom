@@ -92,7 +92,7 @@
     <beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <beans:property name="cache" value="false" />
         <beans:property name="viewClass" value="org.springframework.faces.mvc.JsfView" />
-        <beans:property name="prefix" value="/" />
+        <beans:property name="prefix" value="/WEB-INF/views/" />
         <beans:property name="suffix" value=".xhtml" />
     </beans:bean>
 <!--    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
