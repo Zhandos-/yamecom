@@ -7,6 +7,7 @@ package com.food.webapp.controllers;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import java.util.Map;
+import javax.faces.bean.ManagedProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,16 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
+//    @ManagedProperty(value="#{user}")
+//    User user;
     @RequestMapping(value = "/")
-    private String index() {
+    private String index(Map<String, Object> map) {
+ 
+        User u=new User();
+        u.setName("Zhandos");
+        u.setSurname("Dauyl");
+        u.setEmail("j@h.kz");
+        map.put("user", u);
         return "index";
     }
      
