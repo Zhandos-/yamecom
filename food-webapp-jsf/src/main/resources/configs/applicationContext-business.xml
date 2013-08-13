@@ -89,7 +89,14 @@
     <!-- Всю статику (изображения, css-файлы, javascript) положим в папку webapp/resources 
     и замаппим их на урл вида /resources/** -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
-
+    <beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="cache" value="false" />
+        <beans:property name="viewClass" value="org.springframework.faces.mvc.JsfView" />
+        <beans:property name="prefix" value="/" />
+        <beans:property name="suffix" value=".xhtml" />
+    </beans:bean>
+<!--    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />-->
     <!--  БИН Валидатор -->
     <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
