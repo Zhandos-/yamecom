@@ -12,15 +12,15 @@
         <title>JSP Page</title>
     </head>
     <body >
-         <center>
+    <center>
         <h1>Профиль:</h1>
-    <form:form  method="post" id="form" action="${pageContext.request.contextPath}/save" commandName="user" >
-        <form:hidden path="id"  />
-        <form:input path="name"  id="name" placeholder="Имя" /><br/>
-        <form:input path="surname"  id="surname" placeholder="Фамилия" /><br/>
-        <form:input path="email"  id="email" placeholder="Email" /><br/>
-        <input type="submit" value="Сохранить" /><br/>
-    </form:form>
-        </center>
-    </body>
+        <form:form  method="post" id="form" action="${pageContext.request.contextPath}/save" commandName="user" >
+            <form:hidden path="id"  />
+            <form:input path="name"  id="name" placeholder="Имя" /><br/>
+            <form:input path="surname"  id="surname" placeholder="Фамилия" /><br/>
+            <form:input path="email"  id="email" placeholder="Email" /><br/>
+            <input type="submit" value="Сохранить" /><br/>
+        </form:form>
+    </center>
+</body>
 </html>

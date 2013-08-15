@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view>
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
+            <style type="text/css">
+                .ui-widget {
+                    font-size: 89% !important;
+                }
+            </style>
+            <script type="text/javascript" >
+                jQuery(window).load(function() {
+                    jQuery("#loader").fadeOut();
+                });
+                jQuery(document).keypress(function(event) {
+                    if (event.keyCode == 27)
+                        return false;
+                })
+            </script>
+            <script type="text/javascript" >
+                function startAjaxRequest() {
+                    widget_ajaxStatusDialog.show();
+                }
+                function completeAjaxRequest(args) {
+                    widget_ajaxStatusDialog.hide();
+                }
+            </script>
+            <ui:insert name="head"></ui:insert>
+        </h:head>
+        <h:body>
+            <div id="loader"></div>
+            <p:ajaxStatus id="ajaxStatusComponent" onstart="startAjaxRequest();" oncomplete="completeAjaxRequest(arguments);" rendered="#{empty showAjaxStatus || showAjaxStatus}"/>
+            <p:layout id="fullPage" fullPage="true">
+
+                <p:layoutUnit position="north" size="100" header="Top" resizable="true" closable="false" collapsible="true">  
+                    <ui:include src="fragments/header.xhtml"/>
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="south" size="100" header="Bottom" resizable="true" closable="false" collapsible="true">  
+                    <ui:include src="fragments/footer.xhtml"/>
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="west" size="200" header="Left" resizable="true" closable="false" collapsible="true">  
+                    <ui:include src="fragments/left-side-bar.xhtml"/>
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="east" size="200" header="Right" resizable="true" closable="false" collapsible="true" effect="drop">  
+                    <ui:include src="fragments/right-side-bar.xhtml"/>
+                </p:layoutUnit>  
+
+                <p:layoutUnit position="center" header="#{currentPageTitle}" >  
+                    <ui:insert name="content"></ui:insert>
+                </p:layoutUnit>
+            </p:layout>
+            <p:dialog id="ajaxStatusDialog" modal="true" resizable="false" closable="false" appendToBody="true" width="100" height="100" header="#{msg['waiting']}">
+                <div id="loader" style="background-color: transparent;"></div>
+            </p:dialog>
+        </h:body>
+    </f:view>
+</html>

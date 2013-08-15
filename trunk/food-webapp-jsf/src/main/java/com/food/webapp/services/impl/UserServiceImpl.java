@@ -19,8 +19,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,7 +29,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,23 +41,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
-   private UserDAO userDAO;
-   @Autowired
-   private RoleDAO roleDAO;
-    public boolean  authenticate(User user)
-    {
-         SecurityContextHolder.clearContext();
-        User user2 = getUserByEmail(user.getEmail());
-         String password=createHash(user.getPassword());
-         
-        if (user2!= null) {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user2.getEmail(), user.getPassword(),getAuthorities(user2.getRoles()));
-//            authentication.setAuthenticated(true);
+    private UserDAO userDAO;
+    @Autowired
+    private RoleDAO roleDAO;
+    private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    public boolean authenticate(User user) {
+        SecurityContextHolder.clearContext();
+        User realUser = getUserByEmail(user.getEmail());
+        String password = createHash(user.getPassword());
+
+        if (realUser != null) {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(realUser.getEmail(), user.getPassword(), getAuthorities(realUser.getRoles()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-         return false;
+        return false;
     }
-    
+
     @Override
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         return u;
     }
-    
+
     @Override
     public User getUser(Long id) {
         return userDAO.getUser(id);
@@ -87,16 +87,16 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
-        User innerUser = getUserByEmail(login);
-        System.out.println(innerUser.getEmail() + "  ########################## login");
-        if (innerUser == null) {
-            System.out.println(" Нет пользователя  ########################## login");
-            throw new UsernameNotFoundException("user not found in database");
+    public UserDetails loadUserByUsername(String login) {
+        try {
+            User innerUser = getUserByEmail(login);
+            log.info("########################## login = {}", innerUser.getEmail());
+            org.springframework.security.core.userdetails.User springUser = new org.springframework.security.core.userdetails.User(innerUser.getEmail(), innerUser.getPassword(), true, true, true, true, getAuthorities(innerUser.getRoles()));
+            return springUser;
+        } catch (Exception ex) {
+            log.warn(">>>> Пользователь не найден в базе : {} {}", login, ex.getMessage());
+            return null;
         }
-        org.springframework.security.core.userdetails.User springUser = new org.springframework.security.core.userdetails.User(innerUser.getEmail(), innerUser.getPassword(), true, true, true, true, getAuthorities(innerUser.getRoles()));
-
-        return springUser;
     }
 
     @Override
@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         for (int i = 0; i < length; i++) {
             password = password + alphabet.charAt(rg.nextInt(alphabet.length()));
         }
-        System.out.println("*** Generated password:" + password);
+        log.info("*** Generated password: {}", password);
         return password;
     }
 
@@ -123,13 +123,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             }
             return hashedPass;
         } catch (NoSuchAlgorithmException e) {
+            log.error("Error when create hashpassword: {}", e.getMessage());
             return "";
         }
     }
-
-   
-
-   
 
     @Override
     public User getUserByEmail(String email) {
@@ -170,36 +167,32 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public boolean login(User user) {
-        String mail=user.getEmail();
-        String password=createHash(user.getPassword());
+        String mail = user.getEmail();
+        String password = createHash(user.getPassword());
         return userDAO.login(mail, password);
     }
 
     @Override
     public long save(User user) {
         user.setPassword(createHash(user.getPassword()));
-        Set<Role> roles=new HashSet<Role>();
-        Role role=roleDAO.getRoleByName(EnumRole.ROLE_CLIENT);
-        if(role==null)
-        {
-            role=new Role();
-            role.setDescription("для клиентов");
-            role.setName(EnumRole.ROLE_CLIENT);
-            roleDAO.save(role);
+        Set<Role> roles = new HashSet<Role>();
+        Role role = roleDAO.getRoleByName(EnumRole.ROLE_CLIENT);
+//        if (role == null) {
+//            role = new Role();
+//            role.setDescription("для клиентов");
+//            role.setName(EnumRole.ROLE_CLIENT);
+//            roleDAO.save(role);
+//        }
+        if (user.getId() == null) {
+            roles.add(role);
+            user.setRoles(roles);
+            return userDAO.save(user).getId();
+        } else {
+            roles.add(role);
+            user.setRoles(roles);
+            return userDAO.update(user).getId();
         }
-        if(user.getId()==null)
-        {
-        roles.add(role);
-        user.setRoles(roles);
-        return userDAO.save(user).getId();
-        }
-        else
-        {
-        roles.add(role);
-        user.setRoles(roles);    
-        return userDAO.update(user).getId();
-        }
-        
+
     }
 
     @Override

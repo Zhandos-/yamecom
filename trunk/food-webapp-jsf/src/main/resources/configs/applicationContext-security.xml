@@ -12,6 +12,7 @@
                 
         <intercept-url pattern="/**" access="hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN','ROLE_CONSUMER','ROLE_ANONYMOUS')" />
         <intercept-url pattern="/resources/**" access="permitAll" />
+        <intercept-url pattern="/template/**" access="permitAll" />
         <intercept-url pattern="/javax.faces.resource/**" access="permitAll" />
         <intercept-url pattern="/login*" access="permitAll"/>
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />

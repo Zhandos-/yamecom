@@ -14,19 +14,19 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-       
-          <%
-                                if(request.getUserPrincipal()==null)
-                                  out.print("Anonymous");
-                                else
-                                    out.print(request.getUserPrincipal().getName());
-                                    
-                                 %>
-                               <%if(request.getUserPrincipal()==null){%> 
+
+        <%
+            if (request.getUserPrincipal() == null) {
+                out.print("Anonymous");
+            } else {
+                out.print(request.getUserPrincipal().getName());
+            }
+        %>
+        <%if (request.getUserPrincipal() == null) {%> 
         <a href="${pageContext.request.contextPath}/login" >Логин</a><br/>
-        <% } else { %>
-         <a href="${pageContext.request.contextPath}/logout" >Выйти</a><br/>
-         <a href="${pageContext.request.contextPath}/profile" >Редактировать профиль</a><br/>
-         <% }%>
+        <% } else {%>
+        <a href="${pageContext.request.contextPath}/logout" >Выйти</a><br/>
+        <a href="${pageContext.request.contextPath}/profile" >Редактировать профиль</a><br/>
+        <% }%>
     </body>
 </html>
