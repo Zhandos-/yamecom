@@ -4,6 +4,9 @@
  */
 package com.food.webapp.test;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -19,6 +22,24 @@ public class TestApp {
 
     private EntityManagerFactory emf;
     private EntityManager em;
+
+    @Test
+    @Ignore
+    public void test() {
+        MessageDigest messageDigest;
+        String password = "s3cret";
+        try {
+            messageDigest = MessageDigest.getInstance("md5");
+            messageDigest.update(password.getBytes(), 0, password.length());
+            String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
+            if (hashedPass.length() < 32) {
+                hashedPass = "0" + hashedPass;
+            }
+            System.out.println(hashedPass);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Before
     @Ignore

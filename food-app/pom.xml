@@ -17,6 +17,7 @@
         <spring.security.version>3.1.0.RELEASE</spring.security.version>
         <jsf.version>2.1.0-b03</jsf.version>
         <hibernate.version>4.2.3.Final</hibernate.version>
+        <spring.logging.version>1.7.5</spring.logging.version>
     </properties>
   
     <profiles>
