@@ -6,15 +6,13 @@ public enum EnumRole {
     ROLE_ADMIN("РОЛЬ АДМИНСТРАТОРА"),
     ROLE_CONSUMER("РОЛЬ КОМПАНЬОНА"),
     ROLE_ANONYMOUS("НЕ АВТОРИЗОВАННЫЙ ПОЛЗОВАТЕЛЬ");
-    
-    EnumRole(String descriptin)
-    {
-        this.descriptin=descriptin;
+    private String descriptin;
+
+    EnumRole(String descriptin) {
+        this.descriptin = descriptin;
     }
-    
-    public String getDescription()
-    {
+
+    public String getDescription() {
         return this.descriptin;
     }
-    private String descriptin;
 }

@@ -42,7 +42,7 @@ public class Phone extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "phone_seq")
-    @SequenceGenerator(name = "phone_seq", sequenceName = Conf.TABLE_PREFIX + "phone_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "phone_seq", sequenceName = "phone_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

@@ -38,7 +38,7 @@ public class Address extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
-    @SequenceGenerator(name = "address_seq", sequenceName = Conf.TABLE_PREFIX + "address_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "address_seq", sequenceName = "address_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

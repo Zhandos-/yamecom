@@ -31,7 +31,7 @@ public class SpecialOffer extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "special_offer_seq")
-    @SequenceGenerator(name = "special_offer_seq", sequenceName = Conf.TABLE_PREFIX + "special_offer_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "special_offer_seq", sequenceName = "special_offer_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

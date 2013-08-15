@@ -26,36 +26,32 @@ public class UserController {
     private String index() {
         return "index";
     }
-     
-       @RequestMapping(value = "/profile")
+
+    @RequestMapping(value = "/profile")
     private String logout(Map<String, Object> map) {
-         User user=userService.getUser(userService.getCurrentUser().getId());
-         
-         map.put("user",user);
+        User user = userService.getUser(userService.getCurrentUser().getId());
+
+        map.put("user", user);
         return "client/profile";
     }
-    
-    
-        @RequestMapping(value = "/login")
-    private String login(  Map<String, Object> map ) {
-        User user=new User();   
+
+    @RequestMapping(value = "/login")
+    private String login(Map<String, Object> map) {
+        User user = new User();
         map.put("user", user);
         return "login";
     }
-        
-        @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    private String registration(  Map<String, Object> map ) {
-        User user=new User();   
+
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    private String registration(Map<String, Object> map) {
+        User user = new User();
         map.put("user", user);
         return "registration";
-    }    
-        
- 
-        
-           @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
     private String registration(User user) {
         userService.registration(user);
         return "redirect:/";
-    }       
-        
+    }
 }

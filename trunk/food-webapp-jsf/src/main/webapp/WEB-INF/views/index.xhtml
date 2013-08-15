@@ -4,15 +4,24 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Welcome!!!</title>
     </h:head>
     <h:body>
         <h:form prependId="false">
-            <p:panel>
-                <h:outputLabel value="Hello world PrimeFaces!!!"/>
-               <br/> <h:outputText value="#{user.name}" />
-               <br/> <h:outputText value="#{user.surname}" />
-               <br/> <h:outputText value="#{user.email}" />
+            <p:panel id="usersPanel">
+                <p:dataTable id="usersTable" value="#{usersList}" var="u">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{u.id}"/>
+                    </p:column>
+                    <p:column headerText="Name">
+                        <h:outputText value="#{u.name}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{u.email}"/>
+                    </p:column>
+                </p:dataTable>
+                <p:panel id="addUser">
+                </p:panel>
             </p:panel>
         </h:form>
     </h:body>

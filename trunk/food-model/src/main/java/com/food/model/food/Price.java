@@ -35,7 +35,7 @@ public class Price extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "price_seq")
-    @SequenceGenerator(name = "price_seq", sequenceName = Conf.TABLE_PREFIX + "price_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "price_seq", sequenceName = "price_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

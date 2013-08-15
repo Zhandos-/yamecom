@@ -23,8 +23,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
     public User getUserByEmail(String email);
 
     public Role getRoles(Integer id);
-    
-    public boolean login(String mail,String password);
-    
-    
+
+    public boolean login(String mail, String password);
 }

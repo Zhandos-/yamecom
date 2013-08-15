@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome!!!</title>
+    </h:head>
+    <h:body>
+        <h:form prependId="false">
+            <p:panel id="authPanel">
+                <p:messages />
+                <h:panelGrid columns="2" cellpadding="5" width="100%">
+                    <h:outputLabel for="j_username" value="Логин"/>                        
+                    <p:inputText label="Логин" id="j_username" required="true"/>
+                    <h:outputLabel for="j_password" value="Пароль"/>
+                    <p:password label="Пароль" id="j_password" feedback="false" required="true" />
+                </h:panelGrid>
+                <p:commandButton ajax="false" value="Войти" action="/j_spring_security_check" />
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

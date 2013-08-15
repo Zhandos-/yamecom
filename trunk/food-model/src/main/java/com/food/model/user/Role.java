@@ -82,7 +82,7 @@ public class Role extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
-    @SequenceGenerator(name = "role_seq", sequenceName = Conf.TABLE_PREFIX + "role_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "role_seq", sequenceName = "role_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;
