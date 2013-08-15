@@ -31,7 +31,7 @@ public class Country extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "country_seq")
-    @SequenceGenerator(name = "country_seq", sequenceName = Conf.TABLE_PREFIX + "country_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "country_seq", sequenceName = "country_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

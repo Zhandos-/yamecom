@@ -20,25 +20,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("insertService")
 @Transactional("postgresT")
 public class InsertServiceImpl implements InsertService {
-@Autowired RoleDAO roleDAO;
+
+    @Autowired
+    RoleDAO roleDAO;
 //    @PostConstruct
-    void insert()
-    {
+
+    void insert() {
         insertRoles();
     }
-   @Transactional("postgresT")
-   @Override
+
+    @Transactional("postgresT")
+    @Override
     public void insertRoles() {
-    for(EnumRole role:EnumRole.values())
-    {
-       Role r=roleDAO.getRoleByName(role);
-       if(r==null)
-       {
-           r=new Role();
-           r.setName(role);
-           r.setDescription(role.getDescription());
-       }
+        for (EnumRole role : EnumRole.values()) {
+            Role r = roleDAO.getRoleByName(role);
+            if (r == null) {
+                r = new Role();
+                r.setName(role);
+                r.setDescription(role.getDescription());
+            }
+        }
     }
-    }
-   
 }

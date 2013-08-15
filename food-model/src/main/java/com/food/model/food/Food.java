@@ -40,7 +40,7 @@ public class Food extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_seq")
-    @SequenceGenerator(name = "food_seq", sequenceName = Conf.TABLE_PREFIX + "food_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "food_seq", sequenceName = "food_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

@@ -44,7 +44,7 @@ public class Comment extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comments_seq")
-    @SequenceGenerator(name = "comments_seq", sequenceName = Conf.TABLE_PREFIX + "comments_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "comments_seq", sequenceName = "comments_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

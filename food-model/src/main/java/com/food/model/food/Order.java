@@ -53,7 +53,7 @@ public class Order extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
-    @SequenceGenerator(name = "order_seq", sequenceName = Conf.TABLE_PREFIX + "order_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "order_seq", sequenceName = "order_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

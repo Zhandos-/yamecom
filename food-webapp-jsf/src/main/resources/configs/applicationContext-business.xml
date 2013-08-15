@@ -65,6 +65,7 @@
                 <prop key="hibernate.hbm2ddl.auto">${db.hbmddl}</prop>
                 <prop key="hibernate.default_schema">${db.schemaName}</prop>
                 <prop key="hibernate.show_sql">${db.showsql}</prop>
+                <prop key="hibernate.format_sql">${db.formatsql}</prop>
                 <prop key="hibernate.dialect">${db.dialect}</prop>
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
                 <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
@@ -89,13 +90,22 @@
     <!-- Всю статику (изображения, css-файлы, javascript) положим в папку webapp/resources 
     и замаппим их на урл вида /resources/** -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
+    <bean id="defaultServletHttpRequestHandler" class="org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler" />
+    <bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/javax.faces.resource/**" value-ref="defaultServletHttpRequestHandler" />
+            </map>
+        </property>
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
     <beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <beans:property name="cache" value="false" />
         <beans:property name="viewClass" value="org.springframework.faces.mvc.JsfView" />
         <beans:property name="prefix" value="/WEB-INF/views/" />
         <beans:property name="suffix" value=".xhtml" />
     </beans:bean>
-<!--    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+    <!--    <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
     <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />-->
     <!--  БИН Валидатор -->
     <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />

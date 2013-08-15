@@ -37,7 +37,7 @@ public class Rating extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rating_seq")
-    @SequenceGenerator(name = "rating_seq", sequenceName = Conf.TABLE_PREFIX + "rating_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "rating_seq", sequenceName = "rating_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

@@ -14,48 +14,47 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author TWINS
  */
 @Repository
-public abstract class BaseDAOImpl <T,KeyType extends Serializable> implements BaseDAO <T,KeyType>{
+public abstract class BaseDAOImpl<T, KeyType extends Serializable> implements BaseDAO<T, KeyType> {
 
     @Autowired
-    @Qualifier("sessionFactoryPostgres")   protected     
-    SessionFactory  sessionFactory;
+    @Qualifier("sessionFactoryPostgres")
+    protected SessionFactory sessionFactory;
+    private Class<T> domainClass;
 
-    private Class<T>  domainClass;
-    
     public BaseDAOImpl() {
-      domainClass=(Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
-    
-    protected Session ht(){
+
+    protected Session ht() {
         return sessionFactory.getCurrentSession();
     }
-    
+
     @Override
     public T save(T entity) {
-      ht().saveOrUpdate(entity);
-      return entity;
+        ht().saveOrUpdate(entity);
+        return entity;
     }
-    
+
     @Override
     public T update(T entity) {
-      ht().saveOrUpdate(entity);
-      return entity;
+        ht().saveOrUpdate(entity);
+        return entity;
     }
-    
+
     @Override
     public void delete(T entity) {
         ht().delete(entity);
     }
-    
-    
+
     @Override
     public T getById(KeyType id) {
-        
+
         return (T) ht().get(domainClass, id);
     }
 
@@ -65,14 +64,14 @@ public abstract class BaseDAOImpl <T,KeyType extends Serializable> implements Ba
     }
 
     @Override
-    public  void saveAll(Collection<T> entities) {
+    public void saveAll(Collection<T> entities) {
         for (T t : entities) {
             ht().save(t);
         }
     }
-    
+
     @Override
-    public  void updateAll(Collection<T> entities) {
+    public void updateAll(Collection<T> entities) {
         for (T t : entities) {
             ht().update(t);
         }
@@ -80,15 +79,15 @@ public abstract class BaseDAOImpl <T,KeyType extends Serializable> implements Ba
 
     @Override
     public void deleteById(KeyType id) {
-      Object o=getById(id);
-      ht().delete(o);
+        Object o = getById(id);
+        ht().delete(o);
     }
 
     @Override
     public List<T> getAll(int maxResult, int firstResult) {
-      return  ht().createCriteria(domainClass)
-              .setFirstResult(firstResult)
-              .setMaxResults(maxResult).list();
+        return ht().createCriteria(domainClass)
+                .setFirstResult(firstResult)
+                .setMaxResults(maxResult).list();
     }
 
     @Override
@@ -97,7 +96,4 @@ public abstract class BaseDAOImpl <T,KeyType extends Serializable> implements Ba
             deleteById(id);
         }
     }
-
-    
-    
 }

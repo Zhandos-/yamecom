@@ -12,15 +12,15 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <center>
+    <center>
         <h1>Login form!</h1>
-    <form:form method="post" id="form" action="${pageContext.request.contextPath}/registration" commandName="user" >
-        <form:input path="name"  id="name" placeholder="Имя" /><br/>
-        <form:input path="surname"  id="surname" placeholder="Фамилия" /><br/>
-        <form:input path="email"  id="email" placeholder="Email" /><br/>
-        <form:input path="password"  id="password" placeholder="Пароль" /><br/>
-        <input type="submit" value="Войти" /><br/>
-    </form:form>
-        </center>
-    </body>
+        <form:form method="post" id="form" action="${pageContext.request.contextPath}/registration" commandName="user" >
+            <form:input path="name"  id="name" placeholder="Имя" /><br/>
+            <form:input path="surname"  id="surname" placeholder="Фамилия" /><br/>
+            <form:input path="email"  id="email" placeholder="Email" /><br/>
+            <form:input path="password"  id="password" placeholder="Пароль" /><br/>
+            <input type="submit" value="Войти" /><br/>
+        </form:form>
+    </center>
+</body>
 </html>

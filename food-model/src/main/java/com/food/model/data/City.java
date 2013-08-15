@@ -35,7 +35,7 @@ public class City extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "city_seq")
-    @SequenceGenerator(name = "city_seq", sequenceName = Conf.TABLE_PREFIX + "city_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "city_seq", sequenceName = "city_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;

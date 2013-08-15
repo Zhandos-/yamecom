@@ -12,13 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RoleDAOImpl extends BaseDAOImpl<Role, Long> implements RoleDAO {
 
-
-
+    @Override
     public Role getRoleByName(EnumRole name) {
 
         return (Role) ht().createQuery("from Role where name = :name")
                 .setParameter("name", name)
                 .uniqueResult();
     }
-
 }

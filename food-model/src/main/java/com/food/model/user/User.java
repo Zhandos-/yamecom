@@ -199,7 +199,7 @@ public class User extends AEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    @SequenceGenerator(name = "user_seq", sequenceName = Conf.TABLE_PREFIX + "user_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", initialValue = 1, allocationSize = 1)
     @Override
     public Long getId() {
         return id;
