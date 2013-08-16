@@ -12,6 +12,7 @@
         </ui:define>
         <ui:define name="content">
             <c:set value="Main Page" var="currentPageTitle" scope="request"/>
+            <p:messages id="messages" />
             <p:panel id="usersPanel">
                 <p:dataTable id="usersTable" value="#{usersList}" var="u">
                     <p:column headerText="ID">
