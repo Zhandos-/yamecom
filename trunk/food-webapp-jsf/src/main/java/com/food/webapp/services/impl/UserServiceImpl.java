@@ -10,6 +10,7 @@ import com.food.model.enums.EnumRole;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -44,7 +45,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 @Service("userService")
 @Transactional("postgresT")
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserDetailsService, UserService, Serializable {
 
     @Autowired
     private UserDAO userDAO;
@@ -125,6 +126,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public String createHash(String password) {
         MessageDigest messageDigest;
         try {
+            log.info(">>> create hash for password: {} ", password);
             messageDigest = MessageDigest.getInstance("md5");
             messageDigest.update(password.getBytes(), 0, password.length());
             String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);

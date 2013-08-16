@@ -11,7 +11,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -43,17 +42,18 @@ public class UserController {
         map.put("user", user);
         return "login";
     }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    private String registration(Map<String, Object> map) {
-        User user = new User();
-        map.put("user", user);
-        return "registration";
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    private String registration(User user) {
-        userService.registration(user);
-        return "redirect:/";
-    }
+//    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+//    private String registration(Map<String, Object> map) {
+//        RegistrationBean registrationBean = new RegistrationBean();
+//        User user = new User();
+//        map.put("user", user);
+//        map.put("registrationBean", registrationBean);
+//        return "registration";
+//    }
+//
+//    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+//    private String registration(User user) {
+//        userService.registration(user);
+//        return "redirect:/";
+//    }
 }
