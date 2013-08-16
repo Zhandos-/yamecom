@@ -1,1 +1,0 @@
-mvn install:install-file -Dfile=D:\spring-webmvc-struts-3.1.1.RELEASE.jar -DgroupId=org.springframework -DartifactId=spring-webmvc-struts -Dversion=3.1.1.RELEASE -Dpackaging=jar
