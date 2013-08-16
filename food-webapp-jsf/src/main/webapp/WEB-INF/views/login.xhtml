@@ -2,20 +2,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:composition template="./template/main-template.xhtml">
         <ui:define name="head">
             <title>Login Page</title>
         </ui:define>
         <ui:define name="content">
             <c:set value="Login Page" var="currentPageTitle" scope="request"/>
-            <div class="message">
-                <c:if test="#{param.error == 1 and SPRING_SECURITY_LAST_EXCEPTION != null}">
-                    <span class="error">#{SPRING_SECURITY_LAST_EXCEPTION.message}</span>
-                </c:if>
-            </div>
-            <p:messages />
+            <c:if test="#{param.error == 'true' and SPRING_SECURITY_LAST_EXCEPTION != null}">
+                <div aria-live="polite" class="ui-messages ui-widget" id="form1:messages">
+                    <div class="ui-messages-error ui-corner-all">
+                        <a onclick="$(this).parent().slideUp();
+                                                    return false;" class="ui-messages-close" href="#">
+                            <span class="ui-icon ui-icon-close"></span>
+                        </a>
+                        <span class="ui-messages-error-icon"></span>
+                        <ul>
+                            <li>
+                                <span class="ui-messages-error-summary">#{SPRING_SECURITY_LAST_EXCEPTION.message}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </c:if>
             <div class="login">
                 <form action="/food/j_spring_security_check" method="post">
                     <table border="0" cellpadding="5" width="40%">

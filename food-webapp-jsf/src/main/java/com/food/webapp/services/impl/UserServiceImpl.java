@@ -19,9 +19,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,8 +31,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -47,6 +53,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     public boolean authenticate(User user) {
+
         SecurityContextHolder.clearContext();
         User realUser = getUserByEmail(user.getEmail());
         String password = createHash(user.getPassword());
@@ -54,6 +61,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (realUser != null) {
             Authentication authentication = new UsernamePasswordAuthenticationToken(realUser.getEmail(), user.getPassword(), getAuthorities(realUser.getRoles()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession();
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
         }
         return false;
     }
@@ -87,7 +97,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) {
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
         try {
             User innerUser = getUserByEmail(login);
             log.info("########################## login = {}", innerUser.getEmail());
