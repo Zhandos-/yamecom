@@ -5,6 +5,7 @@ import com.food.model.AEntity;
 import com.food.model.Conf;
 import com.food.model.additional.Comment;
 import com.food.model.additional.Rating;
+import com.food.model.data.Phone;
 import com.food.model.food.Order;
 import com.food.model.restaurant.Restaurant;
 import java.util.*;
@@ -33,6 +34,7 @@ public class User extends AEntity {
     private List<Restaurant> restaurants;
     private List<Order> orders;
     private Set<Role> roles = new HashSet<Role>();
+    private List<Phone> phones;
 
     @Column(name = "name")
     @Size(max = 255)
@@ -100,7 +102,7 @@ public class User extends AEntity {
     }
 
     @Basic(optional = true)
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     public List<Comment> getComments() {
         return comments;
     }
@@ -147,6 +149,15 @@ public class User extends AEntity {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
     }
 
     @Override

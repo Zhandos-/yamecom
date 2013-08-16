@@ -9,3 +9,8 @@
 root { 
     display: block;
 }
+
+.required {
+    color: red;
+    font-size: 14px;
+}
