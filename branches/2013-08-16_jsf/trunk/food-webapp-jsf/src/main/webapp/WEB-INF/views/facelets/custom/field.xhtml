@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+        <ui:composition>
+            <c:if test="${empty required}">
+                <c:set var="required" value="false" />
+            </c:if>
+            <c:if test="${empty disabled}">
+                <c:set var="disabled" value="false" />
+            </c:if>
+            <c:if test="${empty rendered}">
+                <c:set var="rendered" value="true" />
+            </c:if>
+            <c:if test="${empty size}">
+                <c:set var="size" value="40" />
+            </c:if>
+            <c:if test="${empty maxlength}">
+                <c:set var="maxlength" value="80" />
+            </c:if>
+            <c:if test="${empty escape}">
+                <c:set var="escape" value="true" />
+            </c:if>
+            <c:if test="${empty pattern}">
+                <c:set var="pattern" value="dd/MM/yyyy" />
+            </c:if>
+            <c:if test="${empty feedback}">
+                <c:set var="feedback" value="false" />
+            </c:if>
+            <c:if test="${empty promptLabel}">
+                <c:set var="promptLabel" value="Введите пароль" />
+            </c:if>
+            <c:if test="${empty weakLabel}">
+                <c:set var="weakLabel" value="Надежность пароля: слабый" />
+            </c:if>
+            <c:if test="${empty goodLabel}">
+                <c:set var="goodLabel" value="Надежность пароля: средний" />
+            </c:if>
+            <c:if test="${empty strongLabel}">
+                <c:set var="strongLabel" value="Надежность пароля: высокий" />
+            </c:if>
+
+            <p:outputLabel for="#{id}" value="#{label}" rendered="#{rendered}" escape="#{escape}" />
+            <!--<p:outputLabel for="#{id}" value="*" rendered="#{required}" escape="#{escape}" styleClass="required" />-->
+            <c:if test="${!empty textArea}">
+                <p:inputTextarea id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" 
+                                 required="${required}" styleClass="${styleClass}" maxlength="#{maxlength}" />
+            </c:if>
+            <c:if test="${!empty inputMask}">
+                <p:inputMask id="#{id}" rendered="#{rendered}" label="#{label}" mask="#{mask}" disabled="#{disabled}" value="#{value}" 
+                             required="${required}" size="#{size}" styleClass="${styleClass}" maxlength="#{maxlength}" />
+            </c:if>
+            <c:if test="${!empty date}">
+                <p:calendar id="#{id}" rendered="#{rendered}" label="#{label}" pattern="#{pattern}" disabled="#{disabled}" value="#{value}" 
+                            required="${required}" styleClass="${styleClass}" mindate="#{mindate}"/>
+            </c:if>
+            <c:if test="${!empty password}">
+                <p:password id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" size="#{size}"
+                            required="${required}" styleClass="${styleClass}" match="#{match}" feedback="#{feedback}"
+                            promptLabel="#{promptLabel}" weakLabel="#{weakLabel}" goodLabel="#{goodLabel}" strongLabel="#{strongLabel}" />
+            </c:if>
+            <c:if test="${empty textArea and empty inputMask and empty date and empty password}">
+                <p:inputText id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" 
+                             required="${required}" size="#{size}" maxlength="#{maxlength}" >
+                    <c:if test="${!empty regexPattern}">
+                        <f:validateRegex pattern="#{regexPattern}" />
+                    </c:if>
+                </p:inputText>
+            </c:if>
+        </ui:composition>
+    </h:body>
+</html>

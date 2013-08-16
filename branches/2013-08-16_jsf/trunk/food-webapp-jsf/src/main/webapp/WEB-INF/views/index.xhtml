@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="./template/main-template.xhtml" xmlns="http://www.w3.org/1999/xhtml">
+        <ui:define name="head">
+            <title>Main Page</title>
+        </ui:define>
+        <ui:define name="content">
+            <c:set value="Main Page" var="currentPageTitle" scope="request"/>
+            <p:messages id="messages" />
+            <p:panel id="usersPanel">
+                <p:dataTable id="usersTable" value="#{usersList}" var="u">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{u.id}"/>
+                    </p:column>
+                    <p:column headerText="Name">
+                        <h:outputText value="#{u.name}"/>
+                    </p:column>
+                    <p:column headerText="Surname">
+                        <h:outputText value="#{u.surname}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{u.email}"/>
+                    </p:column>
+                    <p:column headerText="Registration date">
+                        <h:outputText value="#{u.creationDate}">
+                            <f:convertDateTime pattern="dd-MM-yyyy hh:mm:ss"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </ui:define>
+    </ui:composition>
+</html>
