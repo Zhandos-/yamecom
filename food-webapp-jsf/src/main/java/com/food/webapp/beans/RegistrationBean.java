@@ -7,6 +7,8 @@ package com.food.webapp.beans;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import java.io.Serializable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -25,6 +27,7 @@ public class RegistrationBean implements Serializable {
     @Qualifier("userService")
     private UserService userService;
     private User user;
+    private static final Logger log = LoggerFactory.getLogger(RegistrationBean.class);
     
     public User getUser() {
         return user;
@@ -35,6 +38,7 @@ public class RegistrationBean implements Serializable {
     }
     
     public String addUser() {
+        log.info("addUser()");
         user.setPassword(userService.createHash(user.getPassword()));
         userService.save(user);
         return null;

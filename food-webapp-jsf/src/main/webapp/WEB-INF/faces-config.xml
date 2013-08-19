@@ -4,11 +4,9 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
     <application>
-        <resource-handler>com.food.webapp.handlers.CustomResourceHandler</resource-handler>
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
-        <resource-bundle>
-            <base-name>MessageResources</base-name>
-            <var>messages</var>
-        </resource-bundle>
+        <lifecycle>
+            <phase-listener>com.food.webapp.listeners.LoginErrorPhaseListener</phase-listener>
+        </lifecycle>
     </application>
 </faces-config>

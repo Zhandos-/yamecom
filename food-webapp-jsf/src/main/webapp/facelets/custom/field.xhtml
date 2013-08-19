@@ -46,7 +46,6 @@
             </c:if>
 
             <p:outputLabel for="#{id}" value="#{label}" rendered="#{rendered}" escape="#{escape}" />
-            <!--<p:outputLabel for="#{id}" value="*" rendered="#{required}" escape="#{escape}" styleClass="required" />-->
             <c:if test="${!empty textArea}">
                 <p:inputTextarea id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" 
                                  required="${required}" styleClass="${styleClass}" maxlength="#{maxlength}" />
@@ -68,7 +67,7 @@
                 <p:inputText id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" 
                              required="${required}" size="#{size}" maxlength="#{maxlength}" >
                     <c:if test="${!empty regexPattern}">
-                        <f:validateRegex pattern="#{regexPattern}" />
+                        <f:validateRegex for="#{id}" pattern="#{regexPattern}" />
                     </c:if>
                 </p:inputText>
             </c:if>

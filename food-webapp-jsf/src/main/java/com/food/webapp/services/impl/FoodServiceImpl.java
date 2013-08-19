@@ -7,6 +7,7 @@ package com.food.webapp.services.impl;
 import com.food.dao.FoodDAO;
 import com.food.model.food.Food;
 import com.food.webapp.services.FoodService;
+import java.io.Serializable;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("foodService")
 @Transactional("postgresT")
-public class FoodServiceImpl implements FoodService{
-@Autowired private FoodDAO foodDAO;
+public class FoodServiceImpl implements FoodService, Serializable {
+
+    private static final long serialVersionUID = 3285458768543050522L;
+    @Autowired
+    private FoodDAO foodDAO;
+
     @Override
     public long save(Food food) {
         return foodDAO.save(food).getId();
@@ -44,9 +49,4 @@ public class FoodServiceImpl implements FoodService{
     public void deleteAll(List<Long> foods) {
         foodDAO.deletelAllById(foods);
     }
-    
-   
-    
-    
-    
 }

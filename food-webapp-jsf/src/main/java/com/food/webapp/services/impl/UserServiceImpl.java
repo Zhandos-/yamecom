@@ -47,6 +47,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Transactional("postgresT")
 public class UserServiceImpl implements UserDetailsService, UserService, Serializable {
 
+    private static final long serialVersionUID = 1369253307786229411L;
     @Autowired
     private UserDAO userDAO;
     @Autowired
