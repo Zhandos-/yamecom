@@ -6,13 +6,14 @@ package com.food.webapp.services.impl;
 
 import org.springframework.stereotype.Service;
 import com.food.webapp.services.OrderService;
+import java.io.Serializable;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  *
  * @author TWINS
  */
 @Service("orderService")
 @Transactional("postgresT")
-public class OrderServiceImpl implements OrderService {
-    
+public class OrderServiceImpl implements OrderService, Serializable {
 }

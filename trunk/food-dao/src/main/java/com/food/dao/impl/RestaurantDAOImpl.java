@@ -6,7 +6,7 @@ package com.food.dao.impl;
 
 import com.food.dao.RestaurantDAO;
 import com.food.model.restaurant.Restaurant;
-import java.util.List;
+import java.io.Serializable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,8 +14,5 @@ import org.springframework.stereotype.Repository;
  * @author TWINS
  */
 @Repository
-public class RestaurantDAOImpl extends BaseDAOImpl<Restaurant,Long> implements RestaurantDAO{
-
-   
-    
+public class RestaurantDAOImpl extends BaseDAOImpl<Restaurant, Long> implements RestaurantDAO, Serializable {
 }

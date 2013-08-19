@@ -8,6 +8,7 @@ import com.food.dao.RoleDAO;
 import com.food.model.enums.EnumRole;
 import com.food.model.user.Role;
 import com.food.webapp.services.InsertService;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,26 +20,26 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("insertService")
 @Transactional("postgresT")
-public class InsertServiceImpl implements InsertService {
-@Autowired RoleDAO roleDAO;
-//    @PostConstruct
-    void insert()
-    {
+public class InsertServiceImpl implements InsertService, Serializable {
+
+    private static final long serialVersionUID = 8067071817063099419L;
+    @Autowired
+    private RoleDAO roleDAO;
+
+    void insert() {
         insertRoles();
     }
-   @Transactional("postgresT")
-   @Override
+
+    @Transactional("postgresT")
+    @Override
     public void insertRoles() {
-    for(EnumRole role:EnumRole.values())
-    {
-       Role r=roleDAO.getRoleByName(role);
-       if(r==null)
-       {
-           r=new Role();
-           r.setName(role);
-           r.setDescription(role.getDescription());
-       }
+        for (EnumRole role : EnumRole.values()) {
+            Role r = roleDAO.getRoleByName(role);
+            if (r == null) {
+                r = new Role();
+                r.setName(role);
+                r.setDescription(role.getDescription());
+            }
+        }
     }
-    }
-   
 }
