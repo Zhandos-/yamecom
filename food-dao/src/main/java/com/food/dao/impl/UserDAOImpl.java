@@ -8,7 +8,9 @@ import com.food.dao.UserDAO;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -44,8 +46,8 @@ public class UserDAOImpl extends BaseDAOImpl<User, Long> implements UserDAO, Ser
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
-    public Role getRoles(Integer id) {
-        return (Role) ht().createQuery("from Role where id=:id").setInteger("id", id).uniqueResult();
+    public Set<Role> getRolesByUserId(Long id) {
+        return new HashSet<Role>(ht().createQuery("select u.roles from User u where u.id=:id").setParameter("id", id).list());
     }
 
     @Override

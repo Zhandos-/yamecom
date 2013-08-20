@@ -16,8 +16,11 @@
         <spring.version>3.1.1.RELEASE</spring.version>
         <spring.security.version>3.1.0.RELEASE</spring.security.version>
         <jsf.version>2.1.0-b03</jsf.version>
+        <primefaces.version>3.5</primefaces.version>
+        <postgresql.jdbc.version>9.2-1002.jdbc4</postgresql.jdbc.version>
         <hibernate.version>4.2.3.Final</hibernate.version>
         <spring.logging.version>1.7.5</spring.logging.version>
+        <log4j.logging.version>1.2.17</log4j.logging.version>
     </properties>
   
     <profiles>
@@ -59,9 +62,9 @@
     <modules>
         <module>../food-model</module>
         <module>../food-dao</module>
-        <module>../food-webapp</module>
+        <!--<module>../food-webapp</module>-->
         <module>../food-webapp-jsf</module>
-        <module>../food-reports</module>
+        <!--<module>../food-reports</module>-->
     </modules>
   
     <repositories>

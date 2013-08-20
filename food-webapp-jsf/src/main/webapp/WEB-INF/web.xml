@@ -17,7 +17,7 @@
     <!-- To start/stop Spring framework automatically. -->
     <listener>
         <listener-class>
-            org.springframework.web.context.ContextLoaderListener
+            com.food.webapp.listeners.ContextLoaderListener
         </listener-class>
     </listener>
     

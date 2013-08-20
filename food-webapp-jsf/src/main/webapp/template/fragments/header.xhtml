@@ -8,7 +8,8 @@
                 xmlns:f="http://java.sun.com/jsf/core">
     <div class="pageHeader">
         <h:outputText value="Page Header"/>
-        <br />
-        <h:outputText value="#{request.getUserPrincipal().getName()}"/>
+        <p:panel id="headerPanel">
+            <h:outputText value="#{request.getUserPrincipal().getName()}"/>
+        </p:panel>
     </div>
 </ui:composition>

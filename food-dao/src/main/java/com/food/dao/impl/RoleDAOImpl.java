@@ -22,4 +22,11 @@ public class RoleDAOImpl extends BaseDAOImpl<Role, Long> implements RoleDAO, Ser
                 .setParameter("name", name)
                 .uniqueResult();
     }
+
+    @Override
+    public Role getRoleById(Long id) {
+        return (Role) ht().createQuery("from Role where id = :id")
+                .setParameter("id", id)
+                .uniqueResult();
+    }
 }

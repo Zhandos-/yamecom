@@ -14,4 +14,6 @@ import com.food.model.user.Role;
 public interface RoleDAO extends BaseDAO<Role, Long> {
 
     public Role getRoleByName(EnumRole name);
+
+    public Role getRoleById(Long id);
 }

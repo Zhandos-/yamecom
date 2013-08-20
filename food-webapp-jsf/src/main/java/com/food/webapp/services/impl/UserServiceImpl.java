@@ -169,8 +169,8 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
     }
 
     @Override
-    public Role getRoles(Integer id) {
-        return userDAO.getRoles(id);
+    public Set<Role> getRolesByUserId(Long id) {
+        return userDAO.getRolesByUserId(id);
     }
 
     @Override
@@ -189,13 +189,21 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
     public long save(User user) {
         user.setPassword(createHash(user.getPassword()));
         Set<Role> roles = new HashSet<Role>();
-        Role role = roleDAO.getRoleByName(EnumRole.ROLE_CLIENT);
-//        if (role == null) {
-//            role = new Role();
-//            role.setDescription("для клиентов");
-//            role.setName(EnumRole.ROLE_CLIENT);
-//            roleDAO.save(role);
-//        }
+        Role role = getRoleByEnum(EnumRole.ROLE_CLIENT);
+        if (role == null) {
+            role = new Role();
+            role.setDescription("Зарегистрированный пользователь сайта");
+            role.setName(EnumRole.ROLE_CLIENT);
+            roleDAO.save(role);
+            Role role1 = new Role();
+            role1.setDescription("Администратор сайта");
+            role1.setName(EnumRole.ROLE_ADMIN);
+            roleDAO.save(role1);
+            Role role2 = new Role();
+            role2.setDescription("Компаньон");
+            role2.setName(EnumRole.ROLE_CONSUMER);
+            roleDAO.save(role2);
+        }
         if (user.getId() == null) {
             roles.add(role);
             user.setRoles(roles);
@@ -205,7 +213,11 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             user.setRoles(roles);
             return userDAO.update(user).getId();
         }
+    }
 
+    @Override
+    public Role getRoleByEnum(EnumRole role) {
+        return roleDAO.getRoleByName(role);
     }
 
     @Override

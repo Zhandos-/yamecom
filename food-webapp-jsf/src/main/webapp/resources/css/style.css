@@ -10,7 +10,6 @@ root {
     display: block;
 }
 
-.required {
-    color: red;
-    font-size: 14px;
+.ui-button-default {
+    width: 80px;
 }
