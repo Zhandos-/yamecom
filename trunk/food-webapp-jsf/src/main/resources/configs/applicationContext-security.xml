@@ -24,7 +24,7 @@
         
     <!--
     Usernames/Passwords are
-        test/spring
+        test@gmail.com/spring
     -->
     <authentication-manager>
         <authentication-provider user-service-ref='userService'>
@@ -34,8 +34,8 @@
         <authentication-provider>
             <password-encoder hash="md5"/>
             <user-service>
-                <user name="test"
-                      password="2a2d595e6ed9a0b24f027f2b63b134d6" authorities="ROLE_CLIENT,ROLE_ADMIN,ROLE_CONSUMER,ROLE_ANONYMOUS" />
+                <user name="test@gmail.com"
+                      password="2a2d595e6ed9a0b24f027f2b63b134d6" authorities="ROLE_CLIENT,ROLE_ADMIN,ROLE_CONSUMER" />
             </user-service>
         </authentication-provider>
     </authentication-manager>

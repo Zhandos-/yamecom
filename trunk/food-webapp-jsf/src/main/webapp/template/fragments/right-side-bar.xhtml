@@ -7,29 +7,9 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:f="http://java.sun.com/jsf/core">
     <div class="pageRight">
-        <p:panel id="rightLoginPanel" rendered="#{request.requestURI != '/food/login.jsf'}">
-            <!--            <h:form prependId="false">
-                            <p:messages />
-                            <h:panelGrid columns="2" cellpadding="5" width="40%">
-                                <h:outputLabel for="j_username" value="Логин:"/>                        
-                                <p:inputText label="Логин:" id="j_username" required="true"/>
-            
-                                <h:outputLabel for="j_password" value="Пароль:"/>
-                                <p:password label="Пароль:" id="j_password" feedback="false" required="true" />
-            
-                            </h:panelGrid>
-                            <div class="submit" style="margin: 7px 0 0 5px;">
-                                <p:commandButton ajax="false" value="Login" action="#{loginBean.login}" />
-                                <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
-                                        onclick="window.open('#{request.contextPath}/registration.jsf', '_self')">
-                                    <span class="ui-button-text">Registration</span>
-                                </button>
-                            </div>                
-                        </h:form>-->
-        </p:panel>
-        <p:panel id="rightProfilePanel" rendered="#{loginBean.currentUser.email != null or not loginBean.currentUser.email.equal('')}">
+        <p:panel id="rightProfilePanel">
             <h:outputLink value="#{request.contextPath}/logout" >
-                <h:outputText value="Logout"/>
+                <h:outputText value="Logout" rendered="#{loginBean.loggedIn and !loginBean.hasRole('ROLE_ANONYMOUS')}" />
             </h:outputLink>
         </p:panel>
     </div>

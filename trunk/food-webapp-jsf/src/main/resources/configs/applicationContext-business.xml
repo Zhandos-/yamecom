@@ -30,11 +30,18 @@
 
     <!-- Непосредственно бин dataSource -->
     <bean id="dataSourcePostgres"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="${db.driverClassName}" 
-          p:url="${db.url}"
-          p:username="${db.username}" 
-          p:password="${db.password}" />
+          class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          p:driverClass="${db.driverClassName}" 
+          p:jdbcUrl="${db.url}"
+          p:user="${db.username}" 
+          p:password="${db.password}" 
+          p:initialPoolSize="3"
+          p:acquireIncrement="3"
+          p:minPoolSize="1"
+          p:maxPoolSize="100"
+          p:maxIdleTime="60"
+          p:checkoutTimeout="1000"
+          destroy-method="close" />
     
     <!-- Настройки фабрики сессий Хибернейта -->
     <bean id="sessionFactoryPostgres"

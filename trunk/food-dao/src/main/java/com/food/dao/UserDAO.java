@@ -7,6 +7,7 @@ package com.food.dao;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -22,7 +23,7 @@ public interface UserDAO extends BaseDAO<User, Long> {
 
     public User getUserByEmail(String email);
 
-    public Role getRoles(Integer id);
+    public Set<Role> getRolesByUserId(Long id);
 
     public boolean login(String mail, String password);
 }

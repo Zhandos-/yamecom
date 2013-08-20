@@ -24,12 +24,24 @@ public class FacesUtil {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
     }
 
+    public static synchronized void addErrorBundleMessage(String key, Object... arguments) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, getMessageFromBundle(key, arguments), null));
+    }
+
     public static synchronized void addErrorMessage(String summary, String detail) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
     }
 
+    public static synchronized void addErrorBundleMessage(String error, String key, Object... arguments) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, getMessageFromBundle(key, arguments), error));
+    }
+
     public static synchronized void addInfoMessage(String message) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, message));
+    }
+
+    public static synchronized void addInfoBundleMessage(String key, Object... arguments) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, getMessageFromBundle(key, arguments), null));
     }
 
     public static synchronized void addInfoMessage(String summary, String detail) {
@@ -40,8 +52,16 @@ public class FacesUtil {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, message, message));
     }
 
+    public static synchronized void addWarningBundleMessage(String key, Object... arguments) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, getMessageFromBundle(key, arguments), null));
+    }
+
     public static synchronized void addWarningMessage(String summary, String detail) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
+    }
+
+    public static synchronized void addWarningBundleMessage(String error, String key, Object... arguments) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, getMessageFromBundle(key, arguments), error));
     }
 
     public static synchronized String getMessageFromBundle(String key, Object... arguments) {
@@ -57,7 +77,6 @@ public class FacesUtil {
         } catch (Exception e) {
             log.warn("Bundle message with key {} not found! Error: {}", key, e);
         }
-
         return key;
     }
 }

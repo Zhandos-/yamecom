@@ -59,15 +59,37 @@
                             required="${required}" styleClass="${styleClass}" mindate="#{mindate}"/>
             </c:if>
             <c:if test="${!empty password}">
-                <p:password id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" size="#{size}"
-                            required="${required}" styleClass="${styleClass}" match="#{match}" feedback="#{feedback}"
-                            promptLabel="#{promptLabel}" weakLabel="#{weakLabel}" goodLabel="#{goodLabel}" strongLabel="#{strongLabel}" />
+                <c:if test="${!empty match}">
+                    <p:password id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" size="#{size}"
+                                required="${required}" styleClass="${styleClass}" match="#{match}" feedback="#{feedback}"
+                                promptLabel="#{promptLabel}" weakLabel="#{weakLabel}" goodLabel="#{goodLabel}" strongLabel="#{strongLabel}" />
+                </c:if>
+                <c:if test="${empty match}">
+                    <p:password id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" size="#{size}"
+                                required="${required}" styleClass="${styleClass}" feedback="#{feedback}" promptLabel="#{promptLabel}" 
+                                weakLabel="#{weakLabel}" goodLabel="#{goodLabel}" strongLabel="#{strongLabel}" >
+                        <c:if test="${!empty update}">
+                            <p:ajax update="#{update}" event="blur" />
+                        </c:if>
+                    </p:password>
+                </c:if>
             </c:if>
             <c:if test="${empty textArea and empty inputMask and empty date and empty password}">
                 <p:inputText id="#{id}" rendered="#{rendered}" label="#{label}" disabled="#{disabled}" value="#{value}" 
-                             required="${required}" size="#{size}" maxlength="#{maxlength}" >
+                             required="${required}" size="#{size}" maxlength="#{maxlength}">
                     <c:if test="${!empty regexPattern}">
                         <f:validateRegex for="#{id}" pattern="#{regexPattern}" />
+                    </c:if>
+                    <c:if test="${!empty update}">
+                        <c:if test="${!empty event and event=='blur'}">
+                            <p:ajax update="#{update}" event="blur" />
+                        </c:if>
+                        <c:if test="${!empty event and event=='keyup'}">
+                            <p:ajax update="#{update}" event="keyup" />
+                        </c:if>
+                        <c:if test="${empty event}">
+                            <p:ajax update="#{update}" />
+                        </c:if>
                     </c:if>
                 </p:inputText>
             </c:if>

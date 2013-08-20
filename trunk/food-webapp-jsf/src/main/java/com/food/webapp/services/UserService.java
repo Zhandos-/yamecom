@@ -4,6 +4,7 @@
  */
 package com.food.webapp.services;
 
+import com.food.model.enums.EnumRole;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import java.util.Collection;
@@ -18,7 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 public interface UserService {
 
     public User getCurrentUser();
-    
+
     public User getUser(Long id);
 
     public List<User> allUsers();
@@ -33,11 +34,13 @@ public interface UserService {
 
     public Collection<? extends GrantedAuthority> getAuthorities(Set<Role> rolesList);
 
-    public Role getRoles(Integer id);
-    
+    public Set<Role> getRolesByUserId(Long id);
+
+    public Role getRoleByEnum(EnumRole role);
+
     public boolean login(User user);
-    
+
     public long save(User user);
-    
+
     public void registration(User user);
 }

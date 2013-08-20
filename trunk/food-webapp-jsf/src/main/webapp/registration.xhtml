@@ -5,7 +5,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:custom="http://food.com/custom"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="./template/main-template.xhtml">
         <ui:define name="head">
             <title>Registration Page</title>
@@ -13,21 +14,30 @@
         <ui:define name="content">
             <h:form prependId="false">
                 <c:set value="Registration Page" var="currentPageTitle" scope="request"/>
-                <p:panel id="registrationPanel">
-                    <p:messages id="messages" />
-                    <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
-                        <custom:field id="name" label="Имя" value="#{registrationBean.user.name}" required="true" />
-                        <custom:field id="surname" label="Фамилия" value="#{registrationBean.user.surname}" />
-                        <custom:field id="email" label="E-mail" value="#{registrationBean.user.email}" required="true" 
-                                      regexPattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                        <custom:field id="pwd1" label="Пароль" value="#{registrationBean.user.password}" 
-                                      password="true" required="true" feedback="true" />
-                        <custom:field id="pwd2" label="Повторите пароль" value="#{registrationBean.user.password}" 
-                                      password="true" match="pwd1" required="true" feedback="true" promptLabel="Повторите пароль"/>
-                    </h:panelGrid>
-                    <p:commandButton value="Регистрация" action="#{registrationBean.addUser}"
-                                     process="registrationPanel" update="registrationPanel"/>
-                </p:panel>
+                <p:messages id="messages" />
+                <p:panelGrid id="registrationPanel" columns="3" rendered="#{loginBean.hasRole('ROLE_ANONYMOUS')}">
+                    <f:facet name="header">
+                        <h:outputLabel value="Registration" />
+                    </f:facet>
+                    <custom:field id="name" label="Имя" value="#{registrationBean.name}" required="true" />
+                    <p:message id="nameMsg" for="name" display="text" />
+                    <custom:field id="surname" label="Фамилия" value="#{registrationBean.surname}" />
+                    <p:message id="surnameMsg" for="surname" display="text" />
+                    <custom:field id="email" label="E-mail" value="#{registrationBean.email}" required="true" 
+                                  regexPattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" 
+                                  update="emailMsg" event="blur" />
+                    <p:message id="emailMsg" for="email" display="text" />
+                    <custom:field id="pwd1" label="Пароль" value="#{registrationBean.password}" match="pwd2"
+                                  password="true" required="true" feedback="true" update="pwd1Msg check" event="blur" />
+                    <p:message id="pwd1Msg" for="pwd1" display="text" />
+                    <custom:field id="pwd2" label="Повторите пароль" value="#{registrationBean.password}" 
+                                  password="true" required="true" feedback="true" promptLabel="Повторите пароль"/>
+                    <p:message id="pwd2Msg" for="pwd2" display="text" />
+                    <f:facet name="footer">
+                        <p:commandButton value="Registration" action="#{registrationBean.addUser}" styleClass="ui-button-default"
+                                         process="@form" update="@form" />
+                    </f:facet>
+                </p:panelGrid>
             </h:form>
         </ui:define>
     </ui:composition>
