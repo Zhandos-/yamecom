@@ -55,27 +55,19 @@
             <ui:insert name="head"></ui:insert>
         </h:head>
         <h:body>
-            <p:ajaxStatus id="ajaxStatusComponent" onstart="startAjaxRequest();" oncomplete="completeAjaxRequest(arguments);" rendered="#{empty showAjaxStatus || showAjaxStatus}"/>
-            <p:layout id="fullPage" fullPage="true">
-                <p:layoutUnit>  
+            
                     <ui:include src="fragments/top_menu.xhtml"/>
-                </p:layoutUnit> 
-                <p:layoutUnit>  
+                
                     <ui:include src="fragments/header.xhtml"/>
-                </p:layoutUnit> 
-                  <p:layoutUnit>  
+               
                     <ui:include src="fragments/slider.xhtml"/>
-                </p:layoutUnit>
-                 <p:layoutUnit>  
+               
                     <ui:include src="fragments/purchase_block.xhtml"/>
-                </p:layoutUnit>
-                 <p:layoutUnit>  
+                
                     <ui:include src="fragments/content.xhtml"/>
-                </p:layoutUnit>
-                  <p:layoutUnit>  
+               
                     <ui:include src="fragments/footer.xhtml"/>
-                </p:layoutUnit>
-            </p:layout>
+               
         </h:body>
     </f:view>
 </html>
