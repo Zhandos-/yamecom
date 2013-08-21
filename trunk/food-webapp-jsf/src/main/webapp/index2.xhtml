@@ -5,16 +5,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:h="http://java.sun.com/jsf/html">
-   <ui:composition template="./template/main-template.xhtml">
-        <ui:define name="head">
+         <ui:define name="head">
             <title>Main Page</title>
         </ui:define>
-        <ui:define name="content">
-            <c:set value="Main Page" var="currentPageTitle" scope="request"/>
-            <p:messages id="messages" />
-            <p:panel id="mainPanel">
-                <h:outputText value="#{loginBean.currentUser.email}"/>
-            </p:panel>
-        </ui:define>
-    </ui:composition>
+        <ui:include src="./template2/main-template.xhtml" />
 </html>
