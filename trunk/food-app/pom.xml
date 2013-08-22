@@ -62,7 +62,7 @@
     <modules>
         <module>../food-model</module>
         <module>../food-dao</module>
-        <!--<module>../food-webapp</module>-->
+        <module>../food-webapp</module>
         <module>../food-webapp-jsf</module>
         <!--<module>../food-reports</module>-->
     </modules>

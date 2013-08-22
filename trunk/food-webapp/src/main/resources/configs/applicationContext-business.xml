@@ -84,6 +84,16 @@
     
     <!-- Разрешаем использование аннотаций Spring MVC (то есть @Controller и.т.д) -->
     <mvc:annotation-driven />
+   <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+ <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+<property name="messageConverters">
+  <list>
+    <ref bean="jacksonMessageConverter"/>
+  </list>
+</property>
+</bean>
+
+
     <!-- Всю статику (изображения, css-файлы, javascript) положим в папку webapp/resources 
     и замаппим их на урл вида /resources/** -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
