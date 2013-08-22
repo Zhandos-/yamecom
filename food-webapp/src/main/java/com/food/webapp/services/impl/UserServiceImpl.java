@@ -10,6 +10,8 @@ import com.food.model.enums.EnumRole;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
+import static com.food.webapp.services.impl.UserServiceImpl.getGrantedAuthorities;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +21,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,8 +34,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  *
@@ -38,26 +46,31 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("userService")
 @Transactional("postgresT")
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserDetailsService, UserService, Serializable {
 
+    private static final long serialVersionUID = 1369253307786229411L;
     @Autowired
-   private UserDAO userDAO;
-   @Autowired
-   private RoleDAO roleDAO;
-    public boolean  authenticate(User user)
-    {
-         SecurityContextHolder.clearContext();
-        User user2 = getUserByEmail(user.getEmail());
-         String password=createHash(user.getPassword());
-         
-        if (user2!= null) {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user2.getEmail(), user.getPassword(),getAuthorities(user2.getRoles()));
-//            authentication.setAuthenticated(true);
+    private UserDAO userDAO;
+    @Autowired
+    private RoleDAO roleDAO;
+    private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    public boolean authenticate(User user) {
+
+        SecurityContextHolder.clearContext();
+        User realUser = getUserByEmail(user.getEmail());
+        String password = createHash(user.getPassword());
+
+        if (realUser != null) {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(realUser.getEmail(), user.getPassword(), getAuthorities(realUser.getRoles()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession();
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
         }
-         return false;
+        return false;
     }
-    
+
     @Override
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -75,7 +88,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         return u;
     }
-    
+
     @Override
     public User getUser(Long id) {
         return userDAO.getUser(id);
@@ -88,15 +101,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
-        User innerUser = getUserByEmail(login);
-        System.out.println(innerUser.getEmail() + "  ########################## login");
-        if (innerUser == null) {
-            System.out.println(" Нет пользователя  ########################## login");
-            throw new UsernameNotFoundException("user not found in database");
+        try {
+            User innerUser = getUserByEmail(login);
+            log.info("########################## login = {}", innerUser.getEmail());
+            org.springframework.security.core.userdetails.User springUser = new org.springframework.security.core.userdetails.User(innerUser.getEmail(), innerUser.getPassword(), true, true, true, true, getAuthorities(innerUser.getRoles()));
+            return springUser;
+        } catch (Exception ex) {
+            log.warn(">>>> Пользователь не найден в базе : {} {}", login, ex.getMessage());
+            return null;
         }
-        org.springframework.security.core.userdetails.User springUser = new org.springframework.security.core.userdetails.User(innerUser.getEmail(), innerUser.getPassword(), true, true, true, true, getAuthorities(innerUser.getRoles()));
-
-        return springUser;
     }
 
     @Override
@@ -107,7 +120,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         for (int i = 0; i < length; i++) {
             password = password + alphabet.charAt(rg.nextInt(alphabet.length()));
         }
-        System.out.println("*** Generated password:" + password);
+        log.info("*** Generated password: {}", password);
         return password;
     }
 
@@ -115,6 +128,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public String createHash(String password) {
         MessageDigest messageDigest;
         try {
+            log.info(">>> create hash for password: {} ", password);
             messageDigest = MessageDigest.getInstance("md5");
             messageDigest.update(password.getBytes(), 0, password.length());
             String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
@@ -123,13 +137,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             }
             return hashedPass;
         } catch (NoSuchAlgorithmException e) {
+            log.error("Error when create hashpassword: {}", e.getMessage());
             return "";
         }
     }
-
-   
-
-   
 
     @Override
     public User getUserByEmail(String email) {
@@ -159,8 +170,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public Role getRoles(Integer id) {
-        return userDAO.getRoles(id);
+    public Set<Role> getRolesByUserId(Long id) {
+        return userDAO.getRolesByUserId(id);
     }
 
     @Override
@@ -170,36 +181,44 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public boolean login(User user) {
-        String mail=user.getEmail();
-        String password=createHash(user.getPassword());
+        String mail = user.getEmail();
+        String password = createHash(user.getPassword());
         return userDAO.login(mail, password);
     }
 
     @Override
     public long save(User user) {
         user.setPassword(createHash(user.getPassword()));
-        Set<Role> roles=new HashSet<Role>();
-        Role role=roleDAO.getRoleByName(EnumRole.ROLE_CLIENT);
-        if(role==null)
-        {
-            role=new Role();
-            role.setDescription("для клиентов");
+        Set<Role> roles = new HashSet<Role>();
+        Role role = getRoleByEnum(EnumRole.ROLE_CLIENT);
+        if (role == null) {
+            role = new Role();
+            role.setDescription("Зарегистрированный пользователь сайта");
             role.setName(EnumRole.ROLE_CLIENT);
             roleDAO.save(role);
+            Role role1 = new Role();
+            role1.setDescription("Администратор сайта");
+            role1.setName(EnumRole.ROLE_ADMIN);
+            roleDAO.save(role1);
+            Role role2 = new Role();
+            role2.setDescription("Компаньон");
+            role2.setName(EnumRole.ROLE_CONSUMER);
+            roleDAO.save(role2);
         }
-        if(user.getId()==null)
-        {
-        roles.add(role);
-        user.setRoles(roles);
-        return userDAO.save(user).getId();
+        if (user.getId() == null) {
+            roles.add(role);
+            user.setRoles(roles);
+            return userDAO.save(user).getId();
+        } else {
+            roles.add(role);
+            user.setRoles(roles);
+            return userDAO.update(user).getId();
         }
-        else
-        {
-        roles.add(role);
-        user.setRoles(roles);    
-        return userDAO.update(user).getId();
-        }
-        
+    }
+
+    @Override
+    public Role getRoleByEnum(EnumRole role) {
+        return roleDAO.getRoleByName(role);
     }
 
     @Override
