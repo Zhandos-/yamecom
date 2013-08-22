@@ -26,4 +26,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
     public Set<Role> getRolesByUserId(Long id);
 
     public boolean login(String mail, String password);
+
+    public List<User> allUsers(int maxResults, int firstResult);
 }
