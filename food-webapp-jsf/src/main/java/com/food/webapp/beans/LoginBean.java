@@ -53,11 +53,6 @@ public class LoginBean implements Serializable {
         return null;
     }
 
-    public synchronized String logout() {
-
-        return null;
-    }
-
     public synchronized String getCurrentUserName() {
         String username = null;
         if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null) {
@@ -153,5 +148,9 @@ public class LoginBean implements Serializable {
             this.initUserName = getCurrentUserName();
             logger.info("{} roles: {}", new Object[]{initUserName, Arrays.toString(roles.toArray())});
         }
+    }
+
+    public List<User> usersList() {
+        return userDao.allUsers(1, 1);
     }
 }

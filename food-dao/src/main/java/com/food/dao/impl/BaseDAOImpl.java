@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -54,7 +56,6 @@ public abstract class BaseDAOImpl<T, KeyType extends Serializable> implements Ba
 
     @Override
     public T getById(KeyType id) {
-
         return (T) ht().get(domainClass, id);
     }
 
@@ -84,6 +85,7 @@ public abstract class BaseDAOImpl<T, KeyType extends Serializable> implements Ba
     }
 
     @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<T> getAll(int maxResult, int firstResult) {
         return ht().createCriteria(domainClass)
                 .setFirstResult(firstResult)

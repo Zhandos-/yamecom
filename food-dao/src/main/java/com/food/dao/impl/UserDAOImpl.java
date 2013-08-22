@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserDAOImpl extends BaseDAOImpl<User, Long> implements UserDAO, Serializable {
 
     private static final long serialVersionUID = 5105691350032035974L;
+    private static final String QUERY_GETALL_BETWEEN_ROWS = "select * from food.f_user limit :maxResults offset :firstResult";
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
@@ -69,5 +70,15 @@ public class UserDAOImpl extends BaseDAOImpl<User, Long> implements UserDAO, Ser
         } else {
             return false;
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
+    public List<User> allUsers(int maxResults, int firstResult) {
+        return ht().createSQLQuery(QUERY_GETALL_BETWEEN_ROWS)
+                .addEntity(User.class)
+                .setInteger("firstResult", firstResult)
+                .setInteger("maxResults", maxResults)
+                .list();
     }
 }
