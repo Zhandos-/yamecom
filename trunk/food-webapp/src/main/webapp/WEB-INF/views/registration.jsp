@@ -11,9 +11,7 @@
         <%@include file="include.jsp" %> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Регистрация</title>
-        <style>
-
-        </style>
+        <link href="resources/bootstrap/css/bootstrap-formhelpers.css" rel="stylesheet">
         <script>
 //            $(document).ready(function() {
 //                $('#btn').button();
@@ -24,6 +22,8 @@
         </script>
         <script src="resources/js/jquery/jquery.validate.min.js"></script>
         <script src="resources/js/custom/validation.js"></script>
+        <script src="resources/bootstrap/js/bootstrap-formhelpers-phone.format.js"></script>
+        <script src="resources/bootstrap/js/bootstrap-formhelpers-phone.js"></script>
 
     </head>
     <body>
@@ -63,6 +63,12 @@
                                 <label for="repassword" class="col-lg-3 control-label">Повтор&nbsp;пароля:</label>
                                 <div class="col-lg-7">
                                     <input  class="form-control" name="repassword"  id="repassword" placeholder="Повтор пароля" type="password"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="col-lg-3 control-label">Телефон:</label>
+                                <div class="col-lg-7">
+                                    <input  class="bfh-phone form-control" name="phone" data-format="+7 (ddd) ddd-dd-dd"  id="phone"  type="text"  />
                                 </div>
                             </div>
                             <div class="form-group">

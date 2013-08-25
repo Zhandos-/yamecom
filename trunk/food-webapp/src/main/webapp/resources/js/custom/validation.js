@@ -1,6 +1,6 @@
 jQuery.validator.addMethod('phone', function(phone_number, element) {
     return this.optional(element) || phone_number.length > 9 &&
-            phone_number.match(/^((8|\+7).?\d{3}.?\d{3}.?\d{2}.?\d{2})$/);
+            phone_number.match(/^((8|\+7).?\(\d{3}\).?\d{3}.?\d{2}.?\d{2})$/);
 }, 'неправильный телефонный номер'
         );
 jQuery.validator.addMethod('code', function(phone_number, element) {
@@ -28,6 +28,10 @@ $(document).ready(function() {
             repassword: {
                 minlength: 6,
                 equalTo: "#password",
+                required: true
+            },
+            phone: {
+                phone: true,
                 required: true
             }
         },
