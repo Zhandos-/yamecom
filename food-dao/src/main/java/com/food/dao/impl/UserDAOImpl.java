@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -27,38 +25,32 @@ public class UserDAOImpl extends BaseDAOImpl<User, Long> implements UserDAO, Ser
     private static final String QUERY_GETALL_BETWEEN_ROWS = "select * from food.f_user limit :maxResults offset :firstResult";
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public User getUser(Long id) {
         return (User) ht().createQuery("from User where id = :id").setParameter("id", id).uniqueResult();
 
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<User> allUsers() {
         return ht().createQuery("from User").list();
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<User> allActiveUsers() {
         return ht().createQuery("from User where active = true").list();
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public Set<Role> getRolesByUserId(Long id) {
         return new HashSet<Role>(ht().createQuery("select u.roles from User u where u.id=:id").setParameter("id", id).list());
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public User getUserByEmail(String email) {
         return (User) ht().createQuery("from User where email = :email").setString("email", email).uniqueResult();
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public boolean login(String mail, String password) {
         long count = ((Number) ht()
                 .createQuery("select COUNT(*) from User where email = :email and password=:password")
@@ -73,7 +65,6 @@ public class UserDAOImpl extends BaseDAOImpl<User, Long> implements UserDAO, Ser
     }
 
     @Override
-    @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<User> allUsers(int maxResults, int firstResult) {
         return ht().createSQLQuery(QUERY_GETALL_BETWEEN_ROWS)
                 .addEntity(User.class)
