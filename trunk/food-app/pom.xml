@@ -21,6 +21,7 @@
         <hibernate.version>4.2.3.Final</hibernate.version>
         <spring.logging.version>1.7.5</spring.logging.version>
         <log4j.logging.version>1.2.17</log4j.logging.version>
+        <jackson.version>1.9.4</jackson.version>
     </properties>
   
     <profiles>
@@ -35,6 +36,15 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <id>daniyarTest</id>
+            <properties>
+                <filter.filename>daniyarTest.properties</filter.filename>
+            </properties>
         </profile>
         <profile>
             <id>zhandos</id>
@@ -63,7 +73,7 @@
         <module>../food-model</module>
         <module>../food-dao</module>
         <module>../food-webapp</module>
-        <module>../food-webapp-jsf</module>
+        <!--<module>../food-webapp-jsf</module>-->
         <!--<module>../food-reports</module>-->
     </modules>
   

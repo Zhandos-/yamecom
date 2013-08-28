@@ -43,11 +43,18 @@
 
     <!-- Непосредственно бин dataSource -->
     <bean id="dataSourcePostgres"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="${db.driverClassName}" 
-          p:url="${db.url}"
-          p:username="${db.username}" 
-          p:password="${db.password}" />
+          class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          p:driverClass="${db.driverClassName}" 
+          p:jdbcUrl="${db.url}"
+          p:user="${db.username}" 
+          p:password="${db.password}" 
+          p:initialPoolSize="3"
+          p:acquireIncrement="3"
+          p:minPoolSize="1"
+          p:maxPoolSize="100"
+          p:maxIdleTime="60"
+          p:checkoutTimeout="6000"
+          destroy-method="close" />
     
     <!-- Настройки фабрики сессий Хибернейта -->
     <bean id="sessionFactoryPostgres"
@@ -55,11 +62,7 @@
         <property name="dataSource" ref="dataSourcePostgres" />
         <property name="packagesToScan">
             <list>
-                <value>com.food.model.additional</value>
-                <value>com.food.model.data</value>
-                <value>com.food.model.food</value>
-                <value>com.food.model.restaurant</value>
-                <value>com.food.model.user</value>
+                <value>com.food.model</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -67,10 +70,15 @@
                 <prop key="hibernate.hbm2ddl.auto">${db.hbmddl}</prop>
                 <prop key="hibernate.default_schema">${db.schemaName}</prop>
                 <prop key="hibernate.show_sql">${db.showsql}</prop>
+                <prop key="hibernate.format_sql">${db.formatsql}</prop>
                 <prop key="hibernate.dialect">${db.dialect}</prop>
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
+                <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.connection.autocommit">true</prop>
                 <prop key="javax.persistence.validation.mode">none</prop>
             </props>
         </property>
@@ -84,14 +92,14 @@
     
     <!-- Разрешаем использование аннотаций Spring MVC (то есть @Controller и.т.д) -->
     <mvc:annotation-driven />
-   <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-<property name="messageConverters">
-  <list>
-    <ref bean="jacksonMessageConverter"/>
-  </list>
-</property>
-</bean>
+    <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jacksonMessageConverter"/>
+            </list>
+        </property>
+    </bean>
 
 
     <!-- Всю статику (изображения, css-файлы, javascript) положим в папку webapp/resources 
