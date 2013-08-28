@@ -38,9 +38,11 @@ public interface UserService {
 
     public Role getRoleByEnum(EnumRole role);
 
-    public boolean login(User user);
+    public boolean login(String email, String password);
 
-    public long save(User user);
+    public long saveClient(User user, String phone);
 
-    public void registration(User user);
+    public void registration(User user, String phone);
+
+    public boolean checkEmail(String email);
 }
