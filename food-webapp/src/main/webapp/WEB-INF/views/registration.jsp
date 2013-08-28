@@ -36,43 +36,43 @@
                     <form:form method="post" id="form"  action="${pageContext.request.contextPath}/registration" commandName="user" >
                         <div class="bs-example form-horizontal"  role="form">
                             <div class="form-group">
-                                <label for="name" class="col-lg-3 control-label">Имя:</label>
+                                <label for="name" class="col-lg-4 control-label">Имя:</label>
                                 <div class="col-lg-7">
                                     <form:input path="name"  class="form-control" id="name" placeholder="Имя" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="surname" class="col-lg-3 control-label">Фамилия:</label>
+                                <label for="surname" class="col-lg-4 control-label">Фамилия:</label>
                                 <div class="col-lg-7">
                                     <form:input path="surname" class="form-control" id="surname" placeholder="Фамилия" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="email" class="col-lg-3 control-label">Почта:</label>
+                                <label for="email" class="col-lg-4 control-label">Почта *:</label>
                                 <div class="col-lg-7">
                                     <form:input path="email" class="form-control"  id="email" placeholder="Email" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="col-lg-3 control-label">Пароль:</label>
+                                <label for="password" class="col-lg-4 control-label">Пароль *:</label>
                                 <div class="col-lg-7">
                                     <form:password path="password" class="form-control"  id="password" placeholder="Пароль" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="repassword" class="col-lg-3 control-label">Повтор&nbsp;пароля:</label>
+                                <label for="repassword" class="col-lg-4 control-label">Повтор&nbsp;пароля *:</label>
                                 <div class="col-lg-7">
                                     <input  class="form-control" name="repassword"  id="repassword" placeholder="Повтор пароля" type="password"  />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="phone" class="col-lg-3 control-label">Телефон:</label>
+                                <label for="phone" class="col-lg-4 control-label">Телефон *:</label>
                                 <div class="col-lg-7">
                                     <input  class="bfh-phone form-control" name="phone" data-format="+7 (ddd) ddd-dd-dd"  id="phone"  type="text"  />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-lg-offset-3 col-lg-7">
+                                <div class="col-lg-offset-4 col-lg-7">
                                     <button type="submit" data-loading-text="подождите" id="btn" class="btn btn-primary">
                                         Регистрация
                                     </button>

@@ -4,8 +4,11 @@
  */
 package com.food.webapp.services.impl;
 
+import com.food.dao.PhoneDAO;
 import com.food.dao.RoleDAO;
 import com.food.dao.UserDAO;
+import com.food.model.data.Phone;
+import com.food.model.enums.EnumPhoneType;
 import com.food.model.enums.EnumRole;
 import com.food.model.user.Role;
 import com.food.model.user.User;
@@ -17,6 +20,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -43,27 +47,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userService")
 @Transactional("postgresT")
 public class UserServiceImpl implements UserDetailsService, UserService, Serializable {
-
+    
     private static final long serialVersionUID = 1369253307786229411L;
     @Autowired
     private UserDAO userDAO;
     @Autowired
     private RoleDAO roleDAO;
+    @Autowired
+    private PhoneDAO phoneDAO;
     private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
-
+    
     public boolean authenticate(User user) {
-
+        
         SecurityContextHolder.clearContext();
         User realUser = getUserByEmail(user.getEmail());
         String password = createHash(user.getPassword());
-
+        
         if (realUser != null) {
             Authentication authentication = new UsernamePasswordAuthenticationToken(realUser.getEmail(), user.getPassword(), getAuthorities(realUser.getRoles()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         return false;
     }
-
+    
     @Override
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -78,20 +84,20 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             username = obj.toString();
         }
         User u = getUserByEmail(username);
-
+        
         return u;
     }
-
+    
     @Override
     public User getUser(Long id) {
         return userDAO.getUser(id);
     }
-
+    
     @Override
     public List<User> allUsers() {
         return userDAO.allUsers();
     }
-
+    
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
         try {
@@ -104,7 +110,7 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             return null;
         }
     }
-
+    
     @Override
     public String generateUserPassword(Integer length) {
         Random rg = new Random();
@@ -116,7 +122,7 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         log.info("*** Generated password: {}", password);
         return password;
     }
-
+    
     @Override
     public String createHash(String password) {
         MessageDigest messageDigest;
@@ -134,12 +140,12 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             return "";
         }
     }
-
+    
     @Override
     public User getUserByEmail(String email) {
         return userDAO.getUserByEmail(email);
     }
-
+    
     public List<String> getRoles(Set<Role> rolesList) {
         List<String> roles = new ArrayList<String>();
         for (Role role : rolesList) {
@@ -147,13 +153,13 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         }
         return roles;
     }
-
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(Set<Role> rolesList) {
         List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(rolesList));
         return authList;
     }
-
+    
     public static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for (String role : roles) {
@@ -161,62 +167,78 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         }
         return authorities;
     }
-
+    
     @Override
     public Set<Role> getRolesByUserId(Long id) {
         return userDAO.getRolesByUserId(id);
     }
-
+    
     @Override
     public List<User> allActiveUsers() {
         return userDAO.allActiveUsers();
     }
-
+    
     @Override
-    public boolean login(User user) {
-        String mail = user.getEmail();
-        String password = createHash(user.getPassword());
-        return userDAO.login(mail, password);
+    public boolean login(String email, String password) {
+        boolean t = userDAO.login(email, createHash(password));
+        if (t) {
+            authenticate(getUserByEmail(email));
+        }
+        return t;
     }
-
+    
     @Override
-    public long save(User user) {
+    public long saveClient(User user, String phone) {
+        Long id;
         user.setPassword(createHash(user.getPassword()));
         Set<Role> roles = new HashSet<Role>();
         Role role = getRoleByEnum(EnumRole.ROLE_CLIENT);
-        if (role == null) {
-            role = new Role();
-            role.setDescription("Зарегистрированный пользователь сайта");
-            role.setName(EnumRole.ROLE_CLIENT);
-            roleDAO.save(role);
-            Role role1 = new Role();
-            role1.setDescription("Администратор сайта");
-            role1.setName(EnumRole.ROLE_ADMIN);
-            roleDAO.save(role1);
-            Role role2 = new Role();
-            role2.setDescription("Компаньон");
-            role2.setName(EnumRole.ROLE_CONSUMER);
-            roleDAO.save(role2);
-        }
+        Phone phone1 = new Phone();
+        phone1.setNumber(phone);
+        phone1.setPhoneType(EnumPhoneType.MOBILE);
         if (user.getId() == null) {
             roles.add(role);
             user.setRoles(roles);
-            return userDAO.save(user).getId();
+            user.setCreationDate(new Date());
+            phone1.setUser(user);
+            id = userDAO.save(user).getId();
+            phoneDAO.save(phone1);
+            return id;
         } else {
             roles.add(role);
             user.setRoles(roles);
-            return userDAO.update(user).getId();
+            id = userDAO.update(user).getId();
+            phone1.setUser(user);
+            phoneDAO.save(phone1);
+            return id;
         }
     }
-
+    
     @Override
     public Role getRoleByEnum(EnumRole role) {
-        return roleDAO.getRoleByName(role);
+        Role r = roleDAO.getRoleByName(role);
+        if (r == null) {
+            r = new Role();
+            r.setDescription(role.getDescription());
+            r.setName(role);
+            roleDAO.save(r);
+        }
+        return r;
     }
-
+    
     @Override
-    public void registration(User user) {
-        save(user);
+    public void registration(User user, String phone) {
+        saveClient(user, phone);
         authenticate(user);
+    }
+    
+    @Override
+    public boolean checkEmail(String email) {
+        User user = userDAO.getUserByEmail(email);
+        if (user != null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

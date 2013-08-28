@@ -1,7 +1,7 @@
 jQuery.validator.addMethod('phone', function(phone_number, element) {
     return this.optional(element) || phone_number.length > 9 &&
             phone_number.match(/^((8|\+7).?\(\d{3}\).?\d{3}.?\d{2}.?\d{2})$/);
-}, 'неправильный телефонный номер'
+}, 'Не корректный номер'
         );
 jQuery.validator.addMethod('code', function(phone_number, element) {
     return this.optional(element) || phone_number.length > 4 &&
@@ -19,7 +19,12 @@ $(document).ready(function() {
             },
             email: {
                 required: true,
-                email: true
+                email: true,
+                remote: {
+                    url: "checkemail",
+                    type: "post"
+
+                }
             },
             password: {
                 minlength: 6,
@@ -40,8 +45,8 @@ $(document).ready(function() {
             surname: "Обязательное поле",
             email: {
                 required: "Обязательное поле",
-                email: jQuery.format("Неправильный адрес почты")
-
+                email: jQuery.format("Неправильный адрес почты"),
+                remote: "Данная почта зарегестрирована, введите другую"
             },
             password: {
                 required: "Обязательное поле",

@@ -11,14 +11,42 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Логин</title>
         <%@include file="include.jsp" %> 
-        <script>
-            $(document).ready(function() {
-                $('#btn').button();
-                $('#btn').click(function() {
-                    $(this).button('loading');
-                });
-            });
-        </script>
+        <script src="resources/js/jquery/jquery.validate.min.js"></script>
+        <script src="resources/js/custom/login.js"></script>
+        <!--        <script>
+                    $(document).ready(function() {
+                        $('#btn').button();
+                        $('#form').submit(function() {
+                            $(this).button('loading');
+                            $.ajax({
+                                type: "POST",
+                                url: "login",
+                                data: $("#form").selorialize(),
+                                contentType: "application/json;charset=UTF-8",
+                                dataType: "json",
+                                success: OnSuccess,
+                                failure: function(response) {
+                                    alert(response.d);
+                                },
+                                error: function(response) {
+                                    alert(response.d);
+                                }
+                            });
+                        });
+                    });
+                    function OnSuccess(response) {
+        
+                        if (response)
+                        {
+                            $("#form").fadeOut();
+                        }
+                        else
+                        {
+                            $('#btn').button('reset');
+                            $("#result").after("<div class=\"alert alert-warning\">Неправильный логин или пароль</div>")
+                        }
+                    }
+                </script>-->
     </head>
     <body>
         <%@include file="includes/main_menu.jsp" %>
@@ -27,36 +55,38 @@
                 <div class="col-xs-1 col-sm-5 col-md-4"></div>
                 <div class="col-xs-10 col-sm-5 col-md-5">
                     <h1>Логин</h1>
-                    <div class="bs-example form-horizontal"  role="form">
-                        <div class="form-group">
-                            <label for="inputEmail1" class="col-lg-4 control-label">Почта:</label>
-                            <div class="col-lg-6">
-                                <input type="email" class="form-control"  id="inputEmail1" placeholder="почта">
+                    <form id="form" action="#" method="post">
+                        <div class="bs-example form-horizontal" id="result" role="form">
+                            <div class="form-group">
+                                <label for="email" class="col-lg-4 control-label">Почта:</label>
+                                <div class="col-lg-6">
+                                    <input type="text" name="email" id="email"  class="form-control"   placeholder="почта"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword1" class="col-lg-4 control-label">Пароль:</label>
-                            <div class="col-lg-6">
-                                <input type="password" class="form-control"  id="inputPassword1" placeholder="пароль">
+                            <div class="form-group">
+                                <label for="password" class="col-lg-4 control-label">Пароль:</label>
+                                <div class="col-lg-6">
+                                    <input type="password" name="password" id="password"  class="form-control"   placeholder="пароль"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-offset-4 col-lg-6">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox">Запомнить меня
-                                    </label>
+                            <div class="form-group">
+                                <div class="col-lg-offset-4 col-lg-6">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox">Запомнить меня
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-offset-4 col-lg-6">
+                                    <button type="submit" data-loading-text="подождите" id="btn" class="btn btn-primary">
+                                        Войти
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-lg-offset-4 col-lg-6">
-                                <button type="button" data-loading-text="подождите" id="btn" class="btn btn-primary">
-                                    Войти
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="col-xs-1 col-sm-5 col-md-4"></div>
             </div>
