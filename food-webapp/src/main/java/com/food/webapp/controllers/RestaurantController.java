@@ -25,32 +25,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class RestaurantController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
- 
-
-    @RequestMapping(value = "/restaurants",method = RequestMethod.GET)
+    @RequestMapping(value = "/restaurants", method = RequestMethod.GET)
     private String restaurants(Map<String, Object> map) {
-        List<Restaurant> r=new ArrayList<Restaurant>();
-        for(int i=0;i<5;i++)
-        {
-            
+        List<Restaurant> r = new ArrayList<Restaurant>();
+        for (int i = 0; i < 5; i++) {
         }
         return "/restaurants";
     }
-    
- @RequestMapping(value = "/restaurant")
-    private  @ResponseBody List<Restaurant> restaurant(Map<String, Object> map,
-    @RequestParam(value = "id", required = false) Long id,HttpServletResponse response) {
-        List<Restaurant> r=new ArrayList<Restaurant>();
-        for(int i=0;i<5;i++)
-        {
-            Restaurant restaurant=new Restaurant();
-            restaurant.setAbout("У нас покупай!"+i);
-            restaurant.setName("REstaurant"+i);
+
+    @RequestMapping(value = "/restaurant")
+    private @ResponseBody
+    List<Restaurant> restaurant(Map<String, Object> map,
+            @RequestParam(value = "id", required = false) Long id, HttpServletResponse response) {
+        List<Restaurant> r = new ArrayList<Restaurant>();
+        for (int i = 0; i < 5; i++) {
+            Restaurant restaurant = new Restaurant();
+            restaurant.setAbout("У нас покупай!" + i);
+            restaurant.setName("REstaurant" + i);
             r.add(restaurant);
         }
         return r;
     }
-   
 }
