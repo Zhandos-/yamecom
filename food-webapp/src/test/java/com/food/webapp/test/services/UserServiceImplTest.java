@@ -9,16 +9,13 @@ import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.Test;
-import org.testng.Assert;
 
 /**
  *
  * @author TWINS
  */
-@ContextConfiguration(locations = {"classpath:/configs/applicationTest.xml"})
-public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
+@ContextConfiguration(locations = {"classpath:/configs/applicationContext-business.xml"})
+public class UserServiceImplTest {
 
     @Autowired
     private BaseDAO baseDAO;

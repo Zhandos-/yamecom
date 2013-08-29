@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>food-app</artifactId>
@@ -54,6 +55,16 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <id>jelasticTest</id>
+            <properties>
+                <filter.filename>jelasticTest.properties</filter.filename>
+            </properties>
+        </profile>
+        
+        <profile>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <id>zhandos</id>
             <properties>
                 <filter.filename>zhandos.properties</filter.filename>
@@ -75,14 +86,9 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <version>${junit.version}</version>
             <type>jar</type>
         </dependency>
-        <!--        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.1.1</version>
-        </dependency>-->
 
         <dependency>
             <groupId>${project.groupId}</groupId>
