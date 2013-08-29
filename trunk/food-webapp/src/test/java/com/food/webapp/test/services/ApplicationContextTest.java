@@ -22,10 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 @TransactionConfiguration(transactionManager = "transactionManager")
 @Transactional
 public class ApplicationContextTest extends AbstractJUnit4SpringContextTests {
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Test
     public void testUserService() {
         User user = new User();
@@ -33,7 +33,7 @@ public class ApplicationContextTest extends AbstractJUnit4SpringContextTests {
         user.setPassword("s3cret");
         user.setName("Doni");
         user.setCreationDate(new Date());
-        userService.registration(user);
+        userService.registration(user, "+7 (702) 820-52-25");
         User u = userService.getUserByEmail("doni@gmail.com");
         System.out.println(u);
     }
