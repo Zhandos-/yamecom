@@ -59,7 +59,7 @@ public class Phone extends AEntity {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     public EnumPhoneType getPhoneType() {
         return phoneType;
     }

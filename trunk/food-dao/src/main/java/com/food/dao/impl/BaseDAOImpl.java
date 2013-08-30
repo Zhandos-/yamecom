@@ -23,67 +23,67 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 public abstract class BaseDAOImpl<T, KeyType extends Serializable> implements BaseDAO<T, KeyType> {
-
+    
     @Autowired
     @Qualifier("sessionFactoryPostgres")
     protected SessionFactory sessionFactory;
     private Class<T> domainClass;
-
+    
     public BaseDAOImpl() {
         domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
-
+    
     protected Session ht() {
         return sessionFactory.getCurrentSession();
     }
-
+    
     @Override
     public T save(T entity) {
         ht().saveOrUpdate(entity);
         return entity;
     }
-
+    
     @Override
     public T update(T entity) {
         ht().saveOrUpdate(entity);
         return entity;
     }
-
+    
     @Override
     public void delete(T entity) {
         ht().delete(entity);
     }
-
+    
     @Override
     public T getById(KeyType id) {
         return (T) ht().get(domainClass, id);
     }
-
+    
     @Override
     public List<T> getAll() {
         return ht().createCriteria(domainClass).list();
     }
-
+    
     @Override
     public void saveAll(Collection<T> entities) {
         for (T t : entities) {
             ht().save(t);
         }
     }
-
+    
     @Override
     public void updateAll(Collection<T> entities) {
         for (T t : entities) {
             ht().update(t);
         }
     }
-
+    
     @Override
     public void deleteById(KeyType id) {
         Object o = getById(id);
         ht().delete(o);
     }
-
+    
     @Override
     @Transactional(readOnly = true, propagation = Propagation.REQUIRED)
     public List<T> getAll(int maxResult, int firstResult) {
@@ -91,11 +91,18 @@ public abstract class BaseDAOImpl<T, KeyType extends Serializable> implements Ba
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResult).list();
     }
-
+    
     @Override
     public void deletelAllById(Collection<KeyType> ids) {
         for (KeyType id : ids) {
             deleteById(id);
+        }
+    }
+    
+    @Override
+    public void deleteAll(Collection<T> entities) {
+        for (T t : entities) {
+            delete(t);
         }
     }
 }
