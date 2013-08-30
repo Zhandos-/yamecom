@@ -61,10 +61,10 @@
                     res += " <table id=\"result\">";
                     res += "<tr >";
                     res += "<td style=\"width:300px;\">" + response[i].about + "</td>";
-                    res += "<td>" + response[i].name + "</td>"
+                    res += "<td>" + response[i].name + "</td>";
                     res += "</tr>";
-                    res += "</table>"
-                    res += "</div>"
+                    res += "</table>";
+                    res += "</div>";
                 }
                 $("#divResult").before(res);
             }

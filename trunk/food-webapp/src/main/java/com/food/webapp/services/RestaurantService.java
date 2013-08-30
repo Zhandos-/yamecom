@@ -12,10 +12,10 @@ import java.util.List;
  * @author TWINS
  */
 public interface RestaurantService {
-  
-public long saveOrUpdate(Restaurant restaurant);    
-    
-public List<Restaurant> getRestaurants(int pageSize,int pageNumber);
 
-public Restaurant getById(Long id);
+    public long saveOrUpdate(Restaurant restaurant);
+
+    public List<Restaurant> getRestaurants(int pageSize, int pageNumber);
+
+    public Restaurant getById(Long id);
 }

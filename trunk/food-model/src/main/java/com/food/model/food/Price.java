@@ -70,7 +70,7 @@ public class Price extends AEntity {
         this.discountPrice = discountPrice;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     public Food getFood() {
         return food;
     }

@@ -18,8 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("foodService")
 @Transactional("postgresT")
-public class FoodServiceImpl implements FoodService{
-@Autowired private FoodDAO foodDAO;
+public class FoodServiceImpl implements FoodService {
+
+    @Autowired
+    private FoodDAO foodDAO;
+
     @Override
     public long save(Food food) {
         return foodDAO.save(food).getId();
@@ -44,9 +47,4 @@ public class FoodServiceImpl implements FoodService{
     public void deleteAll(List<Long> foods) {
         foodDAO.deletelAllById(foods);
     }
-    
-   
-    
-    
-    
 }

@@ -9,7 +9,6 @@ package com.food.webapp.services;
  * @author TWINS
  */
 public interface InsertService {
-    
+
     public void insertRoles();
-    
 }

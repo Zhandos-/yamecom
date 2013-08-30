@@ -53,7 +53,7 @@
           p:minPoolSize="1"
           p:maxPoolSize="100"
           p:maxIdleTime="60"
-          p:checkoutTimeout="6000"
+          p:checkoutTimeout="600000"
           destroy-method="close" />
     
     <!-- Настройки фабрики сессий Хибернейта -->

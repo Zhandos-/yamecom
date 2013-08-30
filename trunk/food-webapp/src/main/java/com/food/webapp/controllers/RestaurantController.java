@@ -38,7 +38,8 @@ public class RestaurantController {
     @RequestMapping(value = "/restaurant")
     private @ResponseBody
     List<Restaurant> restaurant(Map<String, Object> map,
-            @RequestParam(value = "id", required = false) Long id, HttpServletResponse response) {
+            @RequestParam(value = "id", required = false) Long id,
+            HttpServletResponse response) {
         List<Restaurant> r = new ArrayList<Restaurant>();
         for (int i = 0; i < 5; i++) {
             Restaurant restaurant = new Restaurant();

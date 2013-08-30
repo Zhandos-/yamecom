@@ -9,5 +9,4 @@ package com.food.webapp.services;
  * @author TWINS
  */
 public interface OrderService {
-    
 }
