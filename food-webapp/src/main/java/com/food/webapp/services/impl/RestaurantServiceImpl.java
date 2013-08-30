@@ -13,6 +13,7 @@ import com.food.webapp.services.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  *
  * @author TWINS
@@ -20,32 +21,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("restaurantService")
 @Transactional("postgresT")
 public class RestaurantServiceImpl implements RestaurantService {
-@Autowired private RestaurantDAO restaurantDAO;
-@Autowired private UserService userService;
+
+    @Autowired
+    private RestaurantDAO restaurantDAO;
+    @Autowired
+    private UserService userService;
+
     @Override
     public long saveOrUpdate(Restaurant restaurant) {
-        User user=userService.getCurrentUser();
-        if(restaurant.getId()!=null)
-        {
-        restaurant.setUser(user);
-        return restaurantDAO.save(restaurant).getId();
-        }
-        else
-        {
-        restaurant.setUser(user);
-        return restaurantDAO.update(restaurant).getId();
+        User user = userService.getCurrentUser();
+        if (restaurant.getId() != null) {
+            restaurant.setUser(user);
+            return restaurantDAO.save(restaurant).getId();
+        } else {
+            restaurant.setUser(user);
+            return restaurantDAO.update(restaurant).getId();
         }
     }
 
     @Override
     public List<Restaurant> getRestaurants(int maxResult, int firtsResult) {
-       return restaurantDAO.getAll(maxResult, firtsResult);
+        return restaurantDAO.getAll(maxResult, firtsResult);
     }
 
     @Override
     public Restaurant getById(Long id) {
-     return restaurantDAO.getById(id);
+        return restaurantDAO.getById(id);
     }
-    
-    
 }

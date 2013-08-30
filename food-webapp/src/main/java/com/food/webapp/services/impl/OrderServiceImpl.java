@@ -7,6 +7,7 @@ package com.food.webapp.services.impl;
 import org.springframework.stereotype.Service;
 import com.food.webapp.services.OrderService;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  *
  * @author TWINS
@@ -14,5 +15,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("orderService")
 @Transactional("postgresT")
 public class OrderServiceImpl implements OrderService {
-    
 }

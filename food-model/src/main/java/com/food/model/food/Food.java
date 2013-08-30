@@ -37,6 +37,7 @@ public class Food extends AEntity {
     private FoodType foodType;
     private Date creationDate;
     private Restaurant restaurant;
+    private Price price;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_seq")
@@ -93,6 +94,15 @@ public class Food extends AEntity {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
     }
 
     @Override

@@ -47,7 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userService")
 @Transactional("postgresT")
 public class UserServiceImpl implements UserDetailsService, UserService, Serializable {
-    
+
     private static final long serialVersionUID = 1369253307786229411L;
     @Autowired
     private UserDAO userDAO;
@@ -56,20 +56,20 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
     @Autowired
     private PhoneDAO phoneDAO;
     private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
-    
+
     public boolean authenticate(User user) {
-        
+
         SecurityContextHolder.clearContext();
         User realUser = getUserByEmail(user.getEmail());
         String password = createHash(user.getPassword());
-        
+
         if (realUser != null) {
             Authentication authentication = new UsernamePasswordAuthenticationToken(realUser.getEmail(), user.getPassword(), getAuthorities(realUser.getRoles()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         return false;
     }
-    
+
     @Override
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -84,20 +84,20 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             username = obj.toString();
         }
         User u = getUserByEmail(username);
-        
+
         return u;
     }
-    
+
     @Override
     public User getUser(Long id) {
         return userDAO.getUser(id);
     }
-    
+
     @Override
     public List<User> allUsers() {
         return userDAO.allUsers();
     }
-    
+
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
         try {
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             return null;
         }
     }
-    
+
     @Override
     public String generateUserPassword(Integer length) {
         Random rg = new Random();
@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         log.info("*** Generated password: {}", password);
         return password;
     }
-    
+
     @Override
     public String createHash(String password) {
         MessageDigest messageDigest;
@@ -140,12 +140,12 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             return "";
         }
     }
-    
+
     @Override
     public User getUserByEmail(String email) {
         return userDAO.getUserByEmail(email);
     }
-    
+
     public List<String> getRoles(Set<Role> rolesList) {
         List<String> roles = new ArrayList<String>();
         for (Role role : rolesList) {
@@ -153,13 +153,13 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         }
         return roles;
     }
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(Set<Role> rolesList) {
         List<GrantedAuthority> authList = getGrantedAuthorities(getRoles(rolesList));
         return authList;
     }
-    
+
     public static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for (String role : roles) {
@@ -167,17 +167,17 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         }
         return authorities;
     }
-    
+
     @Override
     public Set<Role> getRolesByUserId(Long id) {
         return userDAO.getRolesByUserId(id);
     }
-    
+
     @Override
     public List<User> allActiveUsers() {
         return userDAO.allActiveUsers();
     }
-    
+
     @Override
     public boolean login(String email, String password) {
         boolean t = userDAO.login(email, createHash(password));
@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         }
         return t;
     }
-    
+
     @Override
     public long saveClient(User user, String phone) {
         Long id;
@@ -213,7 +213,7 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             return id;
         }
     }
-    
+
     @Override
     public Role getRoleByEnum(EnumRole role) {
         Role r = roleDAO.getRoleByName(role);
@@ -225,13 +225,13 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         }
         return r;
     }
-    
+
     @Override
     public void registration(User user, String phone) {
         saveClient(user, phone);
         authenticate(user);
     }
-    
+
     @Override
     public boolean checkEmail(String email) {
         User user = userDAO.getUserByEmail(email);

@@ -13,33 +13,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.food.webapp.services.UserService;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  *
  * @author TWINS
  */
 @Service("addressService")
 @Transactional("postgresT")
-public class AddressServiceImpl implements AddressService{
+public class AddressServiceImpl implements AddressService {
 
-    @Autowired private AddressDAO addressDAO;
-    
-    @Autowired UserService userService;
-            
+    @Autowired
+    private AddressDAO addressDAO;
+    @Autowired
+    UserService userService;
+
     @Override
     public long saveOrUpdate(Address address) {
-        User user=userService.getCurrentUser();
+        User user = userService.getCurrentUser();
         address.setUser(user);
-        return  addressDAO.save(address).getId();
+        return addressDAO.save(address).getId();
     }
 
     @Override
     public void delete(Address address) {
-     addressDAO.delete(address);
+        addressDAO.delete(address);
     }
 
     @Override
     public void deleteAll(Set<Long> addressId) {
-      addressDAO.deleteAll(addressId);
+        addressDAO.deleteAll(addressId);
     }
-    
 }

@@ -8,7 +8,6 @@ import com.food.dao.RoleDAO;
 import com.food.model.enums.EnumRole;
 import com.food.model.user.Role;
 import com.food.webapp.services.InsertService;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
