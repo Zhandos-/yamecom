@@ -33,4 +33,6 @@ public interface BaseDAO<T, KeyType extends Serializable> {
     public void deleteById(KeyType id);
 
     public void deletelAllById(Collection<KeyType> ids);
+
+    public void deleteAll(Collection<T> entities);
 }

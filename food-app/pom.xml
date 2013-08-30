@@ -51,9 +51,9 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
-            <id>jelasticTest</id>
+            <id>zhandosTest</id>
             <properties>
-                <filter.filename>jelasticTest.properties</filter.filename>
+                <filter.filename>zhandosTest.properties</filter.filename>
             </properties>
         </profile>
         <profile>
