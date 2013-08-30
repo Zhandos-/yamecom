@@ -7,6 +7,7 @@ package com.food.webapp.controllers;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +46,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     private @ResponseBody
     boolean login(@RequestParam(value = "email", required = true) String email,
-            @RequestParam(value = "password", required = true) String password) {
+            @RequestParam(value = "password", required = true) String password, HttpSession httpSession) {
         return userService.login(email, password);
     }
 

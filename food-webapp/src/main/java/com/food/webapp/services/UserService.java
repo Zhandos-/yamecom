@@ -45,4 +45,6 @@ public interface UserService {
     public void registration(User user, String phone);
 
     public boolean checkEmail(String email);
+
+    public boolean authenticate(User user);
 }
