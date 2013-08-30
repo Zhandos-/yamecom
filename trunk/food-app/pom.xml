@@ -57,6 +57,15 @@
             </properties>
         </profile>
         <profile>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <id>jelasticTest</id>
+            <properties>
+                <filter.filename>jelasticTest.properties</filter.filename>
+            </properties>
+        </profile>
+        <profile>
             <id>zhandos</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
