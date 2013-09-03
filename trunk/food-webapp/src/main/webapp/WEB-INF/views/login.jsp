@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : login
     Created on : Jul 28, 2013, 11:25:14 AM
     Author     : TWINS
@@ -10,43 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Логин</title>
-        <%@include file="include.jsp" %> 
+        <%@include file="include.jsp" %>
         <script src="resources/js/jquery/jquery.validate.min.js"></script>
         <script src="resources/js/custom/login.js"></script>
-        <!--        <script>
-                    $(document).ready(function() {
-                        $('#btn').button();
-                        $('#form').submit(function() {
-                            $(this).button('loading');
-                            $.ajax({
-                                type: "POST",
-                                url: "login",
-                                data: $("#form").selorialize(),
-                                contentType: "application/json;charset=UTF-8",
-                                dataType: "json",
-                                success: OnSuccess,
-                                failure: function(response) {
-                                    alert(response.d);
-                                },
-                                error: function(response) {
-                                    alert(response.d);
-                                }
-                            });
-                        });
-                    });
-                    function OnSuccess(response) {
-        
-                        if (response)
-                        {
-                            $("#form").fadeOut();
-                        }
-                        else
-                        {
-                            $('#btn').button('reset');
-                            $("#result").after("<div class=\"alert alert-warning\">Неправильный логин или пароль</div>")
-                        }
-                    }
-                </script>-->
     </head>
     <body>
         <%@include file="includes/main_menu.jsp" %>

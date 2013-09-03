@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : login
     Created on : Jul 28, 2013, 11:25:14 AM
     Author     : TWINS
@@ -8,10 +8,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="include.jsp" %> 
+        <%@include file="include.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Регистрация</title>
-        <link href="resources/bootstrap/css/bootstrap-formhelpers.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap-formhelpers.css" rel="stylesheet">
         <script>
 //            $(document).ready(function() {
 //                $('#btn').button();
@@ -20,10 +20,10 @@
 //                });
 //            });
         </script>
-        <script src="resources/js/jquery/jquery.validate.min.js"></script>
-        <script src="resources/js/custom/validation.js"></script>
-        <script src="resources/bootstrap/js/bootstrap-formhelpers-phone.format.js"></script>
-        <script src="resources/bootstrap/js/bootstrap-formhelpers-phone.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery.validate.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/custom/registration.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap-formhelpers-phone.format.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap-formhelpers-phone.js"></script>
 
     </head>
     <body>

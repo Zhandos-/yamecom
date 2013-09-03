@@ -208,8 +208,6 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             roles.add(role);
             user.setRoles(roles);
             id = userDAO.update(user).getId();
-            phone1.setUser(user);
-            phoneDAO.save(phone1);
             return id;
         }
     }
@@ -240,5 +238,82 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
         } else {
             return true;
         }
+    }
+
+    @Override
+    public boolean isPasswordRight(String password) {
+        password = createHash(password);
+        User user = getCurrentUser();
+        if (getCurrentUser() == null) {
+            return false;
+        } else {
+            boolean t = password.equals(user.getPassword());
+            return t;
+        }
+    }
+
+    @Override
+    public boolean changePassword(String password) {
+        boolean response = false;
+        try {
+            User user = getUserByEmail(getCurrentUser().getEmail());
+            user.setPassword(createHash(password));
+            userDAO.update(user);
+            response = true;
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error(e.getLocalizedMessage());
+            }
+        }
+        return response;
+    }
+
+    @Override
+    public boolean updateProfile(User user) {
+        boolean response = false;
+        try {
+
+            User u = getCurrentUser();
+            u.setEmail(user.getEmail());
+            u.setName(user.getName());
+            u.setSurname(user.getSurname());
+            userDAO.update(u);
+            Phone phone = user.getPhones().get(0);
+            phone.setUser(u);
+            phoneDAO.update(phone);
+            authenticate(u);
+            response = true;
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Ошибка при обновлении профиля", e.getLocalizedMessage());
+            }
+        }
+        return response;
+    }
+
+    @Override
+    public List<Phone> getCurrentUserPhones() {
+        return getCurrentUser().getPhones();
+    }
+
+    @Override
+    public boolean savePhonesForCurrentUser(List<Phone> phones) {
+        if (log.isInfoEnabled()) {
+            log.info("Вызов savePhonesForCurrentUser");
+        }
+        boolean response = false;
+        try {
+            User user = getCurrentUser();
+            user.setPhones(phones);
+            response = true;
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("Ошибка при обновлении телефонов профиля", e.getLocalizedMessage());
+            }
+        }
+        if (log.isInfoEnabled()) {
+            log.info("Конец вызова savePhonesForCurrentUser");
+        }
+        return response;
     }
 }

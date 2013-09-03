@@ -51,13 +51,13 @@ $(document).ready(function() {
         }
         ,
         highlight: function(label) {
-            $(label).closest('.form-control').removeClass('success').addClass('error');
+//            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         }
 //        ,
 //        success: function(label) {
 //            label
-//                    .text('OK!').addClass('valid')
-//                    .closest('.form-control').addClass('success');
+//
+//                    .closest('.form-group').addClass('has-success');
 //
 //        }
     });
@@ -68,8 +68,9 @@ function OnSuccess(response) {
 
     if (response)
     {
+        $("#btn").button('loading');
         $("#form").fadeOut();
-        window.location.href = 'http://localhost:8080/food/';
+        window.location.href = './';
     }
     else
     {
