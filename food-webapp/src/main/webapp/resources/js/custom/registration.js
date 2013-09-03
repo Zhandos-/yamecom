@@ -62,14 +62,15 @@ $(document).ready(function() {
         }
         ,
         highlight: function(label) {
-            $(label).closest('.form-control').removeClass('success').addClass('error');
-        },
-        success: function(label) {
-            label
-                    .text('OK!').addClass('valid')
-                    .closest('.form-control').addClass('success');
-
+//            $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
         }
+//        ,
+//        success: function(label) {
+//            label
+//
+//                    .closest('.form-group').addClass('has-success');
+//
+//        }
     });
 
 });

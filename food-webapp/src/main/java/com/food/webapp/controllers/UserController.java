@@ -30,17 +30,13 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping(value = "/profile")
-    private String logout(Map<String, Object> map) {
-        User user = userService.getUser(userService.getCurrentUser().getId());
-
-        map.put("user", user);
-        return "client/profile";
-    }
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     private String login() {
-        return "login";
+        if (userService.getCurrentUser() != null) {
+            return "redirect:/";
+        } else {
+            return "login";
+        }
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -52,8 +48,12 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     private String registration(Map<String, Object> map) {
-        User user = new User();
-        map.put("user", user);
+        if (userService.getCurrentUser() != null) {
+            return "redirect:/";
+        } else {
+            User user = new User();
+            map.put("user", user);
+        }
         return "registration";
     }
 
@@ -63,15 +63,44 @@ public class UserController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/checkemail", method = RequestMethod.POST)
+    @RequestMapping(value = {"/checkemail", "client/checkemail"}, method = RequestMethod.POST)
     private @ResponseBody
     boolean checkEmail(@RequestParam(value = "email", required = true) String email) {
-        return userService.checkEmail(email);
+        email = email.toLowerCase();
+        User user = userService.getCurrentUser();
+        if (user != null) {
+            if (user.getEmail().equals(email)) {
+                return true;
+            } else {
+                return userService.checkEmail(email);
+            }
+        } else {
+            return userService.checkEmail(email);
+        }
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    private String editProfile(User user, @RequestParam("phone") String phone) {
-        userService.registration(user, phone);
-        return "redirect:/";
+    @RequestMapping(value = "client/changeProfile", method = RequestMethod.POST)
+    private @ResponseBody
+    boolean editProfile(User user) {
+        return userService.updateProfile(user);
+
+    }
+
+    @RequestMapping(value = {"/isPasswordRight", "client/isPasswordRight"}, method = RequestMethod.POST)
+    private @ResponseBody
+    boolean isPasswordRight(@RequestParam(value = "oldpassword", required = true) String password) {
+        User user = userService.getCurrentUser();
+        if (user != null) {
+            return userService.isPasswordRight(password);
+        } else {
+            return false;
+        }
+    }
+
+    @RequestMapping(value = "client/changePasssword", method = RequestMethod.POST)
+    private @ResponseBody
+    boolean editPasssword(@RequestParam(value = "password", required = true) String password) {
+        return userService.changePassword(password);
+
     }
 }

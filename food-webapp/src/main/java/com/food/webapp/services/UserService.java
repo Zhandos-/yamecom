@@ -4,6 +4,7 @@
  */
 package com.food.webapp.services;
 
+import com.food.model.data.Phone;
 import com.food.model.enums.EnumRole;
 import com.food.model.user.Role;
 import com.food.model.user.User;
@@ -47,4 +48,14 @@ public interface UserService {
     public boolean checkEmail(String email);
 
     public boolean authenticate(User user);
+
+    public boolean isPasswordRight(String password);
+
+    public boolean changePassword(String password);
+
+    public boolean updateProfile(User user);
+
+    public List<Phone> getCurrentUserPhones();
+
+    public boolean savePhonesForCurrentUser(List<Phone> phones);
 }

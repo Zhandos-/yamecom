@@ -5,7 +5,12 @@
 package com.food.dao.impl;
 
 import com.food.dao.TestDao;
+import com.food.model.data.Phone;
+import com.food.model.enums.EnumPhoneType;
+import com.food.model.enums.EnumRole;
+import com.food.model.user.Role;
 import com.food.model.user.User;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -77,11 +82,38 @@ public class TestDAOImpl implements TestDao {
 
     @Override
     public User fillClient(String password) {
+        Set<Role> roles = new HashSet<Role>();
+        List<Phone> phones = new ArrayList<Phone>();
+        EnumRole enumRole = EnumRole.ROLE_CLIENT;
+        Role role = (Role) ht().createQuery("from Role where name=:name").setString("name", "ROLE_CLIENT").uniqueResult();
+        if (role == null) {
+            role = new Role();
+            role.setDescription(enumRole.getDescription());
+            role.setName(enumRole);
+            ht().save(role);
+        }
+        roles.add(role);
         User user = new User();
+        user.setRoles(roles);
         user.setEmail("doni@gmail.comh");
         user.setPassword(password);
         user.setName("Doni");
         user.setSurname("Artykov");
+        {
+            Phone phone = new Phone();
+            phone.setPhoneType(EnumPhoneType.MOBILE);
+            phone.setNumber("+7 (702) 820-52-25");
+            ht().save(phone);
+            phones.add(phone);
+        }
+        {
+            Phone phone = new Phone();
+            phone.setPhoneType(EnumPhoneType.MOBILE);
+            phone.setNumber("+7 (702) 828-52-25");
+            ht().save(phone);
+            phones.add(phone);
+        }
+        user.setPhones(phones);
         ht().save(user);
         return user;
     }
