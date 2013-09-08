@@ -6,14 +6,13 @@
              http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
    
     <http access-denied-page="/error403" use-expressions="true">
-        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
         <remember-me user-service-ref="userService" />
                 
-        <intercept-url pattern="/**" access="hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN','ROLE_EMPLOYEE','ROLE_ANONYMOUS')" />
+        <intercept-url pattern="/**" access="hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN','ROLE_COMPANION','ROLE_ANONYMOUS')" />
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-        <intercept-url pattern="/clients/**" access="hasAnyRole('ROLE_CLIENT')" />
-        <intercept-url pattern="/employers/**" access="hasAnyRole('ROLE_EMPLOYEE')" />
+        <intercept-url pattern="/client/**" access="hasAnyRole('ROLE_CLIENT')" />
+        <intercept-url pattern="/companion/**" access="hasAnyRole('ROLE_COMPANION')" />
         <form-login login-page="/login" default-target-url="/" authentication-failure-url="/login" />
         <logout logout-url="/logout" logout-success-url="/" />
 		              
@@ -33,7 +32,7 @@
             <password-encoder hash="md5"/>
             <user-service>
                 <user name="test"
-                      password="2a2d595e6ed9a0b24f027f2b63b134d6" authorities="ROLE_CLIENT,ROLE_ADMIN,ROLE_EMPLOYEE,ROLE_ANONYMOUS" />
+                      password="2a2d595e6ed9a0b24f027f2b63b134d6" authorities="ROLE_CLIENT,ROLE_ADMIN,ROLE_COMPANION,ROLE_ANONYMOUS" />
             </user-service>
         </authentication-provider>
     </authentication-manager>

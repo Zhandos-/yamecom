@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="include.jsp" %> 
+        <%@include file="includes/include.jsp" %> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Главная</title>
     </head>

@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Логин</title>
-        <%@include file="include.jsp" %>
+        <%@include file="includes/include.jsp" %>
         <script src="resources/js/jquery/jquery.validate.min.js"></script>
         <script src="resources/js/custom/login.js"></script>
     </head>

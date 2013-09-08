@@ -1,39 +1,30 @@
-<%--
-    Document   : login
-    Created on : Jul 28, 2013, 11:25:14 AM
-    Author     : TWINS
+<%-- 
+    Document   : restaurateur
+    Created on : Sep 8, 2013, 10:26:10 PM
+    Author     : daniyar.artykov
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="include.jsp" %>
+        <%@include file="../includes/include.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Регистрация</title>
+        <title>Регистрация ресторана</title>
         <link href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap-formhelpers.css" rel="stylesheet">
-        <script>
-//            $(document).ready(function() {
-//                $('#btn').button();
-//                $('#btn').click(function() {
-//                    $(this).button('loading');
-//                });
-//            });
-        </script>
         <script src="${pageContext.request.contextPath}/resources/js/jquery/jquery.validate.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/custom/registration.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap-formhelpers-phone.format.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap-formhelpers-phone.js"></script>
-
     </head>
     <body>
-        <%@include file="includes/main_menu.jsp" %>
+        <%@include file="../includes/main_menu.jsp" %>
         <div class="container">
             <div class="row">
                 <div class="col-xs-1 col-sm-5 col-md-3"></div>
                 <div class="col-xs-10 col-sm-5 col-md-6">
                     <h1>Регистрация</h1>
-                    <form:form method="post" id="form"  action="${pageContext.request.contextPath}/registration" commandName="user" >
+                    <form:form method="post" id="form"  action="${pageContext.request.contextPath}/companion/registration" commandName="user" >
                         <div class="bs-example form-horizontal"  role="form">
                             <div class="form-group">
                                 <label for="name" class="col-lg-4 control-label">Имя:</label>
@@ -68,7 +59,7 @@
                             <div class="form-group">
                                 <label for="phone" class="col-lg-4 control-label">Телефон *:</label>
                                 <div class="col-lg-7">
-                                    <input  class="bfh-phone form-control" name="phone" data-format="+7 (ddd) ddd-dd-dd"  id="phone"  type="text"  />
+                                    <input class="bfh-phone form-control" name="phone" data-format="+7 (ddd) ddd-dd-dd" id="phone" type="text" />
                                 </div>
                             </div>
                             <div class="form-group">

@@ -41,9 +41,9 @@ public interface UserService {
 
     public boolean login(String email, String password);
 
-    public long saveClient(User user, String phone);
+    public long saveClient(User user, String phone, EnumRole enumRole);
 
-    public void registration(User user, String phone);
+    public void registration(User user, String phone, EnumRole enumRole);
 
     public boolean checkEmail(String email);
 
