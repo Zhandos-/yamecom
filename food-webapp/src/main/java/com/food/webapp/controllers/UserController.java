@@ -4,6 +4,7 @@
  */
 package com.food.webapp.controllers;
 
+import com.food.model.enums.EnumRole;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class UserController {
         return userService.login(email, password);
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @RequestMapping(value = "/client/registration", method = RequestMethod.GET)
     private String registration(Map<String, Object> map) {
         if (userService.getCurrentUser() != null) {
             return "redirect:/";
@@ -54,16 +55,33 @@ public class UserController {
             User user = new User();
             map.put("user", user);
         }
-        return "registration";
+        return "client/registration";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @RequestMapping(value = "/client/registration", method = RequestMethod.POST)
     private String registration(User user, @RequestParam("phone") String phone) {
-        userService.registration(user, phone);
+        userService.registration(user, phone, EnumRole.ROLE_CLIENT);
         return "redirect:/";
     }
 
-    @RequestMapping(value = {"/checkemail", "client/checkemail"}, method = RequestMethod.POST)
+    @RequestMapping(value = "/companion/registration", method = RequestMethod.GET)
+    private String companionRegistration(Map<String, Object> map) {
+        if (userService.getCurrentUser() != null) {
+            return "redirect:/";
+        } else {
+            User user = new User();
+            map.put("user", user);
+        }
+        return "companion/registration";
+    }
+
+    @RequestMapping(value = "/companion/registration", method = RequestMethod.POST)
+    private String companionRegistration(User user, @RequestParam("phone") String phone) {
+        userService.registration(user, phone, EnumRole.ROLE_COMPANION);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = {"/companion/checkemail", "/client/checkemail"}, method = RequestMethod.POST)
     private @ResponseBody
     boolean checkEmail(@RequestParam(value = "email", required = true) String email) {
         email = email.toLowerCase();
@@ -79,6 +97,21 @@ public class UserController {
         }
     }
 
+//    @RequestMapping(value = {"/companion/checkemail", "client/checkemail"}, method = RequestMethod.POST)
+//    private @ResponseBody
+//    boolean companionCheckEmail(@RequestParam(value = "email", required = true) String email) {
+//        email = email.toLowerCase();
+//        User user = userService.getCurrentUser();
+//        if (user != null) {
+//            if (user.getEmail().equals(email)) {
+//                return true;
+//            } else {
+//                return userService.checkEmail(email);
+//            }
+//        } else {
+//            return userService.checkEmail(email);
+//        }
+//    }
     @RequestMapping(value = "client/changeProfile", method = RequestMethod.POST)
     private @ResponseBody
     boolean editProfile(User user) {

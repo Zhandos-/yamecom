@@ -55,14 +55,13 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
     private RoleDAO roleDAO;
     @Autowired
     private PhoneDAO phoneDAO;
-    private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static Logger log = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
+    @Override
     public boolean authenticate(User user) {
 
         SecurityContextHolder.clearContext();
         User realUser = getUserByEmail(user.getEmail());
-        String password = createHash(user.getPassword());
-
         if (realUser != null) {
             Authentication authentication = new UsernamePasswordAuthenticationToken(realUser.getEmail(), user.getPassword(), getAuthorities(realUser.getRoles()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -188,11 +187,11 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
     }
 
     @Override
-    public long saveClient(User user, String phone) {
+    public long saveClient(User user, String phone, EnumRole enumRole) {
         Long id;
         user.setPassword(createHash(user.getPassword()));
         Set<Role> roles = new HashSet<Role>();
-        Role role = getRoleByEnum(EnumRole.ROLE_CLIENT);
+        Role role = getRoleByEnum(enumRole);
         Phone phone1 = new Phone();
         phone1.setNumber(phone);
         phone1.setPhoneType(EnumPhoneType.MOBILE);
@@ -225,8 +224,8 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
     }
 
     @Override
-    public void registration(User user, String phone) {
-        saveClient(user, phone);
+    public void registration(User user, String phone, EnumRole enumRole) {
+        saveClient(user, phone, enumRole);
         authenticate(user);
     }
 

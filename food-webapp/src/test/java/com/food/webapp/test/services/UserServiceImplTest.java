@@ -6,11 +6,10 @@ package com.food.webapp.test.services;
 
 import com.food.dao.TestDao;
 import com.food.model.data.Phone;
-import com.food.model.enums.EnumPhoneType;
+import com.food.model.enums.EnumRole;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import com.food.webapp.utils.UserUtil;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
             user.setEmail("doni@gmail.com");
             user.setPassword("s3cret");
             user.setName("Doni");
-            userService.registration(user, "+7 (702) 820-52-25");
+            userService.registration(user, "+7 (702) 820-52-25", EnumRole.ROLE_ADMIN);
             User u = userService.getUserByEmail("doni@gmail.com");
             assertNotNull(u);
             assertEquals(user.getEmail(), u.getEmail());
@@ -61,7 +60,7 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
             user.setName("Doni");
             user.setCreationDate(new Date());
             UserUtil.createHash("");
-            userService.registration(user, "+7 (702) 820-52-25");
+            userService.registration(user, "+7 (702) 820-52-25", EnumRole.ROLE_CLIENT);
             User u = userService.getUserByEmail("doni@gmail.comh");
             assertNotNull(u);
         }

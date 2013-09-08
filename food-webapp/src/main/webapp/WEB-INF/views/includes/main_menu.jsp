@@ -36,12 +36,14 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <%if (request.getUserPrincipal() != null) {%>
+                <%if (request.isUserInRole("ROLE_COMPANION")) {%>
                 <li class="active dropdown">
-                    <a href="${pageContext.request.contextPath}/logout" >Выйти</a>
+                    <a href="${pageContext.request.contextPath}/companion/restaurateur" >Ресторатор</a>
                 </li>
+                <% }%>
                 <li class="active dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <%
+                        <%                            
                             out.print(request.getUserPrincipal().getName());
                         %>
                         <b class="caret"></b></a>
@@ -53,6 +55,7 @@
                         <li class="divider"></li>
                         <li class="dropdown-header"></li>
                         <li><a href="#">Настройки уведомлений</a></li>
+                        <li><a href="${pageContext.request.contextPath}/logout" >Выйти</a></li>
                         <!--     <li><a href="#">One more separated link</a></li>-->
                     </ul>
                 </li>
@@ -61,7 +64,7 @@
                     <a href="${pageContext.request.contextPath}/login" >Войти</a>
                 </li>
                 <li class="nav navbar-nav">
-                    <a href="${pageContext.request.contextPath}/registration" >Регистрация</a>
+                    <a href="${pageContext.request.contextPath}/client/registration" >Регистрация</a>
                 </li>
                 <% }%>
             </ul>
