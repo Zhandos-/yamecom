@@ -3,9 +3,7 @@
     Created on : Jul 26, 2013, 10:04:41 PM
     Author     : TWINS
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,7 +16,6 @@
 
         <div class="container">
             <h1>Главная страница</h1>
-
         </div>
     </body>
 </html>

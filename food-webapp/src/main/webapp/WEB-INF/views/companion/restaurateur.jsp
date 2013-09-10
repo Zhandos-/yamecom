@@ -24,12 +24,12 @@
                 <div class="col-xs-1 col-sm-5 col-md-3"></div>
                 <div class="col-xs-10 col-sm-5 col-md-6">
                     <h1>Регистрация</h1>
-                    <form:form method="post" id="form"  action="${pageContext.request.contextPath}/companion/registration" commandName="user" >
+                    <form:form method="post" id="form" action="${pageContext.request.contextPath}/companion/registration" commandName="user" >
                         <div class="bs-example form-horizontal"  role="form">
                             <div class="form-group">
                                 <label for="name" class="col-lg-4 control-label">Имя:</label>
                                 <div class="col-lg-7">
-                                    <form:input path="name"  class="form-control" id="name" placeholder="Имя" />
+                                    <form:input path="name" class="form-control" id="name" placeholder="Имя" />
                                 </div>
                             </div>
                             <div class="form-group">
