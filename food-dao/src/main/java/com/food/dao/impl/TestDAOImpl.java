@@ -8,6 +8,9 @@ import com.food.dao.TestDao;
 import com.food.model.data.Phone;
 import com.food.model.enums.EnumPhoneType;
 import com.food.model.enums.EnumRole;
+import com.food.model.restaurant.Restaurant;
+import com.food.model.restaurant.RestaurantDetails;
+import com.food.model.restaurant.RestaurantType;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import java.util.ArrayList;
@@ -37,6 +40,24 @@ public class TestDAOImpl implements TestDao {
     private SessionFactory sessionFactory;
     private static Map<Class<?>, Set<Class<?>>> depends = new HashMap<Class<?>, Set<Class<?>>>();
 
+    private static void addDepends(Class<?> from, Class<?> to) {
+        Set<Class<?>> set = depends.get(to);
+        if (set == null) {
+            depends.put(to, set = new HashSet<Class<?>>());
+        }
+        set.add(from);
+    }
+
+    static {
+        //        (FKTABLE_NAME, PKTABLE_NAME)
+//       очищать таблицы и таблицы которые от низ зависят
+//        от (зависящий) к до (основной)
+        addDepends(Restaurant.class, User.class);
+        addDepends(Restaurant.class, RestaurantDetails.class);
+        addDepends(RestaurantType.class, RestaurantDetails.class);
+    }
+
+    @Override
     public Session ht() {
         return sessionFactory.getCurrentSession();
     }
@@ -116,5 +137,27 @@ public class TestDAOImpl implements TestDao {
         user.setPhones(phones);
         ht().save(user);
         return user;
+    }
+
+    @Override
+    public <T> T save(T entity) {
+        ht().saveOrUpdate(entity);
+        return entity;
+    }
+
+    @Override
+    public <T> T update(T entity) {
+        ht().saveOrUpdate(entity);
+        return entity;
+    }
+
+    @Override
+    public void startTransaction() {
+        ht().beginTransaction();
+    }
+
+    @Override
+    public void endTransaction() {
+        ht().getTransaction().commit();
     }
 }
