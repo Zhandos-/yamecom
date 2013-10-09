@@ -4,9 +4,9 @@
  */
 package com.food.model.restaurant;
 
-import com.food.model.enums.EnumRestaurantType;
 import com.food.model.AEntity;
 import com.food.model.Conf;
+import com.food.model.enums.EnumRestaurantType;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,7 +47,7 @@ public class RestaurantType extends AEntity {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     public EnumRestaurantType getType() {
         return type;
     }

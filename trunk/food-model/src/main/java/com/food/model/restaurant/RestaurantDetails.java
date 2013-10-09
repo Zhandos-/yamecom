@@ -6,13 +6,20 @@ package com.food.model.restaurant;
 
 import com.food.model.AEntity;
 import com.food.model.Conf;
+import com.food.model.user.Role;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -40,6 +47,7 @@ public class RestaurantDetails extends AEntity {
     private DeliveryPrice deliveryPrice;
     private Boolean deliveryFree;
     private Boolean payByCard;
+    private List<RestaurantType> types = new ArrayList<RestaurantType>();
 
     /**
      *
@@ -155,5 +163,15 @@ public class RestaurantDetails extends AEntity {
     @Override
     public String toString() {
         return "com.food.model.restaurant.RestaurantDetails[ id=" + id + " ]";
+    }
+
+    @ManyToMany(cascade = {javax.persistence.CascadeType.MERGE, javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.REFRESH})
+    @JoinTable(name = Conf.TABLE_PREFIX + "restaurant_types")
+    public List<RestaurantType> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<RestaurantType> types) {
+        this.types = types;
     }
 }
