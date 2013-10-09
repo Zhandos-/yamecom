@@ -14,11 +14,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="${pageContext.request.contextPath}/" class="navbar-brand">zakazhiedu.kz</a>
+            <a href="${pageContext.request.contextPath}/" class="navbar-brand"></a>
         </div>
         <div class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="${pageContext.request.contextPath}/restaurants#">Рестораны</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/">zakazhiedu</a></li>
+                <li class="active"><a href="${pageContext.request.contextPath}/restaurants">Рестораны</a></li>
                 <!--    <li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>
               <li class="dropdown">
@@ -43,7 +44,7 @@
                 <% }%>
                 <li class="active dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <%                            
+                        <%
                             out.print(request.getUserPrincipal().getName());
                         %>
                         <b class="caret"></b></a>
