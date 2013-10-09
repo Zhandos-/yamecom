@@ -7,9 +7,13 @@ package com.food.model.food;
 import com.food.model.restaurant.*;
 import com.food.model.AEntity;
 import com.food.model.Conf;
+import com.food.model.enums.EnumFoodType;
+import com.food.model.enums.EnumRestaurantClass;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +34,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 public class FoodType extends AEntity {
 
     private static final long serialVersionUID = -3958103253554275726L;
-    private String type;
     private Date creationDate;
+    private EnumFoodType type;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_type_seq")
@@ -46,11 +50,12 @@ public class FoodType extends AEntity {
         this.id = id;
     }
 
-    public String getType() {
+    @Enumerated(EnumType.STRING)
+    public EnumFoodType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(EnumFoodType type) {
         this.type = type;
     }
 

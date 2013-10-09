@@ -8,7 +8,7 @@ package com.food.model.enums;
  *
  * @author TWINS
  */
-public enum EnumRestaurantType {
+public enum EnumFoodType {
 
     SUSHI("Суши"),
     PICCA("Пицца"),
@@ -17,7 +17,7 @@ public enum EnumRestaurantType {
     ITALIAN_EUROPE("Италянская/Европейская");
     private String descriptin;
 
-    EnumRestaurantType(String descriptin) {
+    EnumFoodType(String descriptin) {
         this.descriptin = descriptin;
     }
 
