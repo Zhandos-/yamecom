@@ -60,12 +60,14 @@
                             <div class="form-group">
                                 <label for="phone" class="col-lg-4 control-label">Телефон *:</label>
                                 <div class="col-lg-7">
-                                    <input class="bfh-phone form-control" name="phone" data-format="+7 (ddd) ddd-dd-dd" id="phone" type="text" />
+                                    <input class="bfh-phone form-control" name="phone" 
+                                           data-format="+7 (ddd) ddd-dd-dd" id="phone" type="text" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-lg-offset-4 col-lg-7">
-                                    <button type="submit" data-loading-text="подождите" id="btn" class="btn btn-primary">
+                                    <button type="submit" data-loading-text="подождите" 
+                                            id="btn" class="btn btn-primary">
                                         Регистрация
                                     </button>
                                 </div>

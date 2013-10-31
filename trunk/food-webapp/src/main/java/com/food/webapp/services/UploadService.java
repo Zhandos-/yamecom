@@ -5,7 +5,7 @@
 package com.food.webapp.services;
 
 import com.food.model.user.User;
-import com.food.webapp.additional.UploadFile;
+import com.food.webapp.additional.UploadedFile;
 
 /**
  *
@@ -13,5 +13,5 @@ import com.food.webapp.additional.UploadFile;
  */
 public interface UploadService {
 
-    public String upload(UploadFile uploadFile, User user);
+    public String upload(UploadedFile uploadFile, User user);
 }

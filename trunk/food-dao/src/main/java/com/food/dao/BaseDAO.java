@@ -11,6 +11,8 @@ import java.util.List;
 /**
  *
  * @author TWINS
+ * @param <T>
+ * @param <KeyType>
  */
 public interface BaseDAO<T, KeyType extends Serializable> {
 

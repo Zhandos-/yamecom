@@ -50,4 +50,11 @@ public class RestaurantDAOImpl extends BaseDAOImpl<Restaurant, Long> implements 
     public List<RestaurantType> getRestaurantTypes() {
         return ht().createQuery("from RestaurantType").list();
     }
+
+    @Override
+    public RestaurantType findById(Long id) {
+        return (RestaurantType) ht().createQuery("from RestaurantType rt where rt.id=:id")
+                .setParameter("id", id)
+                .uniqueResult();
+    }
 }

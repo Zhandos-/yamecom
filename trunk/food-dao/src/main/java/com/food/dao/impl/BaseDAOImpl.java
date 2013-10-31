@@ -21,9 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author TWINS
+ * @param <T>
+ * @param <KeyType>
  */
+@Transactional("postgresT")
 @Repository
-public abstract class BaseDAOImpl<T, KeyType extends Serializable> implements BaseDAO<T, KeyType> {
+public abstract class BaseDAOImpl<T, KeyType extends Serializable>
+        implements BaseDAO<T, KeyType> {
 
     @Autowired
     @Qualifier("sessionFactoryPostgres")
@@ -31,7 +35,9 @@ public abstract class BaseDAOImpl<T, KeyType extends Serializable> implements Ba
     private Class<T> domainClass;
 
     public BaseDAOImpl() {
-        domainClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        domainClass = (Class<T>) ((ParameterizedType) getClass()
+                .getGenericSuperclass())
+                .getActualTypeArguments()[0];
     }
 
     protected Session ht() {

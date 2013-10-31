@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface RestaurantService {
 
-    public long saveOrUpdate(Restaurant restaurant);
+    public long saveOrUpdate(Restaurant restaurant, String mPhone, String sPhone);
 
     public List<RestaurantDetails> getRestaurants(int pageSize, int pageNumber);
 
@@ -26,4 +26,6 @@ public interface RestaurantService {
     public List<RestaurantDetails> filter(List<Long> restaurantTypesId);
 
     public List<RestaurantType> getRestaurantTypes();
+
+    public RestaurantType findById(Long id);
 }

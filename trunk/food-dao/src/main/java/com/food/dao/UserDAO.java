@@ -4,6 +4,7 @@
  */
 package com.food.dao;
 
+import com.food.model.restaurant.Restaurant;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import java.util.List;
@@ -28,4 +29,6 @@ public interface UserDAO extends BaseDAO<User, Long> {
     public boolean login(String mail, String password);
 
     public List<User> allUsers(int maxResults, int firstResult);
+
+    public List<Restaurant> getRestaurantsByUser(User user);
 }

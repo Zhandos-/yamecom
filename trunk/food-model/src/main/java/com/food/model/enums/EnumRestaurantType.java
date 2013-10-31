@@ -10,12 +10,19 @@ package com.food.model.enums;
  */
 public enum EnumRestaurantType {
 
+    PIZZA("Пицца"),
     SUSHI("Суши"),
-    PICCA("Пицца"),
-    FAST_FOOD("Фаст Фуд"),
-    CHINESE_JAPANESE("Китайская/Японская"),
-    ITALIAN_EUROPE("Италянская/Европейская");
-    private String descriptin;
+    HALAL("Халял"),
+    SHASHLIK("Шашлык"),
+    FAST_FOOD("Фаст Фуд/Бургер"),
+    CONFECTION("Кондитерское изделие"),
+    ITALIAN_EUROPE("Итальянская/Европейская"),
+    RUSSIAN_UKRAINIAN("Русская/Украинская"),
+    ASIAN("Азиатская"),
+    KAZAKH_UZBEK("Казахская/Узбекская"),
+    CHINESE_JAPANESE("Китайская/Японская");
+
+    private final String descriptin;
 
     EnumRestaurantType(String descriptin) {
         this.descriptin = descriptin;

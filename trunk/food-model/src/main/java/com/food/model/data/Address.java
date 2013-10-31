@@ -34,7 +34,6 @@ public class Address extends AEntity {
     private String address;
     private District district;
     private User user;
-    private Restaurant restaurant;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
@@ -70,15 +69,6 @@ public class Address extends AEntity {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
     }
 
     @Override

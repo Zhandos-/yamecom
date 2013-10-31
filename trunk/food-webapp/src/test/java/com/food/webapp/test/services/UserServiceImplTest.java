@@ -4,16 +4,21 @@
  */
 package com.food.webapp.test.services;
 
+import com.food.dao.RoleDAO;
 import com.food.dao.TestDao;
 import com.food.model.data.Phone;
 import com.food.model.enums.EnumRole;
+import com.food.model.user.Role;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
 import com.food.webapp.utils.UserUtil;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -33,8 +38,24 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
     private UserService userService;
     @Autowired
     private TestDao testDao;
+    @Autowired
+    private RoleDAO roleDAO;
 
     @Test
+    public void checkRole() {
+        List<EnumRole> enumRoles = new ArrayList<EnumRole>(Arrays.asList(EnumRole.values()));
+        if (roleDAO.getAll() == null || roleDAO.getAll().isEmpty()) {
+            for (EnumRole e : enumRoles) {
+                Role r = new Role();
+                r.setName(e);
+                r.setDescription(e.getDescription());
+                roleDAO.save(r);
+            }
+        }
+    }
+
+    @Test
+    @Ignore
     public void registration() {
         testDao.clean(User.class, Phone.class);
         {
@@ -67,6 +88,7 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
     }
 
     @Test
+    @Ignore
     public void login() {
         testDao.clean(User.class);
         String password = "csasacd";
@@ -84,6 +106,7 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
     }
 
     @Test
+    @Ignore
     public void login2() {
         testDao.clean(User.class);
         String password = "csasacd";
@@ -95,6 +118,7 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
     }
 
     @Test
+    @Ignore
     public void isPasswordRight() {
         testDao.clean(User.class, Phone.class);
         String password = "csasacd";
@@ -104,6 +128,7 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
     }
 
     @Test
+    @Ignore
     public void changePassword() {
         String newPassword = "45454545";
         testDao.clean(User.class);
@@ -115,6 +140,7 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
     }
 
     @Test
+    @Ignore
     public void updateProfile() {
         testDao.clean(User.class, Phone.class);
         String password = "csasacd";
@@ -133,6 +159,7 @@ public class UserServiceImplTest extends AbstractJUnit4SpringContextTests {
     }
 
     @Test
+    @Ignore
     public void savePhonesForCurrentUser() {
         testDao.clean(User.class, Phone.class);
         String password = "csasacd";

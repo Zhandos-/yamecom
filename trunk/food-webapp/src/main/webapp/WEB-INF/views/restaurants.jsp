@@ -11,8 +11,11 @@
         <%@include file="includes/include.jsp" %>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Рестораны</title>
-        <link href="${pageContext.request.contextPath}/resources/slider/css/slider.css" rel="stylesheet">
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/slider/js/bootstrap-slider.js"></script>
+        <link href="${pageContext.request.contextPath}/resources/slider/css/slider.css" 
+              rel="stylesheet">
+        <script type="text/javascript" 
+                src="${pageContext.request.contextPath}/resources/slider/js/bootstrap-slider.js">
+        </script>
         <script type="text/javascript">
             $(document).ready(function() {
                 var page = 0;
@@ -87,10 +90,15 @@
                     <div class="panel panel-default" style="position: fixed;top:auto">
                         <div class="panel-body">
                             <ul class="nav navbar-left">
-                                <li><p><center>Кухни ресторана:</center></p></li>
-                                    <c:forEach var="t" items="${types}">
+                                <li>
+                                    <p><center>Кухни ресторана:</center></p>
+                                </li>
+                                <c:forEach var="t" items="${types}">
                                     <li>
-                                        <a href="#overview"><input value="${t.id}" type="checkbox"> ${t.type.description}</a>
+                                        <a href="#overview">
+                                            <input value="${t.id}" type="checkbox">
+                                            ${t.type.description}
+                                        </a>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -101,7 +109,9 @@
                         <div class="panel-body">
                             <input type="text" id='price' class="form-control" /><br/>
                             <div class="slider slider-horizontal" style="width: 130px;">
-                                <input type="text" class="span2" data-slider-min="1000" data-slider-max="10000" data-slider-step="5" data-slider-value="10000" value="10000" id="sl1" style="">
+                                <input type="text" class="span2" data-slider-min="1000" 
+                                       data-slider-max="10000" data-slider-step="5" 
+                                       data-slider-value="10000" value="10000" id="sl1">
                             </div>
                         </div>
                     </div>
@@ -109,7 +119,11 @@
                 <div class="col-xs-10 col-sm-7 col-md-8">
                     <blockquote >
                         <p>Поиск ресторана:</p>
-                        <p><input type="text" id='text' class="form-control" /><input type="submit" id="search" value="Поиск" class="btn-success" /></p>
+                        <p>
+                            <input type="text" id="text" class="form-control" />
+                            <input type="submit" id="search" value="Поиск" 
+                                   class="btn-success" />
+                        </p>
                     </blockquote>
                     <hr>
                     <div id="theSelect">
