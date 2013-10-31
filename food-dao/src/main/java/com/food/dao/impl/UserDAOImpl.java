@@ -5,9 +5,11 @@
 package com.food.dao.impl;
 
 import com.food.dao.UserDAO;
+import com.food.model.restaurant.Restaurant;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,5 +73,13 @@ public class UserDAOImpl extends BaseDAOImpl<User, Long> implements UserDAO, Ser
                 .setInteger("firstResult", firstResult)
                 .setInteger("maxResults", maxResults)
                 .list();
+    }
+
+    @Override
+    public List<Restaurant> getRestaurantsByUser(User user) {
+        return new ArrayList<Restaurant>(ht()
+                .createQuery("select u.restaurants from User u where u=:u")
+                .setParameter("u", user)
+                .list());
     }
 }

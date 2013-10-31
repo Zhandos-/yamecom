@@ -10,7 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  *
  * @author daniyar.artykov
  */
-public class UploadFile {
+public class UploadedFile {
 
     private CommonsMultipartFile file;
 

@@ -7,6 +7,7 @@ package com.food.webapp.controllers;
 import com.food.model.enums.EnumRole;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
+import java.io.File;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,19 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     private @ResponseBody
     boolean login(@RequestParam(value = "email", required = true) String email,
-            @RequestParam(value = "password", required = true) String password, HttpSession httpSession) {
-        return userService.login(email, password);
+            @RequestParam(value = "password", required = true) String password,
+            HttpSession httpSession) {
+        boolean auth = userService.login(email, password);
+        if (auth) {
+            String absolutePath = new File("").getAbsolutePath();
+            File file = new File(absolutePath + "/food/images/" + email + "/");
+            if (!file.exists()) {
+                boolean mkdirs = file.mkdirs();
+                System.out.println("create new dir = " + mkdirs + " = "
+                        + absolutePath + "/food/images/" + email + "/");
+            }
+        }
+        return auth;
     }
 
     @RequestMapping(value = "/client/registration", method = RequestMethod.GET)
@@ -97,21 +109,6 @@ public class UserController {
         }
     }
 
-//    @RequestMapping(value = {"/companion/checkemail", "client/checkemail"}, method = RequestMethod.POST)
-//    private @ResponseBody
-//    boolean companionCheckEmail(@RequestParam(value = "email", required = true) String email) {
-//        email = email.toLowerCase();
-//        User user = userService.getCurrentUser();
-//        if (user != null) {
-//            if (user.getEmail().equals(email)) {
-//                return true;
-//            } else {
-//                return userService.checkEmail(email);
-//            }
-//        } else {
-//            return userService.checkEmail(email);
-//        }
-//    }
     @RequestMapping(value = "client/changeProfile", method = RequestMethod.POST)
     private @ResponseBody
     boolean editProfile(User user) {
@@ -121,7 +118,8 @@ public class UserController {
 
     @RequestMapping(value = {"/isPasswordRight", "client/isPasswordRight"}, method = RequestMethod.POST)
     private @ResponseBody
-    boolean isPasswordRight(@RequestParam(value = "oldpassword", required = true) String password) {
+    boolean isPasswordRight(
+            @RequestParam(value = "oldpassword", required = true) String password) {
         User user = userService.getCurrentUser();
         if (user != null) {
             return userService.isPasswordRight(password);
@@ -132,7 +130,8 @@ public class UserController {
 
     @RequestMapping(value = "client/changePasssword", method = RequestMethod.POST)
     private @ResponseBody
-    boolean editPasssword(@RequestParam(value = "password", required = true) String password) {
+    boolean editPasssword(
+            @RequestParam(value = "password", required = true) String password) {
         return userService.changePassword(password);
 
     }

@@ -6,12 +6,10 @@ package com.food.model.restaurant;
 
 import com.food.model.AEntity;
 import com.food.model.Conf;
-import com.food.model.user.Role;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,13 +38,15 @@ public class RestaurantDetails extends AEntity {
 
     private static final long serialVersionUID = 167153939075005557L;
     private Restaurant restaurant;
-    private RestaurantType restaurantType;
     private Double minOrderPrice;
     private Date startTime;
     private Date endTime;
     private DeliveryPrice deliveryPrice;
     private Boolean deliveryFree;
     private Boolean payByCard;
+    private Integer deliveryTime;
+    private String facilityType;
+    private String logo;
     private List<RestaurantType> types = new ArrayList<RestaurantType>();
 
     /**
@@ -73,15 +73,6 @@ public class RestaurantDetails extends AEntity {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    public RestaurantType getRestaurantType() {
-        return restaurantType;
-    }
-
-    public void setRestaurantType(RestaurantType restaurantType) {
-        this.restaurantType = restaurantType;
     }
 
     @Column(name = "min_order_price")
@@ -140,6 +131,32 @@ public class RestaurantDetails extends AEntity {
         this.payByCard = payByCard;
     }
 
+    @Column(name = "delivery_time")
+    public Integer getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public void setDeliveryTime(Integer deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    @Column(name = "facility_type")
+    public String getFacilityType() {
+        return facilityType;
+    }
+
+    public void setFacilityType(String facilityType) {
+        this.facilityType = facilityType;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -165,7 +182,9 @@ public class RestaurantDetails extends AEntity {
         return "com.food.model.restaurant.RestaurantDetails[ id=" + id + " ]";
     }
 
-    @ManyToMany(cascade = {javax.persistence.CascadeType.MERGE, javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.REFRESH})
+    @ManyToMany(cascade = {javax.persistence.CascadeType.MERGE,
+        javax.persistence.CascadeType.PERSIST,
+        javax.persistence.CascadeType.REFRESH})
     @JoinTable(name = Conf.TABLE_PREFIX + "restaurant_types")
     public List<RestaurantType> getTypes() {
         return types;
@@ -173,5 +192,9 @@ public class RestaurantDetails extends AEntity {
 
     public void setTypes(List<RestaurantType> types) {
         this.types = types;
+    }
+
+    public void setTypes(RestaurantType[] types) {
+        this.types.addAll(Arrays.asList(types));
     }
 }

@@ -9,7 +9,7 @@
         <anonymous username="guest" granted-authority="ROLE_ANONYMOUS"/>
         <remember-me user-service-ref="userService" />
                 
-        <intercept-url pattern="/**" access="hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN','ROLE_COMPANION','ROLE_ANONYMOUS')" />
+        <intercept-url pattern="/**" access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CLIENT','ROLE_ADMIN','ROLE_COMPANION')" />
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/client/**" access="hasAnyRole('ROLE_CLIENT')" />
         <intercept-url pattern="/companion/**" access="hasAnyRole('ROLE_COMPANION')" />

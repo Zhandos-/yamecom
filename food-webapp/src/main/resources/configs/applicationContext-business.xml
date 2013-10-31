@@ -85,7 +85,7 @@
     <!-- Configure the multipart resolver -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- one of the properties available; the maximum file size in bytes -->
-        <property name="maxUploadSize" value="100000"/> 
+        <property name="maxUploadSize" value="100000" /> 
     </bean>
     
     <!-- Разрешаем использование аннотаций Spring MVC (то есть @Controller и.т.д) -->
@@ -94,16 +94,16 @@
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>
-                <ref bean="jacksonMessageConverter"/>
+                <ref bean="jacksonMessageConverter" />
             </list>
         </property>
     </bean>
 
-
     <!-- Всю статику (изображения, css-файлы, javascript) положим в папку webapp/resources 
     и замаппим их на урл вида /resources/** -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
-
+    <mvc:resources mapping="/images/**" location="file:C:\Java\Servers\Tomcat-7.0.27\bin\food\images\" />
+    
     <!-- Отображение видов на jsp-файлы, лежащие в папке /WEB-INF/views -->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/" />

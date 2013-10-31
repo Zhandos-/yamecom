@@ -37,7 +37,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <%if (request.getUserPrincipal() != null) {%>
-                <%if (request.isUserInRole("ROLE_COMPANION")) {%>
+                <%if (request.isUserInRole("ROLE_COMPANION") || request.isUserInRole("ROLE_ADMIN")) {%>
                 <li class="active dropdown">
                     <a href="${pageContext.request.contextPath}/companion/restaurateur" >Ресторатор</a>
                 </li>
@@ -66,6 +66,9 @@
                 </li>
                 <li class="nav navbar-nav">
                     <a href="${pageContext.request.contextPath}/client/registration" >Регистрация</a>
+                </li>
+                <li class="active navbar-nav">
+                    <a href="${pageContext.request.contextPath}/companion/registration" >Стать партнером</a>
                 </li>
                 <% }%>
             </ul>

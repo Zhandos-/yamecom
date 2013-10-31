@@ -22,4 +22,6 @@ public interface RestaurantDAO extends BaseDAO<Restaurant, Long> {
     public List<RestaurantDetails> filter(List<Long> restaurantTypesId);
 
     public List<RestaurantType> getRestaurantTypes();
+
+    public RestaurantType findById(Long id);
 }

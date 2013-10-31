@@ -6,9 +6,10 @@ package com.food.model.restaurant;
 
 import com.food.model.AEntity;
 import com.food.model.Conf;
-import com.food.model.food.Food;
+import com.food.model.data.Address;
+import com.food.model.data.Phone;
+import com.food.model.food.FoodType;
 import com.food.model.user.User;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -18,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -41,6 +43,10 @@ public class Restaurant extends AEntity {
     private String about;
     private Date creationDate;
     private User user;
+    private List<Phone> phones;
+    private Address address;
+    private RestaurantDetails details;
+    private List<FoodType> foodType;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurant_seq")
@@ -94,6 +100,42 @@ public class Restaurant extends AEntity {
         this.user = user;
     }
 
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    public RestaurantDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(RestaurantDetails details) {
+        this.details = details;
+    }
+
+    @OneToMany(cascade = CascadeType.REFRESH, orphanRemoval = false)
+    public List<FoodType> getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(List<FoodType> foodType) {
+        this.foodType = foodType;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -108,7 +150,8 @@ public class Restaurant extends AEntity {
             return false;
         }
         Restaurant other = (Restaurant) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.id == null && other.id != null)
+                || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;

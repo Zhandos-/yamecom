@@ -10,6 +10,7 @@ import com.food.dao.UserDAO;
 import com.food.model.data.Phone;
 import com.food.model.enums.EnumPhoneType;
 import com.food.model.enums.EnumRole;
+import com.food.model.restaurant.Restaurant;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import com.food.webapp.services.UserService;
@@ -314,5 +315,10 @@ public class UserServiceImpl implements UserDetailsService, UserService, Seriali
             log.info("Конец вызова savePhonesForCurrentUser");
         }
         return response;
+    }
+
+    @Override
+    public List<Restaurant> getRestaurantsByUser() {
+        return userDAO.getRestaurantsByUser(getCurrentUser());
     }
 }

@@ -4,15 +4,16 @@
  */
 package com.food.webapp.test.services;
 
+import com.food.dao.RestaurantTypeDAO;
 import com.food.dao.TestDao;
 import com.food.model.enums.EnumRestaurantType;
-import com.food.model.food.FoodType;
 import com.food.model.restaurant.Restaurant;
 import com.food.model.restaurant.RestaurantDetails;
 import com.food.model.restaurant.RestaurantType;
 import com.food.model.user.User;
 import com.food.webapp.services.RestaurantService;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +38,23 @@ public class RestaurantServiceImplTest extends AbstractJUnit4SpringContextTests 
     private RestaurantService restaurantService;
     @Autowired
     private TestDao testDao;
+    @Autowired
+    private RestaurantTypeDAO restaurantTypeDAO;
+
+    @Test
+    public void checkRestaurantsType() {
+        List<EnumRestaurantType> restaurantTypes = new ArrayList<EnumRestaurantType>(Arrays.asList(EnumRestaurantType.values()));
+        if (restaurantTypeDAO.getAll() == null || restaurantTypeDAO.getAll().isEmpty()) {
+            System.out.println(">>>");
+            for (EnumRestaurantType e : restaurantTypes) {
+                System.out.println("e = " + e.name());
+                RestaurantType rt = new RestaurantType();
+                rt.setType(e);
+                rt.setDescription(e.getDescription());
+                restaurantTypeDAO.save(rt);
+            }
+        }
+    }
 
     @Test
     public void getRestaurants() {
@@ -66,7 +84,7 @@ public class RestaurantServiceImplTest extends AbstractJUnit4SpringContextTests 
         }
         List<RestaurantDetails> list;
         list = restaurantService.getRestaurants(20, 20);
-        Assert.assertEquals(list.size(), 20);
+        Assert.assertEquals(20, list.size());
     }
 
     @Test
@@ -97,7 +115,7 @@ public class RestaurantServiceImplTest extends AbstractJUnit4SpringContextTests 
         }
         List<RestaurantDetails> list;
         list = restaurantService.getByName("Ресторан");
-        Assert.assertEquals(list.size(), 40);
+        Assert.assertEquals(40, list.size());
     }
 
     @Test
@@ -112,7 +130,7 @@ public class RestaurantServiceImplTest extends AbstractJUnit4SpringContextTests 
             EnumRestaurantType.CHINESE_JAPANESE,
             EnumRestaurantType.FAST_FOOD,
             EnumRestaurantType.ITALIAN_EUROPE,
-            EnumRestaurantType.PICCA,
+            EnumRestaurantType.PIZZA,
             EnumRestaurantType.SUSHI
         };
         for (EnumRestaurantType type : resaurantType) {
@@ -122,7 +140,6 @@ public class RestaurantServiceImplTest extends AbstractJUnit4SpringContextTests 
             testDao.save(type1);
             types.add(type1);
         }
-
 
         for (int i = 0; i < 40; i++) {
             User user = testDao.fillClient("ddd");
@@ -149,6 +166,6 @@ public class RestaurantServiceImplTest extends AbstractJUnit4SpringContextTests 
         ids.add(types.get(0).getId());
         List<RestaurantDetails> list;
         list = restaurantService.filter(ids);
-        Assert.assertEquals(list.size(), 40);
+        Assert.assertEquals(40, list.size());
     }
 }

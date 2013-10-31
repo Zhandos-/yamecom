@@ -6,6 +6,7 @@ package com.food.webapp.services;
 
 import com.food.model.data.Phone;
 import com.food.model.enums.EnumRole;
+import com.food.model.restaurant.Restaurant;
 import com.food.model.user.Role;
 import com.food.model.user.User;
 import java.util.Collection;
@@ -58,4 +59,6 @@ public interface UserService {
     public List<Phone> getCurrentUserPhones();
 
     public boolean savePhonesForCurrentUser(List<Phone> phones);
+
+    public List<Restaurant> getRestaurantsByUser();
 }

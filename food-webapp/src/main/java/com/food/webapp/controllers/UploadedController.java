@@ -5,13 +5,14 @@
 package com.food.webapp.controllers;
 
 import com.food.model.user.User;
-import com.food.webapp.additional.UploadFile;
+import com.food.webapp.additional.UploadedFile;
 import com.food.webapp.services.UploadService;
 import com.food.webapp.services.UserService;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
@@ -35,10 +36,10 @@ import org.springframework.web.servlet.ModelAndView;
  * @author daniyar.artykov
  */
 @Controller
-public class UploadController {
+public class UploadedController {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(UploadController.class.getName());
+    private static final Logger logger
+            = LoggerFactory.getLogger(UploadedController.class.getName());
     @Autowired
     private UserService userService;
     @Autowired
@@ -63,12 +64,12 @@ public class UploadController {
 
     @RequestMapping(value = "/client/upload", method = RequestMethod.GET)
     public String getUploadForm(Model model) {
-        model.addAttribute(new UploadFile());
+        model.addAttribute(new UploadedFile());
         return "client/upload";
     }
 
     @RequestMapping(value = "/client/upload", method = RequestMethod.POST)
-    public ModelAndView create(UploadFile uploadFile, BindingResult result,
+    public ModelAndView create(UploadedFile uploadFile, BindingResult result,
             HttpServletRequest request) {
         logger.info(">>> Upoladed file name = {}; type = {}",
                 uploadFile.getFile().getName(), uploadFile.getFile().getContentType());
@@ -96,7 +97,7 @@ public class UploadController {
 
             writer.close();
             reader.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             logger.error(ex.getMessage());
         }
 

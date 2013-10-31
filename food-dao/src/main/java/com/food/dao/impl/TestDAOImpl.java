@@ -76,6 +76,7 @@ public class TestDAOImpl implements TestDao {
         return ht().createQuery(sql).list();
     }
 
+    @Override
     public void clean(Class... entityClasses) {
         cleanInternal(entityClasses, new HashSet<Class<?>>());
     }
